@@ -1,15 +1,18 @@
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { useNavigate } from "react-router-dom"
+import { Volume2, VolumeX } from "lucide-react"
 
 // Assets imports
 import lntLogo from "../assets/logos/lnt-logo.png"
 import scene2Bg from "../assets/images/shared/scene-city-skyline.png"
 import transparentLogo from "../assets/images/home/scene-outline-logo.png"
 import logo2 from "../assets/logos/logo-outline-white.svg"
-import exploreIcon from "../assets/icons/explore-icon.svg"
 import ExploreView from "../components/home/ExploreView"
+import RainOverlay from "../components/home/RainOverlay"
+import LightningOverlay from "../components/home/LightningOverlay"
 import { gradientHeadingStyle } from "../styles/gradientHeadingText"
+import { useStormAudio } from "../hooks/useStormAudio"
 
 interface HomePageProps {
     startScene?: 1 | 2 | 3;
@@ -19,21 +22,29 @@ const HomePage = ({ startScene = 1 }: HomePageProps) => {
     const navigate = useNavigate()
     // scene state determines whether we show Scene 1 (centered logo), Scene 2 (framed workspace), or Scene 3 (sunset explore view)
     const [scene, setScene] = useState<1 | 2 | 3>(startScene)
+    const [isExploring, setIsExploring] = useState(false)
+    const { muted: audioMuted, toggleSound, playThunder } = useStormAudio()
 
     useEffect(() => {
         if (startScene !== 1) return;
-        // Scene 1 lasts for 1.5 seconds, then transitions
+        // Scene 1 plays a theater-curtain intro (curtain holds, splits open, then the
+        // logo fades in) before transitioning to Scene 2 — see timing notes below.
         const timer = setTimeout(() => {
             setScene(2)
-        }, 1500)
+        }, 3500)
 
         return () => clearTimeout(timer)
     }, [startScene])
 
     const handleExploreClick = () => {
-        console.log("Explore button clicked")
-        setScene(3)
-        navigate("/home")
+        if (isExploring) return
+        // Launch the logo-circle ease-off animation first, then swap to the next scene
+        // once it has settled (see the explore button's circle below).
+        setIsExploring(true)
+        setTimeout(() => {
+            setScene(3)
+            navigate("/home")
+        }, 2400)
     }
 
     return (
@@ -44,32 +55,48 @@ const HomePage = ({ startScene = 1 }: HomePageProps) => {
             <AnimatePresence>
                 {scene === 1 && (
                     <motion.div
-                        className="absolute inset-0 flex items-center justify-center z-50 bg-gradient-to-br from-[#e4eef8] via-[#d4e3f4] to-[#b6cff2] overflow-hidden"
-                        exit={{ opacity: 0 }}
-                        transition={{ duration: 1.0, ease: "easeInOut" }}
+                        className="absolute inset-0 flex items-center justify-center z-50 bg-black overflow-hidden"
+                        exit={{ opacity: 0, transition: { duration: 1.4, ease: "easeIn" } }}
                     >
-                        {/* Top Right Light Blue Glow */}
+                        {/* Theater-dim vignette: faint warm glow at center fading to black at the edges */}
                         <div
-                            className="absolute top-0 right-0 w-[60vw] h-[60vh] max-w-[700px] max-h-[700px] pointer-events-none"
+                            className="absolute inset-0 pointer-events-none"
                             style={{
-                                background: 'radial-gradient(circle at 100% 0%, rgba(165, 203, 255, 0.6) 0%, rgba(165, 203, 255, 0) 70%)'
+                                background: 'radial-gradient(circle at 50% 50%, rgba(255, 239, 168, 0.09) 0%, rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 0.7) 100%)'
                             }}
                         />
 
-                        {/* Bottom Left Light Blue Glow */}
-                        <div
-                            className="absolute bottom-0 left-0 w-[60vw] h-[60vh] max-w-[700px] max-h-[700px] pointer-events-none"
-                            style={{
-                                background: 'radial-gradient(circle at 0% 100%, rgba(165, 203, 255, 0.6) 0%, rgba(165, 203, 255, 0) 70%)'
-                            }}
-                        />
-
+                        {/* Logo: fades in after the curtain has fully parted, then grows and zooms
+                            forward into the hero page on exit (delay matches curtain-open end) */}
                         <motion.img
                             src={lntLogo}
                             alt="L&T Realty Logo"
-                            className="h-20 md:h-28 object-contain z-10"
-                            exit={{ y: "-100vh" }}
-                            transition={{ duration: 1.2, ease: [0.25, 1, 0.3, 1] }}
+                            className="h-32 md:h-48 object-contain z-10 filter-inactive-white"
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            animate={{ opacity: 1, scale: 1, transition: { duration: 1.0, delay: 1.5, ease: [0.25, 1, 0.3, 1] } }}
+                            exit={{ opacity: 0, scale: 6, transition: { duration: 1.4, ease: [0.4, 0, 1, 1] } }}
+                        />
+
+                        {/* Theater curtain: top half slides up, bottom half slides down, splitting from the middle */}
+                        <motion.div
+                            className="absolute top-0 left-0 w-full h-1/2 z-20 pointer-events-none"
+                            style={{
+                                background: 'linear-gradient(to bottom, #1a1f27 0%, #0a0d12 100%)',
+                                boxShadow: '0 8px 30px rgba(0, 0, 0, 0.7)'
+                            }}
+                            initial={{ y: '0%' }}
+                            animate={{ y: '-100%' }}
+                            transition={{ duration: 1.0, delay: 0.5, ease: [0.65, 0, 0.35, 1] }}
+                        />
+                        <motion.div
+                            className="absolute bottom-0 left-0 w-full h-1/2 z-20 pointer-events-none"
+                            style={{
+                                background: 'linear-gradient(to top, #1a1f27 0%, #0a0d12 100%)',
+                                boxShadow: '0 -8px 30px rgba(0, 0, 0, 0.7)'
+                            }}
+                            initial={{ y: '0%' }}
+                            animate={{ y: '100%' }}
+                            transition={{ duration: 1.0, delay: 0.5, ease: [0.65, 0, 0.35, 1] }}
                         />
                     </motion.div>
                 )}
@@ -78,8 +105,12 @@ const HomePage = ({ startScene = 1 }: HomePageProps) => {
             {/* ========================================================= */}
             {/* ======================= SCENE 2 ========================= */}
             {/* ========================================================= */}
+            <AnimatePresence>
             {scene < 3 && (
-                <div className="w-full h-full overflow-hidden relative">
+                <motion.div
+                    className="w-full h-full overflow-hidden relative"
+                    exit={{ opacity: 0, transition: { duration: 0.35, ease: [0.22, 1, 0.36, 1] } }}
+                >
                     {/* Background image zoom-out and slide-to-center animation */}
                     <motion.img
                         src={scene2Bg}
@@ -92,6 +123,28 @@ const HomePage = ({ startScene = 1 }: HomePageProps) => {
                         }}
                         transition={{ duration: 3.5, ease: [0.25, 1, 0.28, 1], delay: 0.2 }}
                     />
+
+                    {/* Light drizzle overlay on top of the skyline background */}
+                    <RainOverlay />
+
+                    {/* Occasional lightning strikes in the storm clouds */}
+                    <LightningOverlay onStrike={playThunder} />
+
+                    {/* Storm sound toggle (browsers require a user gesture before audio can play) */}
+                    <motion.button
+                        onClick={toggleSound}
+                        aria-label={audioMuted ? "Unmute storm sound" : "Mute storm sound"}
+                        className="absolute z-20 bottom-10 left-10 w-11 h-11 rounded-full bg-[#1a222b]/95 backdrop-blur-md border border-white/10 shadow-xl flex items-center justify-center cursor-pointer"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: scene === 2 ? 1 : 0, y: scene === 2 ? 0 : 20 }}
+                        transition={{ duration: 1.0, delay: 1.6, ease: [0.25, 1, 0.5, 1] }}
+                    >
+                        {audioMuted ? (
+                            <VolumeX className="w-5 h-5 text-white/70" />
+                        ) : (
+                            <Volume2 className="w-5 h-5 text-white" />
+                        )}
+                    </motion.button>
 
                     {/* Top Left White Logo */}
                     <motion.div
@@ -160,55 +213,74 @@ const HomePage = ({ startScene = 1 }: HomePageProps) => {
                         animate={{ opacity: scene === 2 ? 1 : 0, y: scene === 2 ? 0 : 50 }}
                         transition={{ duration: 2.5, delay: 2.0, ease: [0.25, 1, 0.5, 1] }}
                     >
-                        {/* Interactive Explore Button */}
-                        <motion.div
-                            className="p-1 bg-[#1a222b]/95 backdrop-blur-md rounded-full border border-white/10 shadow-xl flex items-center gap-[6px] select-none cursor-pointer relative"
-                            whileHover="hover"
-                            onClick={handleExploreClick}
-                        >
-                            {/* Logo circle on the left (foreground, z-20) */}
-                            <motion.div
-                                className="w-12 h-12 rounded-full bg-[#12161a] border border-white/20 flex items-center justify-center z-20 shadow-md"
-                                variants={{
-                                    hover: { scale: 1.05, borderColor: "rgba(255,255,255,0.3)" }
+                        {/* Interactive Explore Button — circle is a sibling (not nested inside the
+                            button's overflow-hidden) so it can detach and fly clear across the
+                            screen on click, unclipped, before the next scene appears. */}
+                        <div className="relative flex items-center">
+                            <motion.button
+                                type="button"
+                                onClick={handleExploreClick}
+                                disabled={isExploring}
+                                className="relative flex items-center h-[60px] pl-14 pr-5 rounded-full select-none cursor-pointer overflow-hidden will-change-transform"
+                                style={{
+                                    background: 'rgba(255, 255, 255, 0.05)',
+                                    backdropFilter: 'blur(10px) saturate(160%)',
+                                    WebkitBackdropFilter: 'blur(10px) saturate(160%)',
+                                    border: '1.5px solid rgba(255, 255, 255, 0.55)',
+                                    boxShadow: '0 0 0 1px rgba(255, 255, 255, 0.12), 0 0 22px rgba(255, 255, 255, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.5), 0 8px 24px rgba(0, 0, 0, 0.3)',
                                 }}
-                                transition={{ duration: 0.3 }}
-                            >
-                                <img src={logo2} alt="L&T Logo" className="w-7 h-7 object-contain" />
-                            </motion.div>
-
-                            {/* Yellow cream pill nested inside (z-10) */}
-                            <motion.div
-                                className="px-6 py-3 rounded-full bg-[#FFF6D4] text-black font-semibold text-sm flex items-center gap-2 pr-8 pl-10 -ml-8 z-10 shadow-inner"
+                                initial="rest"
+                                animate={isExploring ? { opacity: 0, transition: { duration: 0.3 } } : "rest"}
+                                whileHover={isExploring ? undefined : "hover"}
+                                whileTap={isExploring ? undefined : "press"}
                                 variants={{
-                                    hover: { backgroundColor: "#FFEFA8", paddingRight: "36px" }
+                                    rest: { scale: 1, y: 0, opacity: 1 },
+                                    hover: { scale: 1.03, y: -2 },
+                                    press: { scale: 0.98, y: 0 }
                                 }}
-                                transition={{ duration: 0.3 }}
+                                transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
                             >
-                                <motion.img
-                                    src={exploreIcon}
-                                    alt="Explore"
-                                    className="w-4 h-4 object-contain"
-                                    variants={{
-                                        hover: { rotate: 15, scale: 1.2 }
-                                    }}
-                                    transition={{ duration: 0.3 }}
-                                />
-                                <span className="font-sans text-sm font-bold text-[#272000] tracking-wider leading-none">
-                                    explore
+                                <span
+                                    className="relative z-10 font-sans text-sm font-bold text-[#FFEFA8] tracking-wider leading-none"
+                                    style={{ textShadow: '0 1px 3px rgba(0, 0, 0, 0.45)' }}
+                                >
+                                    Explore
                                 </span>
+                            </motion.button>
+
+                            {/* Logo circle — overlaps the button's left edge at rest, then eases gently
+                                to the right, staying near the button, when Explore is clicked */}
+                            <motion.div
+                                className="absolute left-1 top-1/2 z-20 w-12 h-12 rounded-full flex items-center justify-center pointer-events-none"
+                                style={{
+                                    background: 'radial-gradient(circle at 35% 30%, rgba(60, 66, 74, 0.55) 0%, rgba(18, 22, 26, 0.6) 70%)',
+                                    border: '1px solid rgba(255, 255, 255, 0.4)',
+                                }}
+                                animate={
+                                    isExploring
+                                        ? { x: 140, y: '-50%', scale: 1.08, opacity: 0 }
+                                        : { x: 0, y: '-50%', scale: 1, opacity: 1 }
+                                }
+                                transition={{ duration: 2.4, ease: [0.45, 0, 0.2, 1] }}
+                            >
+                                <img src={logo2} alt="" className="w-7 h-7 object-contain relative z-10" />
                             </motion.div>
-                        </motion.div>
+                        </div>
 
                         {/* Spark visualizer bars to the right */}
-                        <div className="flex items-end gap-[4px] h-6 ml-6 opacity-70">
+                        <motion.div
+                            className="flex items-end gap-[4px] h-6 ml-6"
+                            animate={{ opacity: isExploring ? 0 : 0.7 }}
+                            transition={{ duration: 0.3 }}
+                        >
                             <span className="w-[3px] h-[10px] bg-white rounded-full animate-pulse" />
                             <span className="w-[3px] h-[22px] bg-white rounded-full animate-pulse" style={{ animationDelay: "0.2s" }} />
                             <span className="w-[3px] h-[15px] bg-white rounded-full animate-pulse" style={{ animationDelay: "0.4s" }} />
-                        </div>
+                        </motion.div>
                     </motion.div>
-                </div>
+                </motion.div>
             )}
+            </AnimatePresence>
 
             {/* Explore View Overlay */}
             <AnimatePresence>

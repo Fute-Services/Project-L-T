@@ -32,9 +32,9 @@ const ExploreView = ({ explored }: ExploreViewProps) => {
     return (
         <motion.div
             className="absolute inset-0 w-full h-full overflow-hidden z-30 bg-[#0a0d12]"
-            initial={{ opacity: 1 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } }}
+            exit={{ opacity: 0, transition: { duration: 0.35, ease: [0.22, 1, 0.36, 1] } }}
         >
             {/* Day Background Image with scale animation */}
             <motion.img
