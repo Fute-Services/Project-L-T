@@ -12,6 +12,9 @@ dist
 dist-ssr
 *.local
 
+# Staging folder for manual Cloudflare uploads (duplicates of src/assets images)
+/cloudflare-upload
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
