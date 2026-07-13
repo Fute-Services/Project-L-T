@@ -6,6 +6,8 @@ import ProjectDetailsPage from "../pages/ProjectDetailsPage";
 import ProjectInfoPage from "../pages/ProjectInfoPage";
 import BrochurePage from "../pages/BrochurePage";
 import CirculationPage from "../pages/CirculationPage";
+import CertificationPage from "../pages/CertificationPage";
+import Gallery from "../pages/Gallery";
 
 export const router = createBrowserRouter([
   {
@@ -35,5 +37,13 @@ export const router = createBrowserRouter([
   {
     path: "/circulation",
     element: <CirculationPage />,
+  },
+  {
+    path: "/certification",
+    element: <CertificationPage />,
+  },
+  {
+    path: "/gallery",
+    element: <Gallery />,
   },
 ]);

@@ -13,7 +13,7 @@ import { useEffect, useRef, useState } from "react";
 import { PageFlip } from "page-flip";
 import LeftNavbar from "../components/navigation/LeftNavbar";
 // import backIcon from "../assets/back butten.png";
-import pdfFile from "../assets/documents/hiranandani-sands-brochure.pdf";
+import pdfFile from "../assets/documents/L&T Lower Parel_PPT General_Lowres.pdf";
 import bgImage from "../assets/images/shared/scene-city-skyline.png";
 
 // Declare pdfjsLib and PageFlip module to satisfy TypeScript

@@ -5,8 +5,6 @@ import buildingImg from "../assets/images/project-specification/building.png";
 import transLogo from "../assets/images/project-specification/transparent-logo.png";
 import logo2 from "../assets/logos/logo-outline-white.svg";
 import LeftNavbar from "../components/navigation/LeftNavbar";
-import img1 from "../assets/images/project-specification/well-certification-badge.png";
-import img2 from "../assets/images/project-specification/leed-platinum-badge.png";
 
 const ProjectInfoPage = () => {
   const [isZoomed, setIsZoomed] = useState(true);
@@ -187,55 +185,7 @@ const ProjectInfoPage = () => {
       </AnimatePresence>
 
       {/* 6. Right Side Badges Pill */}
-      <AnimatePresence>
-        {showOverlays && (
-          <motion.div
-            initial={{ opacity: 0, x: 50, y: "-50%" }}
-            animate={{ opacity: 1, x: 0, y: "-50%" }}
-            exit={{ opacity: 0, x: 50, y: "-50%" }}
-            transition={{ duration: 1.2, ease: "easeOut", delay: 0.4 }}
-            className="fixed right-10 lg:right-24 top-1/2 z-40 w-[80px] lg:w-[100px] flex flex-col items-center gap-3 lg:gap-4 py-4 lg:py-5 px-1.5 rounded-full border"
-            style={{
-              background: "linear-gradient(180deg, rgba(165, 130, 85, 0.25) 0%, rgba(135, 105, 65, 0.25) 50%, rgba(105, 80, 50, 0.25) 100%)",
-              backdropFilter: "blur(20px)",
-              WebkitBackdropFilter: "blur(20px)",
-              border: "5px solid rgba(30, 25, 20, 0.15)",
 
-            }}
-          >
-            {/* WELL Certification Badge */}
-            <div className="group cursor-pointer">
-              <img
-                src={img1}
-                alt="WELL Certification"
-                className="w-13 h-13 lg:w-[82px] lg:h-[82px] object-contain transition-transform duration-300 group-hover:scale-105"
-              />
-            </div>
-
-            {/* Divider */}
-            <div className="w-[70%] h-[1px] bg-white/20" />
-
-            {/* LEED Platinum Badge */}
-            <div className="group cursor-pointer">
-              <img
-                src={img2}
-                alt="LEED Platinum Certification"
-                className="w-13 h-13 lg:w-[82px] lg:h-[82px] object-contain transition-transform duration-300 group-hover:scale-105"
-              />
-            </div>
-
-            {/* Divider */}
-            <div className="w-[70%] h-[1px] bg-white/20" />
-
-            {/* High OPEX Savings Text */}
-            <div className="px-1 w-full text-center">
-              <p className="text-[7px] lg:text-[8px] font-sans font-semibold tracking-tight text-white leading-none whitespace-nowrap">
-                High OPEX Savings
-              </p>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </div>
   );
 };

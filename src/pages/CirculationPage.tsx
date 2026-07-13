@@ -1,6 +1,10 @@
+import { useState } from "react";
 import LeftNavbar from "../components/navigation/LeftNavbar";
+import RightNavbar from "../components/navigation/RightNavbar";
 
 export default function CirculationPage() {
+    const [isNight, setIsNight] = useState(true);
+
     return (
         <div
             className="fixed inset-0 w-full h-full overflow-hidden flex flex-col justify-between"
@@ -38,6 +42,11 @@ export default function CirculationPage() {
             {/* 3. Left Navbar Container */}
             <div className="absolute top-[48%] lg:top-[55%] left-[6%] z-50 -translate-y-1/2 -translate-x-1/2">
                 <LeftNavbar />
+            </div>
+
+            {/* 4. Right Navbar Container */}
+            <div className="fixed right-5 lg:right-10 top-[55%] lg:top-1/2 -translate-y-1/2 z-50">
+                <RightNavbar isNight={isNight} setIsNight={setIsNight} />
             </div>
 
             {/* Bottom spacer to match top padding */}
