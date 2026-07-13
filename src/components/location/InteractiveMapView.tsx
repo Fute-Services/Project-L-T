@@ -36,6 +36,15 @@ const CIRCULATION_PATH = [
   [72.83384455041819, 19.009526907888123]
 ];
 
+// Hoisted so it's computed once at module load rather than on every render.
+const LOCATION_ENTRIES = Object.entries(LOCATIONS)
+
+// Module-level caches so re-opening the map (Back → Map again) reuses work
+// already done instead of re-fetching/re-parsing from scratch.
+let cachedModelScene: THREE.Group | null = null
+let cachedModelPromise: Promise<THREE.Group> | null = null
+const directionsCache = new Map<string, { coordinates: [number, number][], durationMinutes: number }>()
+
 export default function InteractiveMapView({ onClose }: { onClose: () => void }) {
   const mapContainerRef = useRef<HTMLDivElement>(null)
   const mapInstanceRef = useRef<mapboxgl.Map | null>(null)
@@ -112,10 +121,10 @@ export default function InteractiveMapView({ onClose }: { onClose: () => void })
     const parelEl = document.createElement('div');
     parelEl.innerHTML = `
       <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; opacity: 0; animation: parelSequence 10s forwards;">
-        <div style="background: #3b82f6; color: white; padding: 6px 12px; border-radius: 8px; font-weight: 800; font-size: 13px; border: 2px solid #ffffff; box-shadow: 0 0 15px rgba(59, 130, 246, 0.8); white-space: nowrap; margin-bottom: 6px;">
-          🚆 PAREL STATION
+        <div style="background: rgba(20, 22, 24, 0.55); backdrop-filter: blur(14px) saturate(180%); -webkit-backdrop-filter: blur(14px) saturate(180%); color: #E6F0FF; padding: 5px 11px; border-radius: 999px; font-weight: 600; font-size: 10.5px; letter-spacing: 0.01em; border: 1px solid rgba(185, 210, 255, 0.35); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.12); white-space: nowrap; margin-bottom: 5px;">
+          🚆 Parel Station
         </div>
-        <div style="width: 16px; height: 16px; background: #3b82f6; border: 3px solid white; border-radius: 50%; box-shadow: 0 0 20px rgba(59, 130, 246, 1); animation: pulseMarker 1.5s infinite;"></div>
+        <div style="width: 8px; height: 8px; background: #B9D2FF; border: 2px solid white; border-radius: 50%; box-shadow: 0 0 10px rgba(185, 210, 255, 0.9); animation: pulseMarker 1.5s infinite;"></div>
       </div>
     `;
     const parelMarker = new mapboxgl.Marker(parelEl)
@@ -125,10 +134,10 @@ export default function InteractiveMapView({ onClose }: { onClose: () => void })
     const elphinstoneEl = document.createElement('div');
     elphinstoneEl.innerHTML = `
       <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; opacity: 0; animation: parelSequence 10s forwards;">
-        <div style="background: #3b82f6; color: white; padding: 6px 12px; border-radius: 8px; font-weight: 800; font-size: 13px; border: 2px solid #ffffff; box-shadow: 0 0 15px rgba(59, 130, 246, 0.8); white-space: nowrap; margin-bottom: 6px;">
-          🌉 ELPHINSTONE BRIDGE
+        <div style="background: rgba(20, 22, 24, 0.55); backdrop-filter: blur(14px) saturate(180%); -webkit-backdrop-filter: blur(14px) saturate(180%); color: #E6F0FF; padding: 5px 11px; border-radius: 999px; font-weight: 600; font-size: 10.5px; letter-spacing: 0.01em; border: 1px solid rgba(185, 210, 255, 0.35); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.12); white-space: nowrap; margin-bottom: 5px;">
+          🌉 Elphinstone Bridge
         </div>
-        <div style="width: 16px; height: 16px; background: #3b82f6; border: 3px solid white; border-radius: 50%; box-shadow: 0 0 20px rgba(59, 130, 246, 1); animation: pulseMarker 1.5s infinite;"></div>
+        <div style="width: 8px; height: 8px; background: #B9D2FF; border: 2px solid white; border-radius: 50%; box-shadow: 0 0 10px rgba(185, 210, 255, 0.9); animation: pulseMarker 1.5s infinite;"></div>
       </div>
     `;
     const elphinstoneMarker = new mapboxgl.Marker(elphinstoneEl)
@@ -138,17 +147,17 @@ export default function InteractiveMapView({ onClose }: { onClose: () => void })
     const siddhivinayakEl = document.createElement('div');
     siddhivinayakEl.innerHTML = `
       <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; opacity: 0; animation: parelSequence 10s forwards;">
-        <div style="background: #3b82f6; color: white; padding: 6px 12px; border-radius: 8px; font-weight: 800; font-size: 13px; border: 2px solid #ffffff; box-shadow: 0 0 15px rgba(59, 130, 246, 0.8); white-space: nowrap; margin-bottom: 6px;">
-          🛕 SHREE SIDDHIVINAYAK TEMPLE
+        <div style="background: rgba(20, 22, 24, 0.55); backdrop-filter: blur(14px) saturate(180%); -webkit-backdrop-filter: blur(14px) saturate(180%); color: #E6F0FF; padding: 5px 11px; border-radius: 999px; font-weight: 600; font-size: 10.5px; letter-spacing: 0.01em; border: 1px solid rgba(185, 210, 255, 0.35); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.12); white-space: nowrap; margin-bottom: 5px;">
+          🛕 Siddhivinayak Temple
         </div>
-        <div style="width: 16px; height: 16px; background: #3b82f6; border: 3px solid white; border-radius: 50%; box-shadow: 0 0 20px rgba(59, 130, 246, 1); animation: pulseMarker 1.5s infinite;"></div>
+        <div style="width: 8px; height: 8px; background: #B9D2FF; border: 2px solid white; border-radius: 50%; box-shadow: 0 0 10px rgba(185, 210, 255, 0.9); animation: pulseMarker 1.5s infinite;"></div>
       </div>
     `;
     const siddhivinayakMarker = new mapboxgl.Marker(siddhivinayakEl)
       .setLngLat([72.83041535413224, 19.01691320905886])
       .addTo(map);
 
-    setTimeout(() => {
+    const markerCleanupTimeout = setTimeout(() => {
       parelMarker.remove();
       elphinstoneMarker.remove();
       siddhivinayakMarker.remove();
@@ -170,9 +179,13 @@ export default function InteractiveMapView({ onClose }: { onClose: () => void })
 
         const gltfLoader = new GLTFLoader()
 
+        // Re-opening the map (Back → Map again) re-mounts this component, so without
+        // caching, the building model would be re-fetched and re-parsed from scratch
+        // every time. Cache the parsed scene once and clone() it on subsequent loads —
+        // cloning a parsed Object3D is far cheaper than re-running GLTF parsing.
         const loadCustomModel = (fileName: string, pos: [number, number, number], scale: number, spinRotation: number, hexColor: number | null) => {
-          gltfLoader.load(fileName, (gltf) => {
-            const model = gltf.scene
+          const placeModel = (sourceScene: THREE.Group) => {
+            const model = sourceScene.clone(true)
             model.traverse((child) => {
               if (child instanceof THREE.Mesh) {
                 if (hexColor !== null) {
@@ -187,7 +200,25 @@ export default function InteractiveMapView({ onClose }: { onClose: () => void })
             model.rotation.x = Math.PI / 2;
             model.rotation.y = spinRotation;
             this.scene.add(model)
-          })
+          }
+
+          if (cachedModelScene) {
+            placeModel(cachedModelScene)
+            return
+          }
+
+          if (!cachedModelPromise) {
+            cachedModelPromise = new Promise((resolve, reject) => {
+              gltfLoader.load(fileName, (gltf) => resolve(gltf.scene), undefined, reject)
+            })
+          }
+
+          cachedModelPromise
+            .then((scene) => {
+              cachedModelScene = scene
+              placeModel(scene)
+            })
+            .catch((err) => console.error('Failed to load building model:', err))
         }
 
         loadCustomModel('/buildings/LNT.glb', [55, 30, 150], 150, 0.8, null)
@@ -253,14 +284,26 @@ export default function InteractiveMapView({ onClose }: { onClose: () => void })
           const targetLngLat = targetData.center;
 
           try {
-            const response = await fetch(
-              `https://api.mapbox.com/directions/v5/mapbox/driving/${LNT_HQ.center[0]},${LNT_HQ.center[1]};${targetLngLat[0]},${targetLngLat[1]}?geometries=geojson&access_token=${mapboxgl.accessToken}`
-            );
-            const data = await response.json();
+            let routeData = directionsCache.get(targetKey);
 
-            if (data.routes && data.routes.length > 0) {
-              const coordinates = data.routes[0].geometry.coordinates;
-              const durationMinutes = Math.round(data.routes[0].duration / 60);
+            if (!routeData) {
+              const response = await fetch(
+                `https://api.mapbox.com/directions/v5/mapbox/driving/${LNT_HQ.center[0]},${LNT_HQ.center[1]};${targetLngLat[0]},${targetLngLat[1]}?geometries=geojson&access_token=${mapboxgl.accessToken}`
+              );
+              const data = await response.json();
+
+              if (data.routes && data.routes.length > 0) {
+                routeData = {
+                  coordinates: data.routes[0].geometry.coordinates,
+                  durationMinutes: Math.round(data.routes[0].duration / 60),
+                };
+                directionsCache.set(targetKey, routeData);
+              }
+            }
+
+            if (routeData) {
+              const coordinates = routeData.coordinates;
+              const durationMinutes = routeData.durationMinutes;
 
               const points3D = coordinates.map((coord: [number, number]) => {
                 const targetMerc = mapboxgl.MercatorCoordinate.fromLngLat(coord, 0);
@@ -279,10 +322,10 @@ export default function InteractiveMapView({ onClose }: { onClose: () => void })
 
               const el = document.createElement('div');
               el.innerHTML = `
-                <div style="background: #111827; color: white; padding: 8px 16px; border-radius: 30px; font-weight: 600; font-size: 14px; box-shadow: 0 8px 20px rgba(0,0,0,0.4); display: flex; flex-direction: column; align-items: center; border: 2px solid #ef4444; white-space: nowrap;">
+                <div style="background: rgba(20, 22, 24, 0.6); backdrop-filter: blur(14px) saturate(180%); -webkit-backdrop-filter: blur(14px) saturate(180%); color: #FFEFA8; padding: 8px 18px; border-radius: 30px; font-weight: 600; font-size: 14px; box-shadow: 0 8px 24px rgba(0,0,0,0.4), inset 0 1px 1px rgba(255,255,255,0.15), 0 0 18px rgba(255,239,168,0.2); display: flex; flex-direction: column; align-items: center; border: 1.5px solid rgba(255, 239, 168, 0.5); white-space: nowrap;">
                   <span>${targetData.name}</span>
-                  <span style="font-size: 11px; color: #ef4444; margin-top: 2px;">ETA: ${durationMinutes} MINS</span>
-                  <div style="width: 12px; height: 12px; background: #ef4444; border-radius: 50%; margin-top: 8px; border: 2px solid white;"></div>
+                  <span style="font-size: 11px; color: #FFEFA8; margin-top: 2px; opacity: 0.85;">ETA: ${durationMinutes} MINS</span>
+                  <div style="width: 12px; height: 12px; background: #FFEFA8; border-radius: 50%; margin-top: 8px; border: 2px solid rgba(255,255,255,0.6); box-shadow: 0 0 10px rgba(255,239,168,0.8);"></div>
                 </div>
               `;
 
@@ -422,6 +465,7 @@ export default function InteractiveMapView({ onClose }: { onClose: () => void })
     })
 
     return () => {
+      clearTimeout(markerCleanupTimeout);
       if (document.head.contains(styleEl)) {
         document.head.removeChild(styleEl);
       }
@@ -530,7 +574,7 @@ export default function InteractiveMapView({ onClose }: { onClose: () => void })
             ...glassContainerStyle,
           }}
         >
-          {Object.entries(LOCATIONS).map(([key, data]) => (
+          {LOCATION_ENTRIES.map(([key, data]) => (
             <button
               key={key}
               onClick={() => handleFlyTo(key)}

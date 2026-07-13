@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { useNavigate } from "react-router-dom"
-import { Volume2, VolumeX } from "lucide-react"
 
 // Assets imports
 import lntLogo from "../assets/logos/lnt-logo.png"
@@ -23,14 +22,15 @@ const HomePage = ({ startScene = 1 }: HomePageProps) => {
     // scene state determines whether we show Scene 1 (centered logo), Scene 2 (framed workspace), or Scene 3 (sunset explore view)
     const [scene, setScene] = useState<1 | 2 | 3>(startScene)
     const [isExploring, setIsExploring] = useState(false)
-    const { muted: audioMuted, toggleSound, playThunder } = useStormAudio()
+    const { playThunder } = useStormAudio()
 
     useEffect(() => {
         if (startScene !== 1) return;
-        // Scene 1 lasts for 1.5 seconds, then transitions
+        // Scene 1 plays a theater-curtain intro (curtain holds, splits open, then the
+        // logo fades in) before transitioning to Scene 2 — see timing notes below.
         const timer = setTimeout(() => {
             setScene(2)
-        }, 1500)
+        }, 3500)
 
         return () => clearTimeout(timer)
     }, [startScene])
@@ -48,7 +48,7 @@ const HomePage = ({ startScene = 1 }: HomePageProps) => {
         setTimeout(() => {
             setScene(3)
             navigate("/home")
-        }, 2400)
+        }, 1200)
     }
 
     return (
@@ -60,8 +60,7 @@ const HomePage = ({ startScene = 1 }: HomePageProps) => {
                 {scene === 1 && (
                     <motion.div
                         className="absolute inset-0 flex items-center justify-center z-50 bg-gradient-to-br from-[#e4eef8] via-[#d4e3f4] to-[#b6cff2] overflow-hidden"
-                        exit={{ opacity: 0 }}
-                        transition={{ duration: 1.0, ease: "easeInOut" }}
+                        exit={{ opacity: 0, transition: { duration: 1.0, ease: "easeInOut" } }}
                     >
                         {/* Top Right Light Blue Glow */}
                         <div
@@ -79,12 +78,38 @@ const HomePage = ({ startScene = 1 }: HomePageProps) => {
                             }}
                         />
 
+                        {/* Logo: fades in after the curtain has fully parted, then zooms forward
+                            toward the viewer and fades out on exit */}
                         <motion.img
                             src={lntLogo}
                             alt="L&T Realty Logo"
                             className="h-20 md:h-28 object-contain z-10"
-                            exit={{ y: "-100vh" }}
-                            transition={{ duration: 1.2, ease: [0.25, 1, 0.3, 1] }}
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            animate={{ opacity: 1, scale: 1, transition: { duration: 1.0, delay: 1.5, ease: [0.25, 1, 0.3, 1] } }}
+                            exit={{ opacity: 0, scale: 4, transition: { duration: 1.0, ease: [0.4, 0, 1, 1] } }}
+                        />
+
+                        {/* Theater curtain: black panels holding over the scene, top half slides up,
+                            bottom half slides down, splitting from the middle to reveal the logo */}
+                        <motion.div
+                            className="absolute top-0 left-0 w-full h-1/2 z-20 pointer-events-none"
+                            style={{
+                                background: 'linear-gradient(to bottom, #1a1f27 0%, #0a0d12 100%)',
+                                boxShadow: '0 8px 30px rgba(0, 0, 0, 0.7)'
+                            }}
+                            initial={{ y: '0%' }}
+                            animate={{ y: '-100%' }}
+                            transition={{ duration: 1.0, delay: 0.5, ease: [0.65, 0, 0.35, 1] }}
+                        />
+                        <motion.div
+                            className="absolute bottom-0 left-0 w-full h-1/2 z-20 pointer-events-none"
+                            style={{
+                                background: 'linear-gradient(to top, #1a1f27 0%, #0a0d12 100%)',
+                                boxShadow: '0 -8px 30px rgba(0, 0, 0, 0.7)'
+                            }}
+                            initial={{ y: '0%' }}
+                            animate={{ y: '100%' }}
+                            transition={{ duration: 1.0, delay: 0.5, ease: [0.65, 0, 0.35, 1] }}
                         />
                     </motion.div>
                 )}
@@ -118,28 +143,12 @@ const HomePage = ({ startScene = 1 }: HomePageProps) => {
                     {/* Occasional lightning strikes in the storm clouds */}
                     <LightningOverlay onStrike={playThunder} />
 
-                    {/* Storm sound toggle (browsers require a user gesture before audio can play) */}
-                    <motion.button
-                        onClick={toggleSound}
-                        aria-label={audioMuted ? "Unmute storm sound" : "Mute storm sound"}
-                        className="absolute z-20 bottom-10 left-10 w-11 h-11 rounded-full bg-[#1a222b]/95 backdrop-blur-md border border-white/10 shadow-xl flex items-center justify-center cursor-pointer"
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: scene === 2 ? 1 : 0, y: scene === 2 ? 0 : 20 }}
-                        transition={{ duration: 1.0, delay: 1.6, ease: [0.25, 1, 0.5, 1] }}
-                    >
-                        {audioMuted ? (
-                            <VolumeX className="w-5 h-5 text-white/70" />
-                        ) : (
-                            <Volume2 className="w-5 h-5 text-white" />
-                        )}
-                    </motion.button>
-
                     {/* Top Left White Logo */}
                     <motion.div
                         className="absolute z-20 top-8 left-10 flex items-center gap-4 select-none pointer-events-none"
                         initial={{ opacity: 0, x: -30 }}
                         animate={{ opacity: scene === 2 ? 1 : 0, x: scene === 2 ? 0 : -30 }}
-                        transition={{ duration: 2.2, delay: 1.6, ease: [0.25, 1, 0.5, 1] }}
+                        transition={{ duration: 2.2, delay: 0.6, ease: [0.25, 1, 0.5, 1] }}
                     >
                         <img src={logo2} alt="Logo" className="w-12 h-12 object-contain" />
                         <div className="flex items-center text-white">
@@ -157,7 +166,7 @@ const HomePage = ({ startScene = 1 }: HomePageProps) => {
                         className="absolute z-10 top-0 right-0 w-[25%] md:w-[15%] select-none pointer-events-none"
                         initial={{ opacity: 0, x: 50 }}
                         animate={{ opacity: scene === 2 ? 0.25 : 0, x: scene === 2 ? 0 : 50 }}
-                        transition={{ duration: 2.5, delay: 1.4, ease: [0.25, 1, 0.5, 1] }}
+                        transition={{ duration: 2.5, delay: 0.85, ease: [0.25, 1, 0.5, 1] }}
                     >
                         <img src={transparentLogo} alt="L&T Outline Logo" className="w-full h-auto object-contain" />
                     </motion.div>
@@ -167,7 +176,7 @@ const HomePage = ({ startScene = 1 }: HomePageProps) => {
                         className="absolute z-20 left-20 top-[28%] -translate-y-1/2 flex flex-col gap-2 select-none pointer-events-none"
                         initial={{ opacity: 0, x: -100 }}
                         animate={{ opacity: scene === 2 ? 1 : 0, x: scene === 2 ? 0 : -100 }}
-                        transition={{ duration: 2.8, delay: 1.0, ease: [0.22, 1, 0.36, 1] }}
+                        transition={{ duration: 2.8, delay: 1.4, ease: [0.22, 1, 0.36, 1] }}
                         style={{ fontFamily: '"Hind Kochi", sans-serif', fontWeight: 300 }}
                     >
                         <h2
@@ -204,14 +213,14 @@ const HomePage = ({ startScene = 1 }: HomePageProps) => {
                         {/* Interactive Explore Button — circle is a sibling (not nested inside the
                             button's overflow-hidden) so it can detach and fly clear across the
                             screen on click, unclipped, before the next scene appears. */}
-                        <div className="relative flex items-center">
+                        <div className="relative flex items-center" style={{ transform: 'translateZ(0)', isolation: 'isolate' }}>
                             <motion.button
                                 type="button"
                                 onClick={handleExploreClick}
                                 disabled={isExploring}
                                 className="relative flex items-center h-[60px] pl-14 pr-5 rounded-full select-none cursor-pointer overflow-hidden will-change-transform"
                                 style={{
-                                    background: 'rgba(255, 255, 255, 0.05)',
+                                    background: 'rgba(255, 255, 255, 0.1)',
                                     backdropFilter: 'blur(10px) saturate(160%)',
                                     WebkitBackdropFilter: 'blur(10px) saturate(160%)',
                                     border: '1.5px solid rgba(255, 255, 255, 0.55)',
@@ -249,7 +258,7 @@ const HomePage = ({ startScene = 1 }: HomePageProps) => {
                                         ? { x: 140, y: '-50%', scale: 1.08, opacity: 0 }
                                         : { x: 0, y: '-50%', scale: 1, opacity: 1 }
                                 }
-                                transition={{ duration: 2.4, ease: [0.45, 0, 0.2, 1] }}
+                                transition={{ duration: 1.2, ease: [0.45, 0, 0.2, 1] }}
                             >
                                 <img src={logo2} alt="" className="w-7 h-7 object-contain relative z-10" />
                             </motion.div>

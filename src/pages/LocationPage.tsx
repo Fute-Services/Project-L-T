@@ -1,13 +1,18 @@
 import { useEffect, useState } from 'react'
 import { Map as MapIcon } from 'lucide-react'
-import locationBackground from '../assets/images/location/location-coastal-sunrise.png'
+import locationBackground from '../assets/images/location/location-site-sunset.png'
+import mobilityBackground from '../assets/images/location/location-city-coastline-day.jpeg'
+import connectivityBackground from '../assets/images/location/location-connectivity.jpeg'
+import infraBackground from '../assets/images/location/location-infra.jpeg'
 import InteractiveMapView from '../components/location/InteractiveMapView'
+import MobilityOverlay from '../components/location/MobilityOverlay'
 import { glassContainerStyle, pillButtonStyle, standaloneGlassButtonStyle } from '../styles/glassOverlay'
 
 const TABS = [
   { key: 'site', label: 'Site Location' },
-  { key: 'neighbourhood', label: 'Neighbourhood' },
-  { key: 'transport', label: 'Transport Infra' },
+  { key: 'neighbourhood', label: 'Mobility' },
+  { key: 'transport', label: 'Connectivity' },
+  { key: 'infra', label: 'Infra' },
 ]
 
 export default function LocationPage() {
@@ -27,13 +32,47 @@ export default function LocationPage() {
     return <InteractiveMapView onClose={() => setIsMapOpen(false)} />
   }
 
+  const isMobilityTab = activeTab === 'neighbourhood'
+
+  const backgroundsByTab: Record<string, string> = {
+    site: locationBackground,
+    neighbourhood: mobilityBackground,
+    transport: connectivityBackground,
+    infra: infraBackground,
+  }
+  const currentBackground = backgroundsByTab[activeTab] ?? locationBackground
+
   return (
-    <div style={{ width: '100vw', height: '100vh', position: 'relative', overflow: 'hidden' }}>
-      <img
-        src={locationBackground}
-        alt="Location aerial view"
-        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-      />
+    <div style={{ width: '100vw', height: '100vh', position: 'relative', overflow: 'hidden', background: '#0a0d12' }}>
+      {isMobilityTab ? (
+        /* The Mobility overlay anchors its markings to the photo, not the viewport:
+           this box reproduces the photo's cover-crop (1376x768) so the overlay's
+           percentage coordinates stay glued to landmarks at every viewport size
+           and aspect ratio. */
+        <div
+          style={{
+            position: 'absolute',
+            left: '50%',
+            top: '50%',
+            transform: 'translate(-50%, -50%)',
+            width: 'max(100vw, 179.17vh)',
+            height: 'max(100vh, 55.82vw)',
+          }}
+        >
+          <img
+            src={currentBackground}
+            alt="Location aerial view"
+            style={{ width: '100%', height: '100%', display: 'block' }}
+          />
+          <MobilityOverlay />
+        </div>
+      ) : (
+        <img
+          src={currentBackground}
+          alt="Location aerial view"
+          style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+        />
+      )}
 
       <div
         style={{
