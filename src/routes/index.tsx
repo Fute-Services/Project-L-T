@@ -3,7 +3,7 @@ import { createBrowserRouter } from "react-router-dom";
 import HomePage from "../pages/HomePage";
 import LocationPage from "../pages/LocationPage";
 import ProjectDetailsPage from "../pages/ProjectDetailsPage";
-import ProjectSpecificationPage from "../pages/ProjectSpecificationPage";
+import ProjectInfoPage from "../pages/ProjectInfoPage";
 import BrochurePage from "../pages/BrochurePage";
 import CirculationPage from "../pages/CirculationPage";
 
@@ -21,8 +21,8 @@ export const router = createBrowserRouter([
     element: <LocationPage />,
   },
   {
-    path: "/project-specification",
-    element: <ProjectSpecificationPage />,
+    path: "/project-info",
+    element: <ProjectInfoPage />,
   },
   {
     path: "/project-details",

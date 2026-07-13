@@ -27,13 +27,17 @@ const HomePage = ({ startScene = 1 }: HomePageProps) => {
 
     useEffect(() => {
         if (startScene !== 1) return;
-        // Scene 1 plays a theater-curtain intro (curtain holds, splits open, then the
-        // logo fades in) before transitioning to Scene 2 — see timing notes below.
+        // Scene 1 lasts for 1.5 seconds, then transitions
         const timer = setTimeout(() => {
             setScene(2)
-        }, 3500)
+        }, 1500)
 
         return () => clearTimeout(timer)
+    }, [startScene])
+
+    useEffect(() => {
+        setScene(startScene)
+        setIsExploring(false)
     }, [startScene])
 
     const handleExploreClick = () => {
@@ -55,48 +59,32 @@ const HomePage = ({ startScene = 1 }: HomePageProps) => {
             <AnimatePresence>
                 {scene === 1 && (
                     <motion.div
-                        className="absolute inset-0 flex items-center justify-center z-50 bg-black overflow-hidden"
-                        exit={{ opacity: 0, transition: { duration: 1.4, ease: "easeIn" } }}
+                        className="absolute inset-0 flex items-center justify-center z-50 bg-gradient-to-br from-[#e4eef8] via-[#d4e3f4] to-[#b6cff2] overflow-hidden"
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 1.0, ease: "easeInOut" }}
                     >
-                        {/* Theater-dim vignette: faint warm glow at center fading to black at the edges */}
+                        {/* Top Right Light Blue Glow */}
                         <div
-                            className="absolute inset-0 pointer-events-none"
+                            className="absolute top-0 right-0 w-[60vw] h-[60vh] max-w-[700px] max-h-[700px] pointer-events-none"
                             style={{
-                                background: 'radial-gradient(circle at 50% 50%, rgba(255, 239, 168, 0.09) 0%, rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 0.7) 100%)'
+                                background: 'radial-gradient(circle at 100% 0%, rgba(165, 203, 255, 0.6) 0%, rgba(165, 203, 255, 0) 70%)'
                             }}
                         />
 
-                        {/* Logo: fades in after the curtain has fully parted, then grows and zooms
-                            forward into the hero page on exit (delay matches curtain-open end) */}
+                        {/* Bottom Left Light Blue Glow */}
+                        <div
+                            className="absolute bottom-0 left-0 w-[60vw] h-[60vh] max-w-[700px] max-h-[700px] pointer-events-none"
+                            style={{
+                                background: 'radial-gradient(circle at 0% 100%, rgba(165, 203, 255, 0.6) 0%, rgba(165, 203, 255, 0) 70%)'
+                            }}
+                        />
+
                         <motion.img
                             src={lntLogo}
                             alt="L&T Realty Logo"
-                            className="h-32 md:h-48 object-contain z-10 filter-inactive-white"
-                            initial={{ opacity: 0, scale: 0.9 }}
-                            animate={{ opacity: 1, scale: 1, transition: { duration: 1.0, delay: 1.5, ease: [0.25, 1, 0.3, 1] } }}
-                            exit={{ opacity: 0, scale: 6, transition: { duration: 1.4, ease: [0.4, 0, 1, 1] } }}
-                        />
-
-                        {/* Theater curtain: top half slides up, bottom half slides down, splitting from the middle */}
-                        <motion.div
-                            className="absolute top-0 left-0 w-full h-1/2 z-20 pointer-events-none"
-                            style={{
-                                background: 'linear-gradient(to bottom, #1a1f27 0%, #0a0d12 100%)',
-                                boxShadow: '0 8px 30px rgba(0, 0, 0, 0.7)'
-                            }}
-                            initial={{ y: '0%' }}
-                            animate={{ y: '-100%' }}
-                            transition={{ duration: 1.0, delay: 0.5, ease: [0.65, 0, 0.35, 1] }}
-                        />
-                        <motion.div
-                            className="absolute bottom-0 left-0 w-full h-1/2 z-20 pointer-events-none"
-                            style={{
-                                background: 'linear-gradient(to top, #1a1f27 0%, #0a0d12 100%)',
-                                boxShadow: '0 -8px 30px rgba(0, 0, 0, 0.7)'
-                            }}
-                            initial={{ y: '0%' }}
-                            animate={{ y: '100%' }}
-                            transition={{ duration: 1.0, delay: 0.5, ease: [0.65, 0, 0.35, 1] }}
+                            className="h-20 md:h-28 object-contain z-10"
+                            exit={{ y: "-100vh" }}
+                            transition={{ duration: 1.2, ease: [0.25, 1, 0.3, 1] }}
                         />
                     </motion.div>
                 )}

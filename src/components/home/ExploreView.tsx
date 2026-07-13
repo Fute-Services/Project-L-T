@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
+import { useNavigate } from "react-router-dom"
 import homeBgDay from "../../assets/images/home/home-background-day.png"
 import homeBgNight from "../../assets/images/home/home-background-night.png"
 import homeLeftTransparent from "../../assets/images/home/home-left-overlay.png"
@@ -14,6 +15,7 @@ interface ExploreViewProps {
 }
 
 const ExploreView = ({ explored }: ExploreViewProps) => {
+    const navigate = useNavigate()
     const [showNavbars, setShowNavbars] = useState(false)
     const [isNight, setIsNight] = useState(true) // Night is default
 
@@ -163,6 +165,31 @@ const ExploreView = ({ explored }: ExploreViewProps) => {
                         {/* Right Navbar Container */}
                         <div className="fixed right-5 lg:right-10 top-[55%] lg:top-1/2 -translate-y-1/2 z-50">
                             <RightNavbar isNight={isNight} setIsNight={setIsNight} />
+                        </div>
+
+                        {/* Bottom Left Logo Link to Scene 1 */}
+                        <div className="fixed left-5 lg:left-16 bottom-16 z-50 w-[38px] lg:w-[60px] flex justify-center">
+                            <motion.button
+                                onClick={() => navigate("/")}
+                                className="w-9 h-9 lg:w-12 lg:h-12 rounded-full flex items-center justify-center bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 shadow-2xl backdrop-blur-md cursor-pointer transition-colors duration-300"
+                                initial={{ opacity: 0, y: 25 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                exit={{ opacity: 0, y: 25 }}
+                                whileHover={{ scale: 1.08 }}
+                                whileTap={{ scale: 0.94 }}
+                                transition={{
+                                    y: { duration: 1.0, delay: 0.4, ease: [0.16, 1, 0.3, 1] },
+                                    opacity: { duration: 0.7, delay: 0.4, ease: "easeOut" },
+                                    scale: { duration: 0.2, ease: "easeOut" }
+                                }}
+                                title="Back to Intro"
+                            >
+                                <img
+                                    src={logo2}
+                                    alt="Back to Intro"
+                                    className="w-5 h-5 lg:w-7 lg:h-7 object-contain opacity-75 hover:opacity-100 transition-opacity"
+                                />
+                            </motion.button>
                         </div>
                     </>
                 )}

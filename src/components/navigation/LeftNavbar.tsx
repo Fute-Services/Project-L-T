@@ -12,7 +12,7 @@ import brochureIcon from '../../assets/icons/brochure-icon.png';
 const navItems = [
   { path: '/home', label: 'Home', icon: homeIcon, isCustom: true, end: true },
   { path: '/location', label: 'Location', icon: MapPin, isCustom: false, end: false },
-  { path: '/project-specification', label: 'Project\nSpecification', icon: amenitiesIcon, isCustom: true, end: false, iconSizeClass: 'w-6 h-6' },
+  { path: '/project-info', label: 'Project\nInfo', icon: amenitiesIcon, isCustom: true, end: false, iconSizeClass: 'w-6 h-6' },
   { path: '/project-details', label: 'Project\nDetails', icon: detailsIcon, isCustom: true, end: false, iconSizeClass: 'w-5 h-5' },
   // { path: '/vr', label: 'VR', icon: vrIcon, isCustom: true, end: false, iconSizeClass: 'w-5 h-5' },
   { path: '/brochure', label: 'Brochure', icon: brochureIcon, isCustom: true, end: false },

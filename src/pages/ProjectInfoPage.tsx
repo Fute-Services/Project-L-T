@@ -8,7 +8,7 @@ import LeftNavbar from "../components/navigation/LeftNavbar";
 import img1 from "../assets/images/project-specification/well-certification-badge.png";
 import img2 from "../assets/images/project-specification/leed-platinum-badge.png";
 
-const ProjectSpecificationPage = () => {
+const ProjectInfoPage = () => {
   const [isZoomed, setIsZoomed] = useState(true);
   const [showOverlays, setShowOverlays] = useState(false);
 
@@ -240,4 +240,4 @@ const ProjectSpecificationPage = () => {
   );
 };
 
-export default ProjectSpecificationPage;
+export default ProjectInfoPage;
