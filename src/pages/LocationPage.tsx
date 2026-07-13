@@ -1,5 +1,8 @@
-import { useState } from 'react'
-import locationBackground from '../assets/images/location/location-background.png'
+import { useEffect, useState } from 'react'
+import { Map as MapIcon } from 'lucide-react'
+import locationBackground from '../assets/images/location/location-coastal-sunrise.png'
+import InteractiveMapView from '../components/location/InteractiveMapView'
+import { glassContainerStyle, pillButtonStyle, standaloneGlassButtonStyle } from '../styles/glassOverlay'
 
 const TABS = [
   { key: 'site', label: 'Site Location' },
@@ -10,6 +13,19 @@ const TABS = [
 export default function LocationPage() {
   const [activeTab, setActiveTab] = useState<string>('site')
   const [hoveredTab, setHoveredTab] = useState<string | null>(null)
+  const [isMapOpen, setIsMapOpen] = useState<boolean>(false)
+  const [isMapHovered, setIsMapHovered] = useState<boolean>(false)
+  const [isBackHovered, setIsBackHovered] = useState<boolean>(false)
+
+  useEffect(() => {
+    // Warm the HTTP cache for the 3D map's building model while the user is
+    // still looking at the static image, so opening the map doesn't stall on it.
+    fetch('/buildings/LNT.glb', { cache: 'force-cache' }).catch(() => {})
+  }, [])
+
+  if (isMapOpen) {
+    return <InteractiveMapView onClose={() => setIsMapOpen(false)} />
+  }
 
   return (
     <div style={{ width: '100vw', height: '100vh', position: 'relative', overflow: 'hidden' }}>
@@ -29,14 +45,8 @@ export default function LocationPage() {
           alignItems: 'center',
           gap: '4px',
           padding: '5px',
-          background: 'rgba(10, 10, 8, 0.55)',
-          backdropFilter: 'blur(20px) saturate(160%)',
-          WebkitBackdropFilter: 'blur(20px) saturate(160%)',
-          border: '1.5px solid rgba(255, 239, 168, 0.25)',
-          borderRadius: '999px',
-          boxShadow:
-            '0 0 0 1px rgba(0, 0, 0, 0.4), 0 0 24px rgba(255, 239, 168, 0.12), inset 0 1px 1px rgba(255, 255, 255, 0.12), 0 12px 32px rgba(0, 0, 0, 0.5)',
           zIndex: 10,
+          ...glassContainerStyle,
         }}
       >
         {TABS.map((tab) => {
@@ -49,43 +59,48 @@ export default function LocationPage() {
               onClick={() => setActiveTab(tab.key)}
               onMouseEnter={() => setHoveredTab(tab.key)}
               onMouseLeave={() => setHoveredTab(null)}
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                textAlign: 'center',
-                height: '38px',
-                padding: '0 20px',
-                background: isActive
-                  ? 'rgba(255, 239, 168, 0.22)'
-                  : isHovered
-                    ? 'rgba(255, 239, 168, 0.08)'
-                    : 'transparent',
-                color: isActive ? '#FFEFA8' : 'rgba(232, 224, 200, 0.65)',
-                border: isActive
-                  ? '1px solid rgba(255, 239, 168, 0.6)'
-                  : '1px solid transparent',
-                borderRadius: '999px',
-                cursor: 'pointer',
-                fontFamily: '"Inter", sans-serif',
-                fontWeight: 600,
-                fontSize: '12.5px',
-                letterSpacing: '0.02em',
-                lineHeight: 1,
-                whiteSpace: 'nowrap',
-                textShadow: isActive ? '0 1px 3px rgba(0, 0, 0, 0.45)' : 'none',
-                boxShadow: isActive
-                  ? 'inset 0 1px 1px rgba(255, 255, 255, 0.4), 0 4px 16px rgba(255, 239, 168, 0.3)'
-                  : 'none',
-                transition: 'background 0.25s ease, box-shadow 0.25s ease, color 0.25s ease, border-color 0.25s ease',
-                outline: 'none',
-              }}
+              style={pillButtonStyle(isActive, isHovered, '11.5px', '32px', '16px')}
             >
               {tab.label}
             </button>
           )
         })}
       </div>
+
+      {/* MAP TOGGLE — bottom-right corner, opens the interactive 3D map */}
+      <button
+        onClick={() => setIsMapOpen(true)}
+        onMouseEnter={() => setIsMapHovered(true)}
+        onMouseLeave={() => setIsMapHovered(false)}
+        aria-label="Open interactive map"
+        style={{
+          position: 'absolute',
+          bottom: '40px',
+          right: '40px',
+          gap: '8px',
+          zIndex: 10,
+          ...standaloneGlassButtonStyle(false, isMapHovered),
+        }}
+      >
+        <MapIcon size={16} strokeWidth={2} />
+        Map
+      </button>
+
+      {/* TOP LEFT — back to previous page */}
+      <button
+        onClick={() => window.history.go(-1)}
+        onMouseEnter={() => setIsBackHovered(true)}
+        onMouseLeave={() => setIsBackHovered(false)}
+        style={{
+          position: 'absolute',
+          top: '30px',
+          left: '30px',
+          zIndex: 10,
+          ...standaloneGlassButtonStyle(false, isBackHovered),
+        }}
+      >
+        Back
+      </button>
     </div>
   )
 }
