@@ -5,18 +5,24 @@ export interface POICardData {
   key: string
   name: string
   subtitle?: string
-  distance: string
+  distance?: string
   image: string
   /** Card position as a percentage of the container, top-left anchored */
   top: string
   left: string
   delay?: number
+  /** Card width; defaults to '108px' */
+  width?: string
+  /** Thumbnail image height; defaults to '62px' */
+  imageHeight?: string
+  /** When true, renders just the rounded photo with no name/subtitle/distance label */
+  imageOnly?: boolean
 }
 
 // Small, premium floating card for a point of interest — white surface, rounded
 // image on top, name + distance below. Matches the reference connectivity-map
 // callout style (Apple Maps-like), not the earlier dark-glass treatment.
-export default function POICard({ name, subtitle, distance, image, top, left, delay = 0 }: Omit<POICardData, 'key'>) {
+export default function POICard({ name, subtitle, distance, image, top, left, delay = 0, width = '108px', imageHeight = '62px', imageOnly = false }: Omit<POICardData, 'key'>) {
   const [isHovered, setIsHovered] = useState(false)
 
   return (
@@ -36,60 +42,64 @@ export default function POICard({ name, subtitle, distance, image, top, left, de
         }}
         transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
         style={{
-          width: '108px',
+          width,
           borderRadius: '14px',
           overflow: 'hidden',
           background: '#ffffff',
           boxShadow: isHovered
-            ? '0 14px 28px rgba(0, 0, 0, 0.28)'
-            : '0 8px 18px rgba(0, 0, 0, 0.22)',
+            ? '0 6px 14px rgba(0, 0, 0, 0.20)'
+            : '0 3px 8px rgba(0, 0, 0, 0.15)',
           cursor: 'default',
         }}
       >
-        <div style={{ width: '100%', height: '62px', overflow: 'hidden' }}>
+        <div style={{ width: '100%', height: imageHeight, overflow: 'hidden' }}>
           <img
             src={image}
             alt={name}
             style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
           />
         </div>
-        <div style={{ padding: '6px 8px 8px' }}>
-          <div
-            style={{
-              color: '#111',
-              fontFamily: '"Inter", sans-serif',
-              fontWeight: 700,
-              fontSize: '10px',
-              lineHeight: 1.25,
-            }}
-          >
-            {name}
-          </div>
-          {subtitle && (
+        {!imageOnly && (
+          <div style={{ padding: '6px 8px 8px' }}>
             <div
               style={{
-                color: '#444',
+                color: '#111',
                 fontFamily: '"Inter", sans-serif',
-                fontWeight: 400,
-                fontSize: '9.5px',
-                lineHeight: 1.2,
+                fontWeight: 700,
+                fontSize: '10px',
+                lineHeight: 1.25,
               }}
             >
-              {subtitle}
+              {name}
             </div>
-          )}
-          <div
-            style={{
-              color: '#111',
-              fontFamily: '"Inter", sans-serif',
-              fontWeight: 700,
-              fontSize: '9.5px',
-              marginTop: '3px',
-            }}
-          >
-            {distance}
+            {subtitle && (
+              <div
+                style={{
+                  color: '#444',
+                  fontFamily: '"Inter", sans-serif',
+                  fontWeight: 400,
+                  fontSize: '9.5px',
+                  lineHeight: 1.2,
+                }}
+              >
+                {subtitle}
+              </div>
+            )}
+            {distance && (
+              <div
+                style={{
+                  color: '#111',
+                  fontFamily: '"Inter", sans-serif',
+                  fontWeight: 700,
+                  fontSize: '9.5px',
+                  marginTop: '3px',
+                }}
+              >
+                {distance}
+              </div>
+            )}
           </div>
-        </div>
+        )}
       </motion.div>
     </motion.div>
   )
