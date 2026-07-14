@@ -19,7 +19,6 @@ export default function LocationPage() {
   const [activeTab, setActiveTab] = useState<string>('site')
   const [hoveredTab, setHoveredTab] = useState<string | null>(null)
   const [isMapOpen, setIsMapOpen] = useState<boolean>(false)
-  const [isMapHovered, setIsMapHovered] = useState<boolean>(false)
   const [isBackHovered, setIsBackHovered] = useState<boolean>(false)
   const [isFullscreenHovered, setIsFullscreenHovered] = useState<boolean>(false)
   const [isExitHovered, setIsExitHovered] = useState<boolean>(false)
@@ -91,7 +90,7 @@ export default function LocationPage() {
             muted
             playsInline
             className="w-full h-full"
-            style={{ objectFit: 'cover' }}
+            style={{ objectFit: 'cover', filter: 'brightness(1.15) contrast(1.1)' }}
           />
 
           <button
@@ -196,24 +195,6 @@ export default function LocationPage() {
         })}
       </div>
 
-      {/* MAP TOGGLE — bottom-right corner, opens the interactive 3D map */}
-      <button
-        onClick={() => setIsMapOpen(true)}
-        onMouseEnter={() => setIsMapHovered(true)}
-        onMouseLeave={() => setIsMapHovered(false)}
-        aria-label="Open interactive map"
-        style={{
-          position: 'absolute',
-          bottom: '40px',
-          right: '40px',
-          gap: '8px',
-          zIndex: 10,
-          ...standaloneGlassButtonStyle(false, isMapHovered),
-        }}
-      >
-        <MapIcon size={16} strokeWidth={2} />
-        Map
-      </button>
 
       {/* TOP LEFT — back to previous page */}
       <button
