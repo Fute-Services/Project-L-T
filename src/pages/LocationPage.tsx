@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
-import { Map as MapIcon, Maximize } from 'lucide-react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { Maximize } from 'lucide-react'
+import { motion } from 'framer-motion'
 import locationBackground from '../assets/images/location/site-location-aerial.png'
 import mobilityBackground from '../assets/images/location/location-city-coastline-day.webp'
 import connectivityBackground from '../assets/images/location/location-connectivity.webp'

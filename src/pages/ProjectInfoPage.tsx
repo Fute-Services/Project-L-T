@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import bgImage from "../assets/images/project-specification/background.webp";
-import buildingImg from "../assets/images/project-specification/building.webp";
+import bgImage from "../assets/images/project-specification/background.png";
+import buildingImg from "../assets/images/project-specification/building.png";
 import transLogo from "../assets/images/project-specification/transparent-logo.png";
 import logo2 from "../assets/logos/logo-outline-white.svg";
 import LeftNavbar from "../components/navigation/LeftNavbar";
@@ -145,7 +145,7 @@ const ProjectInfoPage = () => {
             initial={{ opacity: 0, x: -80 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -80 }}
-            transition={{ duration: 1.5, ease: [0.25, 1, 0.28, 1], delay: 0.6 }}
+            transition={{ duration: 1.5, ease: [0.25, 1, 0.28, 1], delay: 0. }}
             className="fixed left-[75px] lg:left-[576px] top-[30%] lg:top-[15%] -translate-y-1/2 z-40 w-[300px] lg:w-[480px] flex flex-col gap-4 lg:gap-5"
           >
             {specData.map((item) => (

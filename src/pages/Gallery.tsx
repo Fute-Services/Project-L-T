@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-import gallery1 from '../assets/images/gallery/1 day.webp';
+// import gallery1 from '../assets/images/gallery/1 day.webp';
 import gallery2 from '../assets/images/gallery/2 Dusk main.webp';
 import gallery3 from '../assets/images/gallery/3.webp';
 import gallery4 from '../assets/images/gallery/4.webp';
@@ -11,7 +11,7 @@ import gallery7 from '../assets/images/gallery/7.webp';
 import gallery8 from '../assets/images/gallery/8.webp';
 import gallery9 from '../assets/images/gallery/9.webp';
 import gallery10 from '../assets/images/gallery/10.webp';
-import gallery11 from '../assets/images/gallery/11.webp';
+// import gallery11 from '../assets/images/gallery/11.webp';
 
 import logo2 from '../assets/logos/logo-outline-white.svg';
 import LeftNavbar from '../components/navigation/LeftNavbar';
