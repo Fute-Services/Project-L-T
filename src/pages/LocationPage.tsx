@@ -136,7 +136,7 @@ export default function LocationPage() {
             position: 'absolute',
             left: '50%',
             top: '50%',
-            transform: 'translate(-50%, -58%)',
+            transform: 'translate(-50%, -53%)',
             width: 'max(100vw, 143.59vh)',
             height: 'max(100vh, 69.64vw)',
           }}
