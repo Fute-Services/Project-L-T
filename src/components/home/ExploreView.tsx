@@ -1,6 +1,7 @@
-import { useState, useEffect, useRef } from "react"
+import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { useNavigate } from "react-router-dom"
+import homeBgDay from "../../assets/images/home/home-background-day.png"
 import homeBgNight from "../../assets/images/home/home-background-night.png"
 import homeLeftTransparent from "../../assets/images/home/home-left-overlay.png"
 import logo2 from "../../assets/logos/logo-outline-white.svg"
@@ -17,21 +18,6 @@ const ExploreView = ({ explored }: ExploreViewProps) => {
     const navigate = useNavigate()
     const [showNavbars, setShowNavbars] = useState(false)
     const [isNight, setIsNight] = useState(true) // Night is default
-    const [sunTransition, setSunTransition] = useState<null | { toNight: boolean; key: number }>(null)
-    const hasMounted = useRef(false)
-    const transitionCounter = useRef(0)
-
-    // Trigger the sunrise/sunset transition effect only on actual toggles, not on first mount
-    useEffect(() => {
-        if (!hasMounted.current) {
-            hasMounted.current = true
-            return
-        }
-        transitionCounter.current += 1
-        setSunTransition({ toNight: isNight, key: transitionCounter.current })
-        const clearTimer = setTimeout(() => setSunTransition(null), 2400)
-        return () => clearTimeout(clearTimer)
-    }, [isNight])
 
     useEffect(() => {
         if (explored) {
@@ -52,130 +38,36 @@ const ExploreView = ({ explored }: ExploreViewProps) => {
             animate={{ opacity: 1, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } }}
             exit={{ opacity: 0, transition: { duration: 0.35, ease: [0.22, 1, 0.36, 1] } }}
         >
-            {/* Background Image — same photo always; "day" is a color-grade over it, not a swap */}
+            {/* Day Background Image with scale animation */}
             <motion.img
-                src={homeBgNight}
-                alt="Skyline"
+                src={homeBgDay}
+                alt="Day Skyline"
                 className="absolute inset-0 w-full h-full object-fill z-0"
-                initial={{
-                    scale: 1.15,
-                    filter: isNight ? "brightness(1) saturate(1)" : "brightness(1.45) contrast(1.05) saturate(1.15)"
-                }}
+                initial={{ scale: 1.15, opacity: isNight ? 0 : 1 }}
                 animate={{
                     scale: explored ? 1.0 : 1.15,
-                    filter: isNight ? "brightness(1) saturate(1)" : "brightness(1.45) contrast(1.05) saturate(1.15)"
+                    opacity: isNight ? 0 : 1
                 }}
                 transition={{
                     scale: { duration: 3.2, delay: 0.2, ease: [0.25, 1, 0.28, 1] },
-                    filter: { duration: 2.2, ease: "easeInOut" }
+                    opacity: { duration: 0.8, ease: "easeInOut" }
                 }}
             />
 
-            {/* Day-mode sky wash — clear blue sky up top, warm tone only near the horizon */}
-            <motion.div
-                className="absolute inset-0 z-[1] pointer-events-none mix-blend-overlay"
-                style={{
-                    background: "linear-gradient(180deg, rgba(120,180,255,0.65) 0%, rgba(150,195,255,0.35) 35%, rgba(255,210,160,0.15) 70%, rgba(255,170,100,0.1) 100%)"
+            {/* Night Background Image with scale animation */}
+            <motion.img
+                src={homeBgNight}
+                alt="Night Skyline"
+                className="absolute inset-0 w-full h-full object-fill z-0"
+                initial={{ scale: 1.15, opacity: isNight ? 1 : 0 }}
+                animate={{
+                    scale: explored ? 1.0 : 1.15,
+                    opacity: isNight ? 1 : 0
                 }}
-                initial={{ opacity: isNight ? 0 : 1 }}
-                animate={{ opacity: isNight ? 0 : 1 }}
-                transition={{ duration: 2.2, ease: "easeInOut" }}
-            />
-            <motion.div
-                className="absolute inset-0 z-[1] pointer-events-none"
-                style={{
-                    background: "linear-gradient(180deg, rgba(255,225,190,0) 0%, rgba(255,225,190,0) 55%, rgba(255,225,190,1) 100%)",
-                    mixBlendMode: "soft-light"
+                transition={{
+                    scale: { duration: 3.2, delay: 0.2, ease: [0.25, 1, 0.28, 1] },
+                    opacity: { duration: 0.8, ease: "easeInOut" }
                 }}
-                initial={{ opacity: isNight ? 0 : 0.45 }}
-                animate={{ opacity: isNight ? 0 : 0.45 }}
-                transition={{ duration: 2.2, ease: "easeInOut" }}
-            />
-
-            {/* Sunrise / Sunset Transition Effect — plays once per toggle */}
-            <AnimatePresence>
-                {sunTransition && (
-                    <motion.div
-                        key={sunTransition.key}
-                        className="absolute inset-0 z-[5] overflow-hidden pointer-events-none"
-                        exit={{ opacity: 0, transition: { duration: 0.2 } }}
-                    >
-                        {/* Sky color wash — warm gold rising, cool blue setting (top-left) */}
-                        <motion.div
-                            className="absolute inset-0"
-                            style={{
-                                background: sunTransition.toNight
-                                    ? "radial-gradient(circle at 12% 12%, rgba(120,150,255,0.4), transparent 55%)"
-                                    : "radial-gradient(circle at 12% 12%, rgba(255,180,90,0.5), transparent 55%)"
-                            }}
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: [0, 1, 0] }}
-                            transition={{ duration: 2.4, times: [0, 0.45, 1], ease: "easeInOut" }}
-                        />
-
-                        {/* Rising / setting sun glow */}
-                        <motion.div
-                            className="absolute rounded-full"
-                            style={{
-                                left: "10%",
-                                width: 280,
-                                height: 280,
-                                marginLeft: -140,
-                                background: sunTransition.toNight
-                                    ? "radial-gradient(circle, rgba(190,210,255,0.9) 0%, rgba(190,210,255,0) 70%)"
-                                    : "radial-gradient(circle, rgba(255,220,150,0.95) 0%, rgba(255,180,90,0) 70%)",
-                                filter: "blur(4px)"
-                            }}
-                            initial={{
-                                top: sunTransition.toNight ? "10%" : "-16%",
-                                opacity: 0,
-                                scale: 0.6
-                            }}
-                            animate={{
-                                top: sunTransition.toNight
-                                    ? ["10%", "-4%", "-20%"]
-                                    : ["-16%", "6%", "14%"],
-                                opacity: [0, 1, sunTransition.toNight ? 0 : 1],
-                                scale: [0.6, 1.1, sunTransition.toNight ? 0.85 : 1]
-                            }}
-                            transition={{ duration: 2.4, times: [0, 0.5, 1], ease: [0.25, 0.8, 0.35, 1] }}
-                        />
-
-                        {/* Lens flare pulse at the core of the sun */}
-                        <motion.div
-                            className="absolute rounded-full bg-white"
-                            style={{ left: "10%", width: 36, height: 36, marginLeft: -18, filter: "blur(2px)" }}
-                            initial={{
-                                top: sunTransition.toNight ? "10%" : "-16%",
-                                opacity: 0,
-                                scale: 0.5
-                            }}
-                            animate={{
-                                top: sunTransition.toNight ? ["10%", "-4%"] : ["-16%", "6%"],
-                                opacity: [0, 0.9, sunTransition.toNight ? 0 : 0.9],
-                                scale: [0.5, 1.8, 0.9]
-                            }}
-                            transition={{ duration: 1.3, delay: 0.5, ease: "easeOut" }}
-                        />
-                    </motion.div>
-                )}
-            </AnimatePresence>
-
-            {/* Sun stays resting in the day sky once the transition settles */}
-            <motion.div
-                className="absolute rounded-full pointer-events-none z-[2]"
-                style={{
-                    left: "10%",
-                    top: "6%",
-                    width: 240,
-                    height: 240,
-                    marginLeft: -120,
-                    background: "radial-gradient(circle, rgba(255,235,190,0.85) 0%, rgba(255,200,120,0) 70%)",
-                    filter: "blur(4px)"
-                }}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: isNight ? 0 : 1 }}
-                transition={{ duration: 1.2, delay: isNight ? 0 : 1.2, ease: "easeInOut" }}
             />
 
             {/* Top Left Logo (Swaps dynamically between Day/Night themes) */}
