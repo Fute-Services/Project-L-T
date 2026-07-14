@@ -8,7 +8,7 @@ import BrochurePage from "../pages/BrochurePage";
 import CirculationPage from "../pages/CirculationPage";
 import CertificationPage from "../pages/CertificationPage";
 import Gallery from "../pages/Gallery";
-
+import UnitPlanPage from "../pages/UnitPlanPage";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -37,6 +37,10 @@ export const router = createBrowserRouter([
   {
     path: "/circulation",
     element: <CirculationPage />,
+  },
+   {
+    path: "/unitplan",
+    element: <UnitPlanPage />,
   },
   {
     path: "/certification",

@@ -13,7 +13,7 @@ interface FloorAmenity {
     polygon: string; // Coordinate strings for SVG mapping
 }
 export default function UnitPlanPage({ startScene = 2 }: { startScene?: 1 | 2 | 3 }) {
-    const [scene] = useState<1 | 2 | 3>(startScene);
+    const [scene, setScene] = useState<1 | 2 | 3>(startScene);
     const [hoveredAmenity, setHoveredAmenity] = useState<FloorAmenity | null>(null);
     const [selectedAmenity, setSelectedAmenity] = useState<string | null>(); // Defaults active highlight
     const [zoomScale, setZoomScale] = useState<number>(1);
