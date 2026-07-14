@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
-import { Map as MapIcon, Maximize } from 'lucide-react'
-import { motion, AnimatePresence } from 'framer-motion'
-import locationBackground from '../assets/images/location/site-location-aerial.png'
+import { motion } from 'framer-motion'
+import { Maximize } from 'lucide-react'
+import locationBackground from '../assets/images/location/site-location-aerial.webp'
 import mobilityBackground from '../assets/images/location/location-city-coastline-day.webp'
 import connectivityBackground from '../assets/images/location/location-connectivity.webp'
 import infraBackground from '../assets/images/location/location-infra.webp'
@@ -105,7 +105,10 @@ export default function LocationPage() {
   const currentBackground = backgroundsByTab[activeTab] ?? locationBackground
 
   return (
-    <div
+    <motion.div
+      initial={{ opacity: 0, scale: 1.02 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
       style={{
         width: '100vw',
         height: '100vh',
@@ -346,6 +349,6 @@ export default function LocationPage() {
       >
         Back
       </button>
-    </div>
+    </motion.div>
   )
 }
