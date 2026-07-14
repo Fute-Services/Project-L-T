@@ -303,7 +303,7 @@ const navigate=useNavigate();
             ))}
           </defs>
 
-          {floorData.map((floor, index) => {
+          {floorData.map((floor:any, index) => {
             const isActive = hoveredFloor?.id === floor.id || selectedRow === index;
             return (
               <polygon
@@ -567,14 +567,14 @@ const navigate=useNavigate();
               <div
                 ref={tableContainerRef}
                 className="h-full  overflow-y-auto custom-scrollbar">
-                {floorData.map((row: any, index: number) => {
+                {floorData.map((row:any, index: number) => {
                   const active = hoveredFloor?.id === row.id || selectedRow === index;
 
                   return (
                     <div
                       key={row.id || index}
                       onClick={()=>navigate("/unitplan")}
-                      ref={(el) => {
+                      ref={(el:any) => {
                         rowRefs.current[row.id] = el;
                       }}
                       onMouseEnter={() => setHoveredFloor(row)}
@@ -718,4 +718,3 @@ function ArrowPointer() {
     </div>
   );
 }
-
