@@ -27,7 +27,7 @@ const POI_MARKERS = [
   {
     name: "AIRPORT MUMBAI",
     left: "50.5%",
-    top: "20%",
+    top: "21%",
     image: airportImg,
     layout: "image-left",
   },
