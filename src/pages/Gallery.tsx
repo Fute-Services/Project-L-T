@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-// import gallery1 from '../assets/images/gallery/1 day.png';
+import gallery1 from '../assets/images/gallery/1 day.png';
 import gallery2 from '../assets/images/gallery/2 Dusk main.png';
 import gallery3 from '../assets/images/gallery/3.png';
 import gallery4 from '../assets/images/gallery/4.jpeg';
@@ -11,7 +11,7 @@ import gallery7 from '../assets/images/gallery/7.png';
 import gallery8 from '../assets/images/gallery/8.png';
 import gallery9 from '../assets/images/gallery/9.png';
 import gallery10 from '../assets/images/gallery/10.png';
-// import gallery11 from '../assets/images/gallery/11.png';
+import gallery11 from '../assets/images/gallery/11.png';
 
 import logo2 from '../assets/logos/logo-outline-white.svg';
 import LeftNavbar from '../components/navigation/LeftNavbar';
@@ -19,7 +19,7 @@ import RightNavbar from '../components/navigation/RightNavbar';
 
 // Gallery data mapping Vite asset paths
 const GALLERY_DATA = [
-    // gallery1,
+    gallery1,
     gallery2,
     gallery3,
     gallery4,
@@ -29,7 +29,7 @@ const GALLERY_DATA = [
     gallery8,
     gallery9,
     gallery10,
-    // gallery11,
+    gallery11,
 ];
 
 // Framer motion variants for the sliding gallery images
