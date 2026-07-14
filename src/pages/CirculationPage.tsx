@@ -14,7 +14,7 @@ export default function CirculationPage() {
     const markers = [
         { name: "Elphinstone Flyover", left: "35%", top: "75%" },
         { name: "Elphinstone station", left: "70%", top: "80%" },
-        { name: "Left from Senapati bapat road", left: "28%", top: "40%" },
+        { name: "Left from\nSenapati bapat road", left: "30%", top: "43%" },
     ];
 
     return (
@@ -65,7 +65,8 @@ export default function CirculationPage() {
                                 <div className="flex flex-col items-center transition-all duration-300 ease-out transform group-hover:-translate-y-2 group-hover:scale-105 origin-bottom">
                                     {/* The Pill Label */}
                                     <div
-                                        className="px-3.5 py-1 lg:py-1.5 rounded-full border border-white/10 font-sans text-[8.5px] lg:text-[10px] font-bold tracking-wider uppercase transition-all duration-300 whitespace-nowrap shadow-lg bg-black/75 text-white group-hover:bg-[#ffcb6e] group-hover:text-[#0c1523] group-hover:border-[#ffcb6e]"
+                                        className={`px-3.5 py-1 lg:py-1.5 border border-white/10 font-sans text-[8.5px] lg:text-[10px] font-bold tracking-wider uppercase transition-all duration-300 text-center whitespace-pre-line shadow-lg bg-black/75 text-white group-hover:bg-[#ffcb6e] group-hover:text-[#0c1523] group-hover:border-[#ffcb6e] ${marker.name.includes('\n') ? 'rounded-[12px] py-1.5' : 'rounded-full'
+                                            }`}
                                     >
                                         {marker.name}
                                     </div>

@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { useNavigate } from "react-router-dom"
-import homeBgDay from "../../assets/images/home/home-background-day.webp"
-import homeBgNight from "../../assets/images/home/home-background-night.webp"
-import homeLeftTransparent from "../../assets/images/home/home-left-overlay.png"
+const homeBgDay = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/0f3a05a6-ecfd-4b4a-3f4b-8b4c5adf7800/public";
+const homeBgNight = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/04e18dee-1e31-4b0e-bf58-9073b8630e00/public";
+const homeLeftTransparent = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/20799cb8-8664-4229-4c2f-c04185864500/public";
 import logo2 from "../../assets/logos/logo-outline-white.svg"
 import logoBlack from "../../assets/logos/logo-black.png"
 import LeftNavbar from "../navigation/LeftNavbar"
@@ -21,10 +21,10 @@ const ExploreView = ({ explored }: ExploreViewProps) => {
 
     useEffect(() => {
         if (explored) {
-            // Delay showing the navbars until after the headline's fade-in/hold/fade-out sequence completes (0.9s)
+            // Delay showing the navbars until after the headline's fade-in/hold/fade-out sequence completes (2.8s)
             const timer = setTimeout(() => {
                 setShowNavbars(true)
-            }, 900)
+            }, 2800)
             return () => clearTimeout(timer)
         } else {
             setShowNavbars(false)
@@ -103,7 +103,7 @@ const ExploreView = ({ explored }: ExploreViewProps) => {
                 className="absolute z-20 left-20 top-[40%] -translate-y-1/2 flex flex-col gap-2 select-none pointer-events-none"
                 initial={{ opacity: 0, x: "40px" }}
                 animate={{ opacity: [0, 1, 1, 0], x: ["40px", "0px", "0px", "-200px"] }}
-                transition={{ duration: 0.9, times: [0, 0.3, 0.6, 1], ease: [0.25, 1, 0.28, 1] }}
+                transition={{ duration: 2.8, times: [0, 0.15, 0.75, 1], ease: [0.25, 1, 0.28, 1] }}
                 style={{ fontFamily: '"Hind Kochi", sans-serif', fontWeight: 300 }}
             >
                 <h2
@@ -125,7 +125,7 @@ const ExploreView = ({ explored }: ExploreViewProps) => {
                 className="absolute z-10 right-0 top-0 h-full w-[50%] md:w-[40%] select-none pointer-events-none flex items-center justify-end"
                 initial={{ opacity: 0, x: "40px" }}
                 animate={{ opacity: [0, 0.35, 0.35, 0], x: ["40px", "0px", "0px", "200px"] }}
-                transition={{ duration: 0.9, times: [0, 0.3, 0.6, 1], ease: [0.25, 1, 0.28, 1] }}
+                transition={{ duration: 2.8, times: [0, 0.15, 0.75, 1], ease: [0.25, 1, 0.28, 1] }}
             >
                 <img src={homeLeftTransparent} alt="L&T Transparent Curve" className="h-full object-contain" />
             </motion.div>

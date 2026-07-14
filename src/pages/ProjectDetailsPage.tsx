@@ -1,7 +1,7 @@
 import { useCallback, useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 
-import homeBgNight from "../assets/images/home/home-background-night.png";
+const homeBgNight = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/c4bab2ee-9d5c-481f-9fd3-bad2e4198c00/public";
 import logo2 from "../assets/logos/logo-outline-white.svg";
 import LeftNavbar from "../components/navigation/LeftNavbar";
 import { useNavigate } from "react-router-dom";

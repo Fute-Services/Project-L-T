@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import certificateBg from "../assets/images/certificate/certificate-bg.webp";
-import wellIcon from "../assets/images/certificate/well-icon.png";
-import leadIcon from "../assets/images/certificate/lead-icon.png";
+const certificateBg = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/03d6e841-c126-4feb-306a-2be0866ee600/public";
+const wellIcon = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/448c4daa-c063-4a12-b792-cc5d52bb4700/public";
+const leadIcon = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/3caab12e-6b86-4e61-4a40-856aa65efe00/public";
 import logo2 from "../assets/logos/logo-outline-white.svg";
 import LeftNavbar from "../components/navigation/LeftNavbar";
 import RightNavbar from "../components/navigation/RightNavbar";

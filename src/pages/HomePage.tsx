@@ -4,11 +4,11 @@ import { useNavigate } from "react-router-dom"
 
 // Assets imports
 import lntLogo from "../assets/logos/lnt-logo.png"
-import scene2Bg from "../assets/images/shared/scene-city-skyline.webp"
-import transparentLogo from "../assets/images/home/scene-outline-logo.png"
+const scene2Bg = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/29dc6f0d-4780-4bf9-7d57-4d94c1186400/public";
+const transparentLogo = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/40740c95-dc4c-4dfa-86a6-f976c26cee00/public";
 import logo2 from "../assets/logos/logo-outline-white.svg"
-import homeBgDay from "../assets/images/home/home-background-day.webp"
-import homeBgNight from "../assets/images/home/home-background-night.webp"
+const homeBgDay = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/0f3a05a6-ecfd-4b4a-3f4b-8b4c5adf7800/public";
+const homeBgNight = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/04e18dee-1e31-4b0e-bf58-9073b8630e00/public";
 import ExploreView from "../components/home/ExploreView"
 import RainOverlay from "../components/home/RainOverlay"
 import LightningOverlay from "../components/home/LightningOverlay"

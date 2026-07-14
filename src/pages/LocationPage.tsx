@@ -1,20 +1,20 @@
 import { useEffect, useRef, useState } from 'react'
 import { Maximize } from 'lucide-react'
 import { motion } from 'framer-motion'
-import locationBackground from '../assets/images/location/site-location-aerial.png'
-import mobilityBackground from '../assets/images/location/location-city-coastline-day.webp'
-import connectivityBackground from '../assets/images/location/location-connectivity.webp'
-import infraBackground from '../assets/images/location/location-infra.webp'
-import group43Logo from '../assets/images/location/group-43-logo.png'
+const locationBackground = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/17b41634-6695-49c9-61a2-8f9d29916400/public";
+const mobilityBackground = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/dc10b7fa-face-4664-3e64-7730e1fc3900/public";
+const connectivityBackground = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/516be76d-66fe-41a5-6c08-756b0e7f9b00/public";
+const infraBackground = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/31d45c69-edae-427e-5929-694fb0757000/public";
+const group43Logo = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/abe60fc8-d31a-482c-276d-74b273dcc700/public";
 import InteractiveMapView from '../components/location/InteractiveMapView'
 import { glassContainerStyle, pillButtonStyle, standaloneGlassButtonStyle } from '../styles/glassOverlay'
 import logoOutline from '../assets/logos/logo-outline-white.svg'
 
 // Import POI landmark preview images
-import airportImg from '../assets/images/location/Airport mumbai.png'
-import gatewayImg from '../assets/images/location/Gateway of india.png'
-import hangingImg from '../assets/images/location/Hanging garden.png'
-import worliImg from '../assets/images/location/Worli sea link.png'
+const airportImg = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/21c606ba-bc5f-4e6b-54bb-b8d8d2f10200/public";
+const gatewayImg = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/2d6d2e06-6b90-439b-da0d-bd4f76af4900/public";
+const hangingImg = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/6b184508-4f2a-4108-4321-63508007d100/public";
+const worliImg = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/c2d60073-f025-4b37-04ef-59dfbce98500/public";
 
 const POI_MARKERS = [
   {

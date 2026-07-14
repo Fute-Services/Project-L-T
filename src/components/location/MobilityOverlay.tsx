@@ -1,14 +1,14 @@
 import POICard from './POICard'
 import PinMarker from './PinMarker'
 
-import coastalRoad from '../../assets/images/location/poi/coastal-road.png'
-import siddhivinayak from '../../assets/images/location/poi/siddhivinayak.png'
-import parelStation from '../../assets/images/location/poi/parel-station.png'
-import prabhadevi from '../../assets/images/location/poi/prabhadevi.png'
-import easternExpress from '../../assets/images/location/poi/eastern-express.png'
-import bkc from '../../assets/images/location/poi/bkc.png'
-import mumbaiAirport from '../../assets/images/location/poi/mumbai-airport.png'
-import easternFreeway from '../../assets/images/location/poi/eastern-freeway.png'
+const coastalRoad = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/a6792b67-4b93-4046-1fee-c918066a4700/public";
+const siddhivinayak = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/9b6ef112-9a95-4ae7-5e55-a2ae79933500/public";
+const parelStation = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/d2f3aa23-6db5-47a2-0b29-cf3b2f27c800/public";
+const prabhadevi = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/571306ab-ec2a-47e9-a2d8-504ffc25b500/public";
+const easternExpress = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/54d43054-693c-4c0a-741d-e75f6c501200/public";
+const bkc = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/2cdb2175-8953-443d-6876-7c4c7f84ca00/public";
+const mumbaiAirport = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/0efad307-c97e-4c86-c3aa-6408c00be100/public";
+const easternFreeway = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/757d249f-ec48-4a25-2af8-5c8111e95e00/public";
 
 interface POI {
   key: string
