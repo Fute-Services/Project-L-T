@@ -1,5 +1,5 @@
 import { useCallback, useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 
 import homeBgNight from "../assets/images/home/home-background-night.png";
 import logo2 from "../assets/logos/logo-outline-white.svg";
@@ -8,16 +8,18 @@ import { useNavigate } from "react-router-dom";
 interface FloorData {
   id: number;
   name: string;
-  area: string;
   title: string;
   sqft: string;
   gradientId: string;
-  points: string; // Tọa độ SVG polygon (ví dụ: "x1,y1 x2,y2 x3,y3...")
-  tooltipX: number; // Vị trí X của tooltip (tính theo %)
-  tooltipY: number; // Vị trí Y của tooltip (tính theo %)
+  polygon: string; // SVG polygon coordinates (e.g. "x1,y1 x2,y2 x3,y3...")
+  tooltipX: number; // Tooltip X position (as %)
+  tooltipY: number; // Tooltip Y position (as %)
+  temp: string;
+  tableName: string;
+  Tooltip_name: string;
 }
 const ProjectDetailsPage = () => {
-  const [selectedRow, setSelectedRow] = useState<number | null>(); // Highlight 6th row by default
+  const [selectedRow] = useState<number | null>(); // Highlight 6th row by default
   const [hoveredFloor, setHoveredFloor] = useState<FloorData | null>(null);
   // const [selectedRow, setSelectedRow] = useState<number | null>(5);
 
@@ -220,7 +222,7 @@ const ProjectDetailsPage = () => {
   ]
 
   const tableContainerRef = useRef<HTMLDivElement>(null);
-  const rowRefs = useRef<Record<string, HTMLTableRowElement | null>>({});
+  const rowRefs = useRef<Record<string, HTMLDivElement | null>>({});
 
   useEffect(() => {
     if (!hoveredFloor) return;
