@@ -1,5 +1,5 @@
 import { useCallback, useState, useEffect, useRef } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 import homeBgNight from "../assets/images/home/home-background-night.png";
 import logo2 from "../assets/logos/logo-outline-white.svg";
@@ -8,17 +8,18 @@ import { useNavigate } from "react-router-dom";
 interface FloorData {
   id: number;
   name: string;
-  temp: string;
-  tableName: string;
+  area: string;
   title: string;
   sqft: string;
   gradientId: string;
-  polygon: string;
-  tooltipX: number;
-  tooltipY: number;
+  points: string; // Tọa độ SVG polygon (ví dụ: "x1,y1 x2,y2 x3,y3...")
+  tooltipX: number; // Vị trí X của tooltip (tính theo %)
+  tooltipY: number; // Vị trí Y của tooltip (tính theo %)
 }
 const ProjectDetailsPage = () => {
-  const [selectedRow] = useState<number | null>(null); // Highlight 6th row by default
+  const [selectedRow,
+    //  setSelectedRow
+    ] = useState<number | null>(); // Highlight 6th row by default
   const [hoveredFloor, setHoveredFloor] = useState<FloorData | null>(null);
   // const [selectedRow, setSelectedRow] = useState<number | null>(5);
 
@@ -221,7 +222,8 @@ const ProjectDetailsPage = () => {
   ]
 
   const tableContainerRef = useRef<HTMLDivElement>(null);
-  const rowRefs = useRef<Record<string, HTMLDivElement | null>>({});
+  // const rowRefs = useRef<Record<string, HTMLTableRowElement | null>>({});
+  const rowRefs = useRef<Record<number, HTMLTableRowElement | null>>({});
 
   useEffect(() => {
     if (!hoveredFloor) return;
@@ -302,7 +304,7 @@ const navigate=useNavigate();
             ))}
           </defs>
 
-          {floorData.map((floor, index) => {
+          {floorData.map((floor:any, index) => {
             const isActive = hoveredFloor?.id === floor.id || selectedRow === index;
             return (
               <polygon
@@ -566,14 +568,14 @@ const navigate=useNavigate();
               <div
                 ref={tableContainerRef}
                 className="h-full  overflow-y-auto custom-scrollbar">
-                {floorData.map((row: any, index: number) => {
+                {floorData.map((row:any, index: number) => {
                   const active = hoveredFloor?.id === row.id || selectedRow === index;
 
                   return (
                     <div
                       key={row.id || index}
                       onClick={()=>navigate("/unitplan")}
-                      ref={(el) => {
+                      ref={(el:any) => {
                         rowRefs.current[row.id] = el;
                       }}
                       onMouseEnter={() => setHoveredFloor(row)}
@@ -717,4 +719,3 @@ function ArrowPointer() {
     </div>
   );
 }
-
