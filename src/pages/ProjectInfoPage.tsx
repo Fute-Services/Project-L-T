@@ -134,7 +134,7 @@ const ProjectInfoPage = () => {
       <img
         src={buildingImg}
         alt="Skyscraper Building"
-        className="absolute left-[20%] bottom-[14%] h-[70%] lg:h-[84%] w-[220px] lg:w-[285px] z-[75] pointer-events-none transition-opacity duration-1000 ease-out"
+        className="absolute left-[15%] bottom-10 h-[70%] lg:h-[92%] w-[220px] lg:w-[260px] z-[45] pointer-events-none transition-opacity duration-1000 ease-out"
         style={{ opacity: showOverlays ? 1 : 0 }}
       />
 
@@ -145,8 +145,8 @@ const ProjectInfoPage = () => {
             initial={{ opacity: 0, x: -80 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -80 }}
-            transition={{ duration: 1.5, ease: [0.25, 1, 0.28, 1], delay: 0.6 }}
-            className="fixed left-[75px] lg:left-[576px] top-[30%] lg:top-[15%] -translate-y-1/2 z-40 w-[300px] lg:w-[480px] flex flex-col gap-4 lg:gap-5"
+            transition={{ duration: 1.5, ease: [0.25, 1, 0.28, 1], delay: 0.3 }}
+            className="fixed left-[75px] lg:left-[485px] top-[30%] lg:top-[15%] -translate-y-1/2 z-40 w-[300px] lg:w-[480px] flex flex-col gap-4 lg:gap-5"
           >
             {specData.map((item) => (
               <div

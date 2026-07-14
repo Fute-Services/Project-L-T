@@ -4,9 +4,11 @@ import { useNavigate } from "react-router-dom"
 
 // Assets imports
 import lntLogo from "../assets/logos/lnt-logo.png"
-import scene2Bg from "../assets/images/shared/scene-city-skyline.png"
+import scene2Bg from "../assets/images/shared/scene-city-skyline.webp"
 import transparentLogo from "../assets/images/home/scene-outline-logo.png"
 import logo2 from "../assets/logos/logo-outline-white.svg"
+import homeBgDay from "../assets/images/home/home-background-day.webp"
+import homeBgNight from "../assets/images/home/home-background-night.webp"
 import ExploreView from "../components/home/ExploreView"
 import RainOverlay from "../components/home/RainOverlay"
 import LightningOverlay from "../components/home/LightningOverlay"
@@ -39,6 +41,15 @@ const HomePage = ({ startScene = 1 }: HomePageProps) => {
         setScene(startScene)
         setIsExploring(false)
     }, [startScene])
+
+    useEffect(() => {
+        // Warm the browser cache for the Explore view's backgrounds as soon as Scene 2
+        // is on screen, so they're already loaded by the time the user clicks Explore.
+        const preloadDay = new Image()
+        preloadDay.src = homeBgDay
+        const preloadNight = new Image()
+        preloadNight.src = homeBgNight
+    }, [])
 
     const handleExploreClick = () => {
         if (isExploring) return
@@ -128,7 +139,7 @@ const HomePage = ({ startScene = 1 }: HomePageProps) => {
                     <motion.img
                         src={scene2Bg}
                         alt="City Skyline"
-                        className="absolute inset-0 w-full h-full object-cover"
+                        className="absolute inset-0 w-full h-full object-cover object-top"
                         initial={{ scale: 1.5, x: "20%" }}
                         animate={{
                             scale: scene >= 2 ? 1.0 : 1.5,

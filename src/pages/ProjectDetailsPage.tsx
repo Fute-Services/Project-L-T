@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import homeBgNight from "../assets/images/home/home-background-night.png";
+import homeBgNight from "../assets/images/home/home-background-night.webp";
 import logo2 from "../assets/logos/logo-outline-white.svg";
 import LeftNavbar from "../components/navigation/LeftNavbar";
 
