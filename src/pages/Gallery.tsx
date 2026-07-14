@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-import gallery1 from '../assets/images/gallery/1 day.webp';
 import gallery2 from '../assets/images/gallery/2 Dusk main.webp';
 import gallery3 from '../assets/images/gallery/3.webp';
 import gallery4 from '../assets/images/gallery/4.webp';
@@ -19,7 +18,6 @@ import RightNavbar from '../components/navigation/RightNavbar';
 
 // Gallery data mapping Vite asset paths
 const GALLERY_DATA = [
-    gallery1,
     gallery2,
     gallery3,
     gallery4,
