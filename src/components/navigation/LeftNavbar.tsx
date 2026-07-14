@@ -136,7 +136,7 @@ const LeftNavbar = () => {
     <motion.div
       initial={{ x: -220, opacity: 0, rotate: -12, scale: 0.9 }}
       animate={{ x: 0, opacity: 1, rotate: 0, scale: 1 }}
-      transition={{ type: "spring", stiffness: 260, damping: 24, mass: 0.6 }}
+      transition={{ type: "spring", stiffness: 420, damping: 32, mass: 0.5 }}
       style={{ transformOrigin: 'top center' }}
       className="flex flex-col items-center w-[38px] lg:w-[60px] gap-2"
     >

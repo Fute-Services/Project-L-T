@@ -21,10 +21,10 @@ const ExploreView = ({ explored }: ExploreViewProps) => {
 
     useEffect(() => {
         if (explored) {
-            // Delay showing the navbars until after the headline's fade-in/hold/fade-out sequence completes (1.6s)
+            // Delay showing the navbars until after the headline's fade-in/hold/fade-out sequence completes (0.9s)
             const timer = setTimeout(() => {
                 setShowNavbars(true)
-            }, 1600)
+            }, 900)
             return () => clearTimeout(timer)
         } else {
             setShowNavbars(false)
@@ -103,7 +103,7 @@ const ExploreView = ({ explored }: ExploreViewProps) => {
                 className="absolute z-20 left-20 top-[40%] -translate-y-1/2 flex flex-col gap-2 select-none pointer-events-none"
                 initial={{ opacity: 0, x: "40px" }}
                 animate={{ opacity: [0, 1, 1, 0], x: ["40px", "0px", "0px", "-200px"] }}
-                transition={{ duration: 1.6, times: [0, 0.25, 0.55, 1], ease: [0.25, 1, 0.28, 1] }}
+                transition={{ duration: 0.9, times: [0, 0.3, 0.6, 1], ease: [0.25, 1, 0.28, 1] }}
                 style={{ fontFamily: '"Hind Kochi", sans-serif', fontWeight: 300 }}
             >
                 <h2
@@ -125,7 +125,7 @@ const ExploreView = ({ explored }: ExploreViewProps) => {
                 className="absolute z-10 right-0 top-0 h-full w-[50%] md:w-[40%] select-none pointer-events-none flex items-center justify-end"
                 initial={{ opacity: 0, x: "40px" }}
                 animate={{ opacity: [0, 0.35, 0.35, 0], x: ["40px", "0px", "0px", "200px"] }}
-                transition={{ duration: 1.6, times: [0, 0.25, 0.55, 1], ease: [0.25, 1, 0.28, 1] }}
+                transition={{ duration: 0.9, times: [0, 0.3, 0.6, 1], ease: [0.25, 1, 0.28, 1] }}
             >
                 <img src={homeLeftTransparent} alt="L&T Transparent Curve" className="h-full object-contain" />
             </motion.div>
@@ -172,8 +172,8 @@ const ExploreView = ({ explored }: ExploreViewProps) => {
                                 whileHover={{ scale: 1.08 }}
                                 whileTap={{ scale: 0.94 }}
                                 transition={{
-                                    y: { duration: 1.0, delay: 0.4, ease: [0.16, 1, 0.3, 1] },
-                                    opacity: { duration: 0.7, delay: 0.4, ease: "easeOut" },
+                                    y: { duration: 0.45, ease: [0.16, 1, 0.3, 1] },
+                                    opacity: { duration: 0.35, ease: "easeOut" },
                                     scale: { duration: 0.2, ease: "easeOut" }
                                 }}
                                 title="Back to Intro"
