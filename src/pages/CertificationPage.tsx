@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import certificateBg from "../assets/images/certificate/certificate-bg.png";
+import certificateBg from "../assets/images/certificate/certificate-bg.webp";
 import wellIcon from "../assets/images/certificate/well-icon.png";
 import leadIcon from "../assets/images/certificate/lead-icon.png";
 import logo2 from "../assets/logos/logo-outline-white.svg";
