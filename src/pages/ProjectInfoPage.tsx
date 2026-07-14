@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import bgImage from "../assets/images/project-specification/background.png";
-import buildingImg from "../assets/images/project-specification/building.png";
+import bgImage from "../assets/images/project-specification/background.webp";
+import buildingImg from "../assets/images/project-specification/building.webp";
 import transLogo from "../assets/images/project-specification/transparent-logo.png";
 import logo2 from "../assets/logos/logo-outline-white.svg";
 import LeftNavbar from "../components/navigation/LeftNavbar";
