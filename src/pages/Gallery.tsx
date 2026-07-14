@@ -19,7 +19,7 @@ import RightNavbar from '../components/navigation/RightNavbar';
 
 // Gallery data mapping Vite asset paths
 const GALLERY_DATA = [
-    gallery1,
+    // gallery1,
     gallery2,
     gallery3,
     gallery4,
@@ -29,7 +29,7 @@ const GALLERY_DATA = [
     gallery8,
     gallery9,
     gallery10,
-    gallery11,
+    // gallery11,
 ];
 
 // Framer motion variants for the sliding gallery images

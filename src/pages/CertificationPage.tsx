@@ -37,13 +37,8 @@ const CertificationPage = () => {
         />
       </div>
 
-      {/* 2. Black Overlay (Fades out when zoom transition happens) */}
-      <motion.div
-        className="absolute inset-0 bg-black/20 z-[5] pointer-events-none"
-        initial={{ opacity: 1 }}
-        animate={{ opacity: isZoomed ? 0 : 1 }}
-        transition={{ duration: 4.5, ease: [0.25, 1, 0.3, 1] }}
-      />
+      {/* 2. Black Overlay (Stays permanently) */}
+      <div className="absolute inset-0 bg-black/20 z-[5] pointer-events-none" />
 
       {/* 3. Top Left Logo */}
       <div className="absolute z-20 top-8 left-10 flex items-center gap-4 select-none pointer-events-none">
@@ -87,14 +82,14 @@ const CertificationPage = () => {
             animate={{
               opacity: 1,
               scale: 1.0,
-              x: isZoomed ? "22vw" : "0px"
+              x: isZoomed ? "8vw" : "0px"
             }}
             transition={{
               duration: 4.0,
               ease: [0.25, 1, 0.3, 1],
               opacity: { duration: 1.0 }
             }}
-            className="absolute w-[110px] h-[110px] md:w-[160px] md:h-[160px] lg:w-[260px] lg:h-[260px] pointer-events-auto select-none rounded-full overflow-hidden flex items-center justify-center"
+            className="absolute w-[110px] h-[110px] md:w-[160px] md:h-[160px] lg:w-[200px] lg:h-[200px] pointer-events-auto select-none rounded-full overflow-hidden flex items-center justify-center"
             style={{
               // boxShadow: "0 20px 50px rgba(0, 0, 0, 0.4)",
             }}
@@ -112,14 +107,14 @@ const CertificationPage = () => {
             animate={{
               opacity: 1,
               scale: 1.0,
-              x: isZoomed ? "-22vw" : "0px"
+              x: isZoomed ? "-8vw" : "0px"
             }}
             transition={{
               duration: 4.0,
               ease: [0.25, 1, 0.3, 1],
               opacity: { duration: 1.0 }
             }}
-            className="absolute w-[110px] h-[110px] md:w-[160px] md:h-[160px] lg:w-[240px] lg:h-[240px] pointer-events-auto select-none rounded-full overflow-hidden flex items-center justify-center"
+            className="absolute w-[110px] h-[110px] md:w-[160px] md:h-[160px] lg:w-[180px] lg:h-[180px] pointer-events-auto select-none rounded-full overflow-hidden flex items-center justify-center"
             style={{
               // boxShadow: "0 20px 50px rgba(0, 0, 0, 0.4)",
             }}
