@@ -128,7 +128,7 @@ const HomePage = ({ startScene = 1 }: HomePageProps) => {
                     <motion.img
                         src={scene2Bg}
                         alt="City Skyline"
-                        className="absolute inset-0 w-full h-full object-cover"
+                        className="absolute inset-0 w-full h-full object-cover object-top"
                         initial={{ scale: 1.5, x: "20%" }}
                         animate={{
                             scale: scene >= 2 ? 1.0 : 1.5,
