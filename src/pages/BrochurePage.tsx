@@ -13,7 +13,7 @@ import { useEffect, useRef, useState } from "react";
 import { PageFlip } from "page-flip";
 import LeftNavbar from "../components/navigation/LeftNavbar";
 // import backIcon from "../assets/back butten.png";
-import pdfFile from "../assets/documents/L&T Lower Parel_PPT General_Lowres.pdf";
+import pdfFile from "../assets/documents/lnt-lower-parel-brochure.pdf";
 import bgImage from "../assets/images/shared/scene-city-skyline.png";
 
 // Declare pdfjsLib and PageFlip module to satisfy TypeScript
@@ -82,6 +82,12 @@ const PageRenderer = ({
                     canvas.style.width = "100%";
                     canvas.style.height = "100%";
 
+                    // PDF pages can have transparent regions where they intend a white
+                    // background; without this the dark page-item behind the canvas
+                    // shows through as black instead.
+                    context.fillStyle = "#FFFFFF";
+                    context.fillRect(0, 0, canvas.width, canvas.height);
+
                     context.scale(dpr, dpr);
 
                     if (page.half === 'right') {
@@ -92,6 +98,9 @@ const PageRenderer = ({
                     canvas.height = viewport.height * dpr;
                     canvas.style.width = "100%";
                     canvas.style.height = "100%";
+
+                    context.fillStyle = "#FFFFFF";
+                    context.fillRect(0, 0, canvas.width, canvas.height);
 
                     context.scale(dpr, dpr);
                 }
@@ -755,7 +764,7 @@ export default function BrochurePage() {
                             {/* Download Button */}
                             <a
                                 href={pdfFile}
-                                download="Hiranandani_Sands_Brochure.pdf"
+                                download="LT_Lower_Parel_Brochure.pdf"
                                 className="px-4 py-1.5 rounded-full bg-[#4785FF] hover:bg-[#B9D2FF] text-white hover:text-slate-950 font-bold text-[10px] tracking-wider uppercase flex items-center gap-1.5 transition-all duration-300 shadow-md shadow-[#4785FF]/20 cursor-pointer pointer-events-auto"
                             >
                                 <Download size={13} />
@@ -790,7 +799,7 @@ export default function BrochurePage() {
                                 <p className="text-red-400 font-sans text-sm mb-4">{error}</p>
                                 <a
                                     href={pdfFile}
-                                    download="Hiranandani_Sands_Brochure.pdf"
+                                    download="LT_Lower_Parel_Brochure.pdf"
                                     className="px-6 py-2 rounded-full bg-[#4785FF] text-white hover:bg-[#B9D2FF] hover:text-slate-950 font-bold text-xs tracking-wider uppercase transition-all duration-300 shadow-md"
                                 >
                                     Download to View

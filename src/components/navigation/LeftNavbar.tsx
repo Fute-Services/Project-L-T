@@ -134,15 +134,21 @@ const LeftNavbar = () => {
 
   return (
     <motion.div
-      initial={{ x: -100, opacity: 0 }}
-      animate={{ x: 0, opacity: 1 }}
-      transition={{ type: "tween", ease: [0.25, 1, 0.5, 1], duration: 1.2, delay: 0.2 }}
+      initial={{ x: -220, opacity: 0, rotate: -12, scale: 0.9 }}
+      animate={{ x: 0, opacity: 1, rotate: 0, scale: 1 }}
+      transition={{ type: "spring", stiffness: 90, damping: 15, mass: 0.9, delay: 0.2 }}
+      style={{ transformOrigin: 'top center' }}
       className="flex flex-col items-center w-[38px] lg:w-[60px] gap-2"
     >
       <nav
-        className="bg-[#2a2d1e]/50 backdrop-blur-xl font-sans border border-white/10
-            py-2 px-1 rounded-[80px] shadow-2xl w-full 
-            flex flex-col gap-2 items-center mb-2"
+        className="font-sans py-2 px-1 rounded-[80px] w-full flex flex-col gap-2 items-center mb-2"
+        style={{
+          background: 'rgba(20, 22, 18, 0.45)',
+          backdropFilter: 'blur(20px) saturate(180%)',
+          WebkitBackdropFilter: 'blur(20px) saturate(180%)',
+          border: '1px solid rgba(255, 255, 255, 0.14)',
+          boxShadow: '0 8px 32px rgba(0, 0, 0, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.12), 0 0 20px rgba(255, 255, 255, 0.06)',
+        }}
       >
         {mainNavItems.map((item) => (
           <NavbarLink
@@ -168,7 +174,7 @@ const LeftNavbar = () => {
         end={brochureItem.end}
         heightClass="h-[50px] lg:h-[80px]"
         iconWrapperClass="w-[24px] h-[28px] lg:w-[40px] lg:h-[48px]"
-        inactiveBgClass="bg-[#2a2d1e]/50 border-white/10 shadow-2xl backdrop-blur-xl"
+        inactiveBgClass="bg-[rgba(20,22,18,0.45)] border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.35),inset_0_1px_1px_rgba(255,255,255,0.12),0_0_20px_rgba(255,255,255,0.06)] backdrop-blur-xl backdrop-saturate-150"
         disableFilter={false}
         hasGradientText={true}
         iconSizeClass="w-[11px] h-[15px] lg:w-[17px] lg:h-[23px]"

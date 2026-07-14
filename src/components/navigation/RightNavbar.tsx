@@ -66,19 +66,20 @@ const RightNavbar = ({ isNight, setIsNight }: RightNavbarProps) => {
     <>
       <div className="fixed right-5 lg:right-8 top-[55%] lg:top-1/2 font-sans -translate-y-1/2 z-50 flex flex-col items-center w-[38px] lg:w-[60px]">
         <motion.div
-          initial={{ x: 100, opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
-          transition={{ type: "tween", ease: [0.25, 1, 0.5, 1], duration: 1.2, delay: 0.2 }}
+          initial={{ x: 220, opacity: 0, rotate: 12, scale: 0.9 }}
+          animate={{ x: 0, opacity: 1, rotate: 0, scale: 1 }}
+          transition={{ type: "spring", stiffness: 90, damping: 15, mass: 0.9, delay: 0.2 }}
+          style={{ transformOrigin: 'top center' }}
           className="flex flex-col items-center w-full"
         >
           <nav
             className="font-sans z-50 flex flex-col items-center rounded-[80px] w-full py-2 px-1 gap-2"
             style={{
-              background: 'rgba(42, 46, 34, 0.5)',
-              backdropFilter: 'blur(18px)',
-              WebkitBackdropFilter: 'blur(18px)',
-              border: '1px solid rgba(255, 255, 255, 0.1)',
-              boxShadow: '0 8px 32px rgba(0, 0, 0, 0)',
+              background: 'rgba(20, 22, 18, 0.45)',
+              backdropFilter: 'blur(20px) saturate(180%)',
+              WebkitBackdropFilter: 'blur(20px) saturate(180%)',
+              border: '1px solid rgba(255, 255, 255, 0.14)',
+              boxShadow: '0 8px 32px rgba(0, 0, 0, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.12), 0 0 20px rgba(255, 255, 255, 0.06)',
             }}
           >
             {/* ── Nav Links ── */}

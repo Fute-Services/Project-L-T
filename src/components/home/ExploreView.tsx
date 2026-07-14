@@ -21,10 +21,10 @@ const ExploreView = ({ explored }: ExploreViewProps) => {
 
     useEffect(() => {
         if (explored) {
-            // Delay showing the navbars until after the slide-out animations complete (1.0s start delay + 1.8s fade duration = 2.8s)
+            // Delay showing the navbars until after the headline's fade-in/hold/fade-out sequence completes (3.2s)
             const timer = setTimeout(() => {
                 setShowNavbars(true)
-            }, 2800)
+            }, 3200)
             return () => clearTimeout(timer)
         } else {
             setShowNavbars(false)
@@ -49,7 +49,7 @@ const ExploreView = ({ explored }: ExploreViewProps) => {
                     opacity: isNight ? 0 : 1
                 }}
                 transition={{
-                    scale: { duration: 2.5, delay: 1.0, ease: [0.25, 1, 0.28, 1] },
+                    scale: { duration: 3.2, delay: 0.2, ease: [0.25, 1, 0.28, 1] },
                     opacity: { duration: 0.8, ease: "easeInOut" }
                 }}
             />
@@ -65,7 +65,7 @@ const ExploreView = ({ explored }: ExploreViewProps) => {
                     opacity: isNight ? 1 : 0
                 }}
                 transition={{
-                    scale: { duration: 2.5, delay: 1.0, ease: [0.25, 1, 0.28, 1] },
+                    scale: { duration: 3.2, delay: 0.2, ease: [0.25, 1, 0.28, 1] },
                     opacity: { duration: 0.8, ease: "easeInOut" }
                 }}
             />
@@ -98,15 +98,12 @@ const ExploreView = ({ explored }: ExploreViewProps) => {
                 </div>
             </div>
 
-            {/* Left Side "SOAR THE SKYLINE" Text */}
+            {/* Left Side "SOAR THE SKYLINE" Text — fades in, holds, then slides out as the navbars arrive */}
             <motion.div
                 className="absolute z-20 left-20 top-[40%] -translate-y-1/2 flex flex-col gap-2 select-none pointer-events-none"
-                initial={{ opacity: 1, x: 0 }}
-                animate={{ opacity: 0, x: "-200px" }}
-                transition={{
-                    opacity: { duration: 1.8, delay: 1.0, ease: "easeInOut" },
-                    x: { duration: 2.0, delay: 1.0, ease: [0.25, 1, 0.28, 1] }
-                }}
+                initial={{ opacity: 0, x: "40px" }}
+                animate={{ opacity: [0, 1, 1, 0], x: ["40px", "0px", "0px", "-200px"] }}
+                transition={{ duration: 3.2, times: [0, 0.25, 0.55, 1], ease: [0.25, 1, 0.28, 1] }}
                 style={{ fontFamily: '"Hind Kochi", sans-serif', fontWeight: 300 }}
             >
                 <h2
@@ -123,15 +120,12 @@ const ExploreView = ({ explored }: ExploreViewProps) => {
                 </h2>
             </motion.div>
 
-            {/* Right Side Transparent Outline Curve */}
+            {/* Right Side Transparent Outline Curve — mirrors the headline's fade-in/hold/fade-out */}
             <motion.div
                 className="absolute z-10 right-0 top-0 h-full w-[50%] md:w-[40%] select-none pointer-events-none flex items-center justify-end"
-                initial={{ opacity: 0.35, x: 0 }}
-                animate={{ opacity: 0, x: "200px" }}
-                transition={{
-                    opacity: { duration: 1.8, delay: 1.0, ease: "easeInOut" },
-                    x: { duration: 2.0, delay: 1.0, ease: [0.25, 1, 0.28, 1] }
-                }}
+                initial={{ opacity: 0, x: "40px" }}
+                animate={{ opacity: [0, 0.35, 0.35, 0], x: ["40px", "0px", "0px", "200px"] }}
+                transition={{ duration: 3.2, times: [0, 0.25, 0.55, 1], ease: [0.25, 1, 0.28, 1] }}
             >
                 <img src={homeLeftTransparent} alt="L&T Transparent Curve" className="h-full object-contain" />
             </motion.div>
