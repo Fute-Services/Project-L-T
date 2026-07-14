@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { Map as MapIcon, Maximize } from 'lucide-react'
+import { Maximize } from 'lucide-react'
 import locationBackground from '../assets/images/location/site-location-aerial.png'
 import mobilityBackground from '../assets/images/location/location-city-coastline-day.jpeg'
 import connectivityBackground from '../assets/images/location/location-connectivity.jpeg'
