@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion"
 import { useNavigate } from "react-router-dom"
 
 // Assets imports
-import lntLogo from "../assets/logos/lnt-logo.png"
+import lntLogo from "../assets/logos/lnt-logo-full.png"
 const scene2Bg = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/29dc6f0d-4780-4bf9-7d57-4d94c1186400/public";
 const transparentLogo = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/40740c95-dc4c-4dfa-86a6-f976c26cee00/public";
 import logo2 from "../assets/logos/logo-outline-white.svg"
@@ -93,8 +93,8 @@ const HomePage = ({ startScene = 1 }: HomePageProps) => {
                             toward the viewer and fades out on exit */}
                         <motion.img
                             src={lntLogo}
-                            alt="L&T Realty Logo"
-                            className="h-20 md:h-28 object-contain z-10"
+                            alt="L&T Realty Innovation Campus Logo"
+                            className="w-[80vw] max-w-md md:max-w-lg object-contain z-10"
                             initial={{ opacity: 0, scale: 0.9 }}
                             animate={{ opacity: 1, scale: 1, transition: { duration: 1.0, delay: 1.5, ease: [0.25, 1, 0.3, 1] } }}
                             exit={{ opacity: 0, scale: 4, transition: { duration: 1.0, ease: [0.4, 0, 1, 1] } }}
