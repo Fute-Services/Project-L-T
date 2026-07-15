@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-const bgImage = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/c7d2991f-61c1-4a20-b3bf-f610aafdb200/public";
-const buildingImg = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/433abac7-c724-41a1-326c-42b3434dfc00/public";
-const transLogo = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/baddc139-7694-40c9-b009-7d1f880dba00/public";
+import bgImage from "../assets/images/project-specification/background.png";
+import buildingImg from "../assets/images/project-specification/building.png";
+import transLogo from "../assets/images/project-specification/transparent-logo.png";
 import logo2 from "../assets/logos/logo-outline-white.svg";
 import LeftNavbar from "../components/navigation/LeftNavbar";
 
