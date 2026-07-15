@@ -69,7 +69,6 @@ export default function LocationPage() {
   const [activeTab, setActiveTab] = useState<string>('site')
   const [hoveredTab, setHoveredTab] = useState<string | null>(null)
   const [isMapOpen, setIsMapOpen] = useState<boolean>(false)
-  const [isBackHovered, setIsBackHovered] = useState<boolean>(false)
   const [isFullscreenHovered, setIsFullscreenHovered] = useState<boolean>(false)
   const [isExitHovered, setIsExitHovered] = useState<boolean>(false)
   const [isFullscreen, setIsFullscreen] = useState<boolean>(false)
