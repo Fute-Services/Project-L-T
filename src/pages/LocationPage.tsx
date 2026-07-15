@@ -100,10 +100,10 @@ export default function LocationPage() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowIntro(false)
-    }, 2000)
+    }, 3500)
     const loadTimer = setTimeout(() => {
       setIsInitialLoadDone(true)
-    }, 6000)
+    }, 9500)
     return () => {
       clearTimeout(timer)
       clearTimeout(loadTimer)
@@ -217,7 +217,7 @@ export default function LocationPage() {
           transition={
             isInitialLoadDone
               ? { duration: 0.3, delay: 0, ease: "easeInOut" }
-              : { duration: 1.5, delay: showIntro ? 0 : 1.5, ease: "easeInOut" }
+              : { duration: 1.5, delay: showIntro ? 0 : 2.5, ease: "easeInOut" }
           }
           style={{
             position: 'absolute',
@@ -248,7 +248,7 @@ export default function LocationPage() {
                       transition={
                         isInitialLoadDone
                           ? { duration: 0.3, delay: 0, ease: "easeOut" }
-                          : { duration: 1.5, delay: showIntro ? 0 : (index * 0.35 + 3.5), ease: [0.16, 1, 0.3, 1] }
+                          : { duration: 1.5, delay: showIntro ? 0 : (index * 0.35 + 4.0), ease: [0.16, 1, 0.3, 1] }
                       }
                       className="absolute pointer-events-auto flex flex-col items-center group cursor-pointer"
                       style={{
@@ -288,7 +288,7 @@ export default function LocationPage() {
                     transition={
                       isInitialLoadDone
                         ? { duration: 0.3, delay: 0, ease: "easeOut" }
-                        : { duration: 1.5, delay: showIntro ? 0 : (index * 0.35 + 3.5), ease: [0.16, 1, 0.3, 1] }
+                        : { duration: 1.5, delay: showIntro ? 0 : (index * 0.35 + 4.0), ease: [0.16, 1, 0.3, 1] }
                     }
                     className="absolute flex flex-col items-center pointer-events-auto group cursor-pointer pb-2"
                     style={{
@@ -348,7 +348,7 @@ export default function LocationPage() {
       <motion.div
         initial={{ opacity: 0, y: 20, x: '-50%' }}
         animate={!showIntro ? { opacity: 1, y: 0, x: '-50%' } : { opacity: 0, y: 20, x: '-50%' }}
-        transition={{ duration: 0.8, delay: showIntro ? 0 : 2.2 }}
+        transition={{ duration: 0.8, delay: showIntro ? 0 : 3.5 }}
         style={{
           position: 'absolute',
           bottom: '40px',
@@ -391,13 +391,20 @@ export default function LocationPage() {
               initial={{ y: "-50vh", opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               exit={{ y: "-50vh", opacity: 0 }}
-              transition={{ duration: 2, ease: [0.25, 1, 0.5, 1] }}
+              transition={{
+                duration: 2,
+                ease: [0.25, 1, 0.5, 1],
+                exit: {
+                  duration: 3.5,
+                  ease: [0.25, 1, 0.5, 1]
+                }
+              }}
               className="flex flex-col items-center justify-center text-center z-40 px-4"
             >
-              <h1 className="text-white text-3xl md:text-5xl lg:text-[54px] xl:text-[64px] font-light tracking-[0.12em] drop-shadow-2xl leading-none uppercase font-sans font-100">
+              <h1 className="text-white text-xl md:text-3xl lg:text-[38px] xl:text-[56px] font-light tracking-[0.12em] drop-shadow-2xl leading-none uppercase font-sans font-100">
                 Lower Parel, Mumbai
               </h1>
-              <p className="text-white/80 text-xs md:text-sm lg:text-lg mt-3 md:mt-4 font-medium tracking-[0.05em] drop-shadow-lg font-sans">
+              <p className="text-white/80 text-xl md:text-3xl lg:text-[38px] xl:text-[30px] mt-4 md:mt-5 font-normal tracking-[0.05em] drop-shadow-lg font-sans">
                 The epicenter of India’s financial capital.
               </p>
             </motion.div>
@@ -412,7 +419,7 @@ export default function LocationPage() {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 1.0, delay: 2.2, ease: "easeOut" }}
+            transition={{ duration: 1.0, delay: 3.5, ease: "easeOut" }}
             className="absolute z-20 top-8 left-10 flex items-center gap-4 select-none pointer-events-none"
           >
             {videoSrc ? (
@@ -452,7 +459,7 @@ export default function LocationPage() {
             <motion.div
               initial={{ opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 1, delay: 2.2, ease: "easeOut" }}
+              transition={{ duration: 1, delay: 3.5, ease: "easeOut" }}
             >
               <LeftNavbar />
             </motion.div>
@@ -467,7 +474,7 @@ export default function LocationPage() {
             <motion.div
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 1, delay: 2.2, ease: "easeOut" }}
+              transition={{ duration: 1, delay: 3.5, ease: "easeOut" }}
             >
               <RightNavbar isNight={isNight} setIsNight={setIsNight} />
             </motion.div>
