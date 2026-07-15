@@ -343,20 +343,7 @@ export default function LocationPage() {
         </motion.div>
       )}
 
-      {videoSrc ? (
-        <img
-          src={group43Logo}
-          alt=""
-          style={{
-            position: 'absolute',
-            top: '30px',
-            right: '40px',
-            height: '56px',
-            width: 'auto',
-            zIndex: 10,
-          }}
-        />
-      ) : null}
+
 
       <motion.div
         initial={{ opacity: 0, y: 20, x: '-50%' }}
@@ -428,18 +415,32 @@ export default function LocationPage() {
             transition={{ duration: 1.0, delay: 2.2, ease: "easeOut" }}
             className="absolute z-20 top-8 left-10 flex items-center gap-4 select-none pointer-events-none"
           >
-            <div className="relative w-12 h-12">
+            {videoSrc ? (
               <img
-                src={logoOutline}
-                alt="L&T Logo"
-                className="absolute inset-0 w-full h-full object-contain"
+                src={group43Logo}
+                alt="Logo"
+                style={{
+                  height: '56px',
+                  width: 'auto',
+                  objectFit: 'contain'
+                }}
               />
-            </div>
-            <div className="flex items-center text-white">
-              <h1 className="font-mahameru text-sm font-semibold tracking-wide italic leading-none">
-                L&T Realty
-              </h1>
-            </div>
+            ) : (
+              <>
+                <div className="relative w-12 h-12">
+                  <img
+                    src={logoOutline}
+                    alt="L&T Logo"
+                    className="absolute inset-0 w-full h-full object-contain"
+                  />
+                </div>
+                <div className="flex items-center text-white">
+                  <h1 className="font-mahameru text-sm font-semibold tracking-wide italic leading-none">
+                    L&T Realty
+                  </h1>
+                </div>
+              </>
+            )}
           </motion.div>
         )}
       </AnimatePresence>
