@@ -207,7 +207,7 @@ const Gallery = () => {
                 animate={{ filter: showIntro ? "blur(24px)" : "blur(0px)" }}
                 transition={{ duration: 1.5, delay: showIntro ? 0 : 1.5, ease: "easeInOut" }}
             >
-                <AnimatePresence initial={true} custom={direction} mode="wait">
+                <AnimatePresence initial={false} custom={direction} mode="wait">
                     <motion.div
                         key={currentIndex}
                         custom={direction}
