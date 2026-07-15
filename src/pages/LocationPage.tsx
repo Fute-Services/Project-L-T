@@ -13,6 +13,7 @@ import LeftNavbar from '../components/navigation/LeftNavbar'
 import RightNavbar from '../components/navigation/RightNavbar'
 
 // Import POI landmark preview images
+import atalSetuImg from '../assets/images/location/atal setu.png';
 const airportImg = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/21c606ba-bc5f-4e6b-54bb-b8d8d2f10200/public";
 const gatewayImg = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/2d6d2e06-6b90-439b-da0d-bd4f76af4900/public";
 const hangingImg = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/6b184508-4f2a-4108-4321-63508007d100/public";
@@ -21,6 +22,7 @@ const worliImg = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/c2d60073-f025
 const POI_MARKERS = [
   {
     name: "WORLI SEA LINK",
+    distance: "3 KM",
     left: "35%",
     top: "38%",
     image: worliImg,
@@ -28,6 +30,7 @@ const POI_MARKERS = [
   },
   {
     name: "AIRPORT MUMBAI",
+    distance: "13 KM",
     left: "50.5%",
     top: "21%",
     image: airportImg,
@@ -42,6 +45,7 @@ const POI_MARKERS = [
   },
   {
     name: "HANGING GARDEN",
+    distance: "7.9 KM",
     left: "32.5%",
     top: "55.5%",
     image: hangingImg,
@@ -50,11 +54,21 @@ const POI_MARKERS = [
   },
   {
     name: "GATEWAY OF INDIA",
+    distance: "16.2 KM",
     left: "45.5%",
     top: "68.5%",
     image: gatewayImg,
     layout: "image-top",
     bgColor: "#9BB6E3",
+  },
+  {
+    name: "ATAL SETU",
+    distance: "36.5 KM",
+    left: "80%",
+    top: "28%",
+    image: atalSetuImg,
+    layout: "image-right",
+    // bgColor: "#9BB6E3",
   },
 ];
 
@@ -73,7 +87,8 @@ export default function LocationPage() {
   const [isExitHovered, setIsExitHovered] = useState<boolean>(false)
   const [isFullscreen, setIsFullscreen] = useState<boolean>(false)
   const [isNight, setIsNight] = useState<boolean>(true)
-  const [animationPhase, setAnimationPhase] = useState<'initial' | 'moving' | 'final'>('initial')
+  const [showIntro, setShowIntro] = useState<boolean>(true)
+  const [isInitialLoadDone, setIsInitialLoadDone] = useState<boolean>(false)
   const videoCardRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -83,20 +98,15 @@ export default function LocationPage() {
   }, [])
 
   useEffect(() => {
-    // Start text animation timeline:
-    // Move from center after 1.5s
-    const moveTimer = setTimeout(() => {
-      setAnimationPhase('moving')
-    }, 1200)
-
-    // Complete transition and show markers/overlays after 3.5s (1.5s + 2.0s transition)
-    const finalTimer = setTimeout(() => {
-      setAnimationPhase('final')
-    }, 2800)
-
+    const timer = setTimeout(() => {
+      setShowIntro(false)
+    }, 2000)
+    const loadTimer = setTimeout(() => {
+      setIsInitialLoadDone(true)
+    }, 6000)
     return () => {
-      clearTimeout(moveTimer)
-      clearTimeout(finalTimer)
+      clearTimeout(timer)
+      clearTimeout(loadTimer)
     }
   }, [])
 
@@ -202,7 +212,13 @@ export default function LocationPage() {
       ) : (
         // Fixed-aspect box reproducing the photo's cover-crop (3075x2141) so the
         // POI markers stay glued to landmarks at every viewport size.
-        <div
+        <motion.div
+          animate={{ filter: showIntro ? "blur(24px)" : "blur(0px)" }}
+          transition={
+            isInitialLoadDone
+              ? { duration: 0.3, delay: 0, ease: "easeInOut" }
+              : { duration: 1.5, delay: showIntro ? 0 : 1.5, ease: "easeInOut" }
+          }
           style={{
             position: 'absolute',
             left: '50%',
@@ -228,8 +244,12 @@ export default function LocationPage() {
                     <motion.div
                       key={poi.name}
                       initial={{ opacity: 0, scale: 0.8 }}
-                      animate={animationPhase === 'final' ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
-                      transition={{ duration: 1.0, delay: index * 0.15 }}
+                      animate={!showIntro ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
+                      transition={
+                        isInitialLoadDone
+                          ? { duration: 0.3, delay: 0, ease: "easeOut" }
+                          : { duration: 1.5, delay: showIntro ? 0 : (index * 0.35 + 3.5), ease: [0.16, 1, 0.3, 1] }
+                      }
                       className="absolute pointer-events-auto flex flex-col items-center group cursor-pointer"
                       style={{
                         left: poi.left,
@@ -263,9 +283,13 @@ export default function LocationPage() {
                   <motion.div
                     key={poi.name}
                     initial={{ opacity: 0, scale: 0.8 }}
-                    animate={animationPhase === 'final' ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
+                    animate={!showIntro ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
                     exit={{ opacity: 0, scale: 0.8 }}
-                    transition={{ duration: 1.0, delay: index * 0.15 }}
+                    transition={
+                      isInitialLoadDone
+                        ? { duration: 0.3, delay: 0, ease: "easeOut" }
+                        : { duration: 1.5, delay: showIntro ? 0 : (index * 0.35 + 3.5), ease: [0.16, 1, 0.3, 1] }
+                    }
                     className="absolute flex flex-col items-center pointer-events-auto group cursor-pointer pb-2"
                     style={{
                       left: poi.left,
@@ -285,13 +309,25 @@ export default function LocationPage() {
 
                       {/* The Name (no pill background, styled with text shadow) */}
                       <span
-                        className="text-[8.5px] lg:text-[10px] font-extrabold text-white tracking-widest uppercase mt-1.5 transition-all duration-300 group-hover:text-[#ffcb6e] whitespace-nowrap"
+                        className="text-[8.5px] lg:text-[10px] font-extrabold text-white tracking-widest uppercase mt-1.5 transition-all duration-300 group-hover:text-[#ffcb6e] whitespace-nowrap block text-center"
                         style={{
                           textShadow: "0 2px 4px rgba(0, 0, 0, 0.95), 0 0 10px rgba(0, 0, 0, 0.6)"
                         }}
                       >
                         {poi.name}
                       </span>
+
+                      {/* Distance (Optional second line) */}
+                      {poi.distance && (
+                        <span
+                          className="text-[8.5px] lg:text-[10px] font-sans font-bold text-white tracking-widest uppercase mt-0.5 transition-all duration-300 whitespace-nowrap block text-center"
+                          style={{
+                            textShadow: "0 2px 4px rgba(0, 0, 0, 0.95), 0 0 10px rgba(0, 0, 0, 0.6)"
+                          }}
+                        >
+                          {poi.distance}
+                        </span>
+                      )}
                     </div>
 
                     {/* Pulsing Dot */}
@@ -304,7 +340,7 @@ export default function LocationPage() {
               })}
             </div>
           )}
-        </div>
+        </motion.div>
       )}
 
       {videoSrc ? (
@@ -324,8 +360,8 @@ export default function LocationPage() {
 
       <motion.div
         initial={{ opacity: 0, y: 20, x: '-50%' }}
-        animate={animationPhase === 'final' ? { opacity: 1, y: 0, x: '-50%' } : { opacity: 0, y: 20, x: '-50%' }}
-        transition={{ duration: 0.8 }}
+        animate={!showIntro ? { opacity: 1, y: 0, x: '-50%' } : { opacity: 0, y: 20, x: '-50%' }}
+        transition={{ duration: 0.8, delay: showIntro ? 0 : 2.2 }}
         style={{
           position: 'absolute',
           bottom: '40px',
@@ -345,7 +381,10 @@ export default function LocationPage() {
           return (
             <button
               key={tab.key}
-              onClick={() => setActiveTab(tab.key)}
+              onClick={() => {
+                setActiveTab(tab.key)
+                setIsInitialLoadDone(true)
+              }}
               onMouseEnter={() => setHoveredTab(tab.key)}
               onMouseLeave={() => setHoveredTab(null)}
               style={pillButtonStyle(isActive, isHovered, '11.5px', '32px', '16px')}
@@ -357,60 +396,36 @@ export default function LocationPage() {
       </motion.div>
 
 
-      {/* Page Title: Intro Center to Top-Center exit */}
-      <motion.div
-        initial={{
-          x: "-50%",
-          y: "-50%",
-          left: "50%",
-          top: "50%",
-          scale: 1.15,
-          opacity: 1
-        }}
-        animate={
-          animationPhase === 'initial'
-            ? {
-              x: "-50%",
-              y: "-50%",
-              left: "50%",
-              top: "50%",
-              scale: 1.15,
-              opacity: 1
-            }
-            : {
-              x: "-50%",
-              y: "-50%",
-              left: "50%",
-              top: "-20%",
-              scale: 1.05,
-              opacity: 0
-            }
-        }
-        transition={{ duration: 2.0, ease: [0.22, 1, 0.36, 1] }}
-        className="absolute z-30 flex flex-col pointer-events-none items-center text-center"
-      >
-        <span
-          className="font-sans text-white font-bold tracking-wide leading-tight text-center text-[22px] lg:text-[32px]"
-          style={{ textShadow: "0 2px 8px rgba(0, 0, 0, 0.9), 0 0 15px rgba(0, 0, 0, 0.5)" }}
-        >
-          Lower Parel, Mumbai
-        </span>
-        <span
-          className="font-sans text-white/90 font-medium tracking-wide mt-1.5 text-center text-[11px] lg:text-[15px]"
-          style={{ textShadow: "0 1px 4px rgba(0, 0, 0, 0.9), 0 0 10px rgba(0, 0, 0, 0.4)" }}
-        >
-          The epicenter of India’s financial capital.
-        </span>
-      </motion.div>
+      {/* Intro Animation Overlay */}
+      <AnimatePresence>
+        {showIntro && (
+          <div className="absolute inset-0 z-30 pointer-events-none flex items-center justify-center">
+            <motion.div
+              initial={{ y: "-50vh", opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: "-50vh", opacity: 0 }}
+              transition={{ duration: 2, ease: [0.25, 1, 0.5, 1] }}
+              className="flex flex-col items-center justify-center text-center z-40 px-4"
+            >
+              <h1 className="text-white text-3xl md:text-5xl lg:text-[54px] xl:text-[64px] font-light tracking-[0.12em] drop-shadow-2xl leading-none uppercase font-sans font-100">
+                Lower Parel, Mumbai
+              </h1>
+              <p className="text-white/80 text-xs md:text-sm lg:text-lg mt-3 md:mt-4 font-medium tracking-[0.05em] drop-shadow-lg font-sans">
+                The epicenter of India’s financial capital.
+              </p>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
 
       {/* Top Left Logo */}
       <AnimatePresence>
-        {animationPhase === 'final' && (
+        {!showIntro && (
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 1.0, ease: "easeOut" }}
+            transition={{ duration: 1.0, delay: 2.2, ease: "easeOut" }}
             className="absolute z-20 top-8 left-10 flex items-center gap-4 select-none pointer-events-none"
           >
             <div className="relative w-12 h-12">
@@ -431,18 +446,30 @@ export default function LocationPage() {
 
       {/* Left Navbar Container */}
       <AnimatePresence>
-        {animationPhase === 'final' && (
+        {!showIntro && (
           <div className="fixed left-5 lg:left-16 top-[55%] lg:top-1/2 -translate-y-1/2 z-50">
-            <LeftNavbar />
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 1, delay: 2.2, ease: "easeOut" }}
+            >
+              <LeftNavbar />
+            </motion.div>
           </div>
         )}
       </AnimatePresence>
 
       {/* Right Navbar Container */}
       <AnimatePresence>
-        {animationPhase === 'final' && (
+        {!showIntro && (
           <div className="fixed right-5 lg:right-10 top-[55%] lg:top-1/2 -translate-y-1/2 z-50">
-            <RightNavbar isNight={isNight} setIsNight={setIsNight} />
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 1, delay: 2.2, ease: "easeOut" }}
+            >
+              <RightNavbar isNight={isNight} setIsNight={setIsNight} />
+            </motion.div>
           </div>
         )}
       </AnimatePresence>

@@ -10,7 +10,7 @@ import nightIcon from '../../assets/icons/night-icon.png'
 const navItems = [
   { path: '/circulation', label: 'Circulation', icon: circulationIcon },
   { path: '/certification', label: 'Certification', icon: certificateIcon },
-  { path: '/gallery', label: 'Gallery', icon: galleryIcon },
+  { path: '/gallery', label: 'Project Overview', icon: galleryIcon },
 ]
 
 interface RightNavbarProps {
@@ -24,8 +24,8 @@ const NavbarLink = ({ to, label, icon }: { to: string; label: string; icon: any 
   const darkCircle = 'w-[30px] lg:w-[48px] h-[30px] lg:h-[48px] rounded-full flex items-center justify-center bg-[#1e2018]/80 hover:bg-[#B9D2FF]/30 transition-all duration-300'
 
   return (
-    <NavLink 
-      to={to} 
+    <NavLink
+      to={to}
       className="flex flex-col items-center py-[2px] lg:py-[5px] w-full"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
@@ -34,19 +34,18 @@ const NavbarLink = ({ to, label, icon }: { to: string; label: string; icon: any 
         return (
           <>
             <div className={isActive ? activeCircle : darkCircle}>
-              <img 
-                src={icon} 
-                alt={label} 
-                className={`w-[14px] h-[14px] lg:w-[22px] lg:h-[22px] transition-all duration-300 ${
-                  isActive 
-                    ? 'filter-active-black' 
-                    : isHovered 
-                      ? 'filter-active-blue' 
+              <img
+                src={icon}
+                alt={label}
+                className={`w-[14px] h-[14px] lg:w-[22px] lg:h-[22px] transition-all duration-300 ${isActive
+                    ? 'filter-active-black'
+                    : isHovered
+                      ? 'filter-active-blue'
                       : 'filter-inactive-white'
-                }`} 
+                  }`}
               />
             </div>
-            <span 
+            <span
               className="text-[6.5px] lg:text-[9px] mt-[3px] text-center whitespace-pre-line leading-[1.3] select-none text-white"
             >
               {label}
