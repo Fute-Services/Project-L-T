@@ -162,7 +162,7 @@ const Gallery = () => {
     const [isNight, setIsNight] = useState(true);
 
     // State to control title disappearance after appearance
-    const [isTitleVisible, setIsTitleVisible] = useState(false);
+    const [, setIsTitleVisible] = useState(false);
 
     // Initial Intro Timer
     useEffect(() => {

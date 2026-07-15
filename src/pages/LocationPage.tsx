@@ -390,14 +390,10 @@ export default function LocationPage() {
             <motion.div
               initial={{ y: "-50vh", opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
-              exit={{ y: "-50vh", opacity: 0 }}
+              exit={{ y: "-50vh", opacity: 0, transition: { duration: 3.5, ease: [0.25, 1, 0.5, 1] } }}
               transition={{
                 duration: 2,
                 ease: [0.25, 1, 0.5, 1],
-                exit: {
-                  duration: 3.5,
-                  ease: [0.25, 1, 0.5, 1]
-                }
               }}
               className="flex flex-col items-center justify-center text-center z-40 px-4"
             >
