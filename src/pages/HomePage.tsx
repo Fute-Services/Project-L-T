@@ -89,16 +89,23 @@ const HomePage = ({ startScene = 1 }: HomePageProps) => {
                             }}
                         />
 
-                        {/* Logo: fades in after the curtain has fully parted, then zooms forward
-                            toward the viewer and fades out on exit */}
-                        <motion.img
-                            src={lntLogo}
-                            alt="L&T Realty Innovation Campus Logo"
-                            className="w-[80vw] max-w-md md:max-w-lg object-contain z-10"
+                        {/* Logo + elegant tagline: fade in together after the curtain has fully
+                            parted, then zoom forward toward the viewer and fade out on exit */}
+                        <motion.div
+                            className="flex flex-col items-center gap-12 z-20"
                             initial={{ opacity: 0, scale: 0.9 }}
                             animate={{ opacity: 1, scale: 1, transition: { duration: 1.0, delay: 1.5, ease: [0.25, 1, 0.3, 1] } }}
                             exit={{ opacity: 0, scale: 4, transition: { duration: 1.0, ease: [0.4, 0, 1, 1] } }}
-                        />
+                        >
+                            <img
+                                src={lntLogo}
+                                alt="L&T Realty Innovation Campus Logo"
+                                className="w-[80vw] max-w-md md:max-w-lg object-contain"
+                            />
+                            <p className="font-sans font-light uppercase text-[#2a3542] text-xs md:text-sm tracking-[0.35em] whitespace-nowrap">
+                                Location <span className="mx-3 opacity-40">•</span> Luxury <span className="mx-3 opacity-40">•</span> Legacy
+                            </p>
+                        </motion.div>
 
                         {/* Theater curtain: black panels holding over the scene, top half slides up,
                             bottom half slides down, splitting from the middle to reveal the logo */}
