@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 const homeBgNight = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/c4bab2ee-9d5c-481f-9fd3-bad2e4198c00/public";
 import logo2 from "../assets/logos/logo-outline-white.svg";
 import LeftNavbar from "../components/navigation/LeftNavbar";
+import RightNavbar from "../components/navigation/RightNavbar";
 import { useNavigate } from "react-router-dom";
 interface FloorData {
   id: number;
@@ -21,6 +22,7 @@ interface FloorData {
 const ProjectDetailsPage = () => {
   const [selectedRow] = useState<number | null>(); // Highlight 6th row by default
   const [hoveredFloor, setHoveredFloor] = useState<FloorData | null>(null);
+  const [isNight, setIsNight] = useState<boolean>(true);
   // const [selectedRow, setSelectedRow] = useState<number | null>(5);
 
   const svgToPercent = useCallback(
@@ -388,6 +390,11 @@ const navigate=useNavigate();
       {/* 3. Left Navbar Container */}
       <div className="fixed left-5 lg:left-16 top-[55%] lg:top-1/2 -translate-y-1/2 z-50">
         <LeftNavbar />
+      </div>
+
+      {/* Right Navbar Container */}
+      <div className="fixed right-5 lg:right-10 top-[55%] lg:top-1/2 -translate-y-1/2 z-50">
+        <RightNavbar isNight={isNight} setIsNight={setIsNight} />
       </div>
 
       <div className="absolute top-[45%] -translate-y-1/2 left-[15%] z-50">

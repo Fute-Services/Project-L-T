@@ -5,10 +5,12 @@ const buildingImg = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/19045808-f
 const transLogo = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/a78f6c68-fcf5-4d49-e5be-2fafd2d42800/public";
 import logo2 from "../assets/logos/logo-outline-white.svg";
 import LeftNavbar from "../components/navigation/LeftNavbar";
+import RightNavbar from "../components/navigation/RightNavbar";
 
 const ProjectInfoPage = () => {
   const [isZoomed, setIsZoomed] = useState(true);
   const [showOverlays, setShowOverlays] = useState(false);
+  const [isNight, setIsNight] = useState(true);
 
   useEffect(() => {
     // Zoom transition lasts for 2.5s, start showing details at 1.2s
@@ -126,6 +128,15 @@ const ProjectInfoPage = () => {
         {showOverlays && (
           <div className="fixed left-5 lg:left-16 top-[55%] lg:top-1/2 -translate-y-1/2 z-50">
             <LeftNavbar />
+          </div>
+        )}
+      </AnimatePresence>
+
+      {/* Right Navbar Container */}
+      <AnimatePresence>
+        {showOverlays && (
+          <div className="fixed right-5 lg:right-10 top-[55%] lg:top-1/2 -translate-y-1/2 z-50">
+            <RightNavbar isNight={isNight} setIsNight={setIsNight} />
           </div>
         )}
       </AnimatePresence>
