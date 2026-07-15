@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { Maximize } from 'lucide-react'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 const locationBackground = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/17b41634-6695-49c9-61a2-8f9d29916400/public";
 const mobilityBackground = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/dc10b7fa-face-4664-3e64-7730e1fc3900/public";
 const connectivityBackground = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/516be76d-66fe-41a5-6c08-756b0e7f9b00/public";
@@ -9,6 +9,8 @@ const group43Logo = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/abe60fc8-d
 import InteractiveMapView from '../components/location/InteractiveMapView'
 import { glassContainerStyle, pillButtonStyle, standaloneGlassButtonStyle } from '../styles/glassOverlay'
 import logoOutline from '../assets/logos/logo-outline-white.svg'
+import LeftNavbar from '../components/navigation/LeftNavbar'
+import RightNavbar from '../components/navigation/RightNavbar'
 
 // Import POI landmark preview images
 const airportImg = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/21c606ba-bc5f-4e6b-54bb-b8d8d2f10200/public";
@@ -71,12 +73,32 @@ export default function LocationPage() {
   const [isFullscreenHovered, setIsFullscreenHovered] = useState<boolean>(false)
   const [isExitHovered, setIsExitHovered] = useState<boolean>(false)
   const [isFullscreen, setIsFullscreen] = useState<boolean>(false)
+  const [isNight, setIsNight] = useState<boolean>(true)
+  const [animationPhase, setAnimationPhase] = useState<'initial' | 'moving' | 'final'>('initial')
   const videoCardRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     // Warm the HTTP cache for the 3D map's building model while the user is
     // still looking at the static image, so opening the map doesn't stall on it.
     fetch('/buildings/LNT.glb', { cache: 'force-cache' }).catch(() => { })
+  }, [])
+
+  useEffect(() => {
+    // Start text animation timeline:
+    // Move from center after 1.5s
+    const moveTimer = setTimeout(() => {
+      setAnimationPhase('moving')
+    }, 1200)
+
+    // Complete transition and show markers/overlays after 3.5s (1.5s + 2.0s transition)
+    const finalTimer = setTimeout(() => {
+      setAnimationPhase('final')
+    }, 2800)
+
+    return () => {
+      clearTimeout(moveTimer)
+      clearTimeout(finalTimer)
+    }
   }, [])
 
   useEffect(() => {
@@ -207,8 +229,8 @@ export default function LocationPage() {
                     <motion.div
                       key={poi.name}
                       initial={{ opacity: 0, scale: 0.8 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      transition={{ duration: 1.0, delay: index * 0.15 + 0.3 }}
+                      animate={animationPhase === 'final' ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
+                      transition={{ duration: 1.0, delay: index * 0.15 }}
                       className="absolute pointer-events-auto flex flex-col items-center group cursor-pointer"
                       style={{
                         left: poi.left,
@@ -242,9 +264,9 @@ export default function LocationPage() {
                   <motion.div
                     key={poi.name}
                     initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
+                    animate={animationPhase === 'final' ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
                     exit={{ opacity: 0, scale: 0.8 }}
-                    transition={{ duration: 1.0, delay: index * 0.15 + 0.3 }}
+                    transition={{ duration: 1.0, delay: index * 0.15 }}
                     className="absolute flex flex-col items-center pointer-events-auto group cursor-pointer pb-2"
                     style={{
                       left: poi.left,
@@ -301,12 +323,14 @@ export default function LocationPage() {
         />
       ) : null}
 
-      <div
+      <motion.div
+        initial={{ opacity: 0, y: 20, x: '-50%' }}
+        animate={animationPhase === 'final' ? { opacity: 1, y: 0, x: '-50%' } : { opacity: 0, y: 20, x: '-50%' }}
+        transition={{ duration: 0.8 }}
         style={{
           position: 'absolute',
           bottom: '40px',
           left: '50%',
-          transform: 'translateX(-50%)',
           display: 'flex',
           alignItems: 'center',
           gap: '4px',
@@ -331,24 +355,98 @@ export default function LocationPage() {
             </button>
           )
         })}
-      </div>
+      </motion.div>
 
 
-      {/* TOP LEFT — back to previous page */}
-      <button
-        onClick={() => window.history.go(-1)}
-        onMouseEnter={() => setIsBackHovered(true)}
-        onMouseLeave={() => setIsBackHovered(false)}
-        style={{
-          position: 'absolute',
-          top: '30px',
-          left: '30px',
-          zIndex: 10,
-          ...standaloneGlassButtonStyle(false, isBackHovered),
+      {/* Page Title: Intro Center to Top-Center exit */}
+      <motion.div
+        initial={{
+          x: "-50%",
+          y: "-50%",
+          left: "50%",
+          top: "50%",
+          scale: 1.15,
+          opacity: 1
         }}
+        animate={
+          animationPhase === 'initial'
+            ? {
+              x: "-50%",
+              y: "-50%",
+              left: "50%",
+              top: "50%",
+              scale: 1.15,
+              opacity: 1
+            }
+            : {
+              x: "-50%",
+              y: "-50%",
+              left: "50%",
+              top: "-20%",
+              scale: 1.05,
+              opacity: 0
+            }
+        }
+        transition={{ duration: 2.0, ease: [0.22, 1, 0.36, 1] }}
+        className="absolute z-30 flex flex-col pointer-events-none items-center text-center"
       >
-        Back
-      </button>
+        <span
+          className="font-sans text-white font-bold tracking-wide leading-tight text-center text-[22px] lg:text-[32px]"
+          style={{ textShadow: "0 2px 8px rgba(0, 0, 0, 0.9), 0 0 15px rgba(0, 0, 0, 0.5)" }}
+        >
+          Lower Parel, Mumbai
+        </span>
+        <span
+          className="font-sans text-white/90 font-medium tracking-wide mt-1.5 text-center text-[11px] lg:text-[15px]"
+          style={{ textShadow: "0 1px 4px rgba(0, 0, 0, 0.9), 0 0 10px rgba(0, 0, 0, 0.4)" }}
+        >
+          The epicenter of India’s financial capital.
+        </span>
+      </motion.div>
+
+      {/* Top Left Logo */}
+      <AnimatePresence>
+        {animationPhase === 'final' && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 1.0, ease: "easeOut" }}
+            className="absolute z-20 top-8 left-10 flex items-center gap-4 select-none pointer-events-none"
+          >
+            <div className="relative w-12 h-12">
+              <img
+                src={logoOutline}
+                alt="L&T Logo"
+                className="absolute inset-0 w-full h-full object-contain"
+              />
+            </div>
+            <div className="flex items-center text-white">
+              <h1 className="font-mahameru text-sm font-semibold tracking-wide italic leading-none">
+                L&T Realty
+              </h1>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Left Navbar Container */}
+      <AnimatePresence>
+        {animationPhase === 'final' && (
+          <div className="fixed left-5 lg:left-16 top-[55%] lg:top-1/2 -translate-y-1/2 z-50">
+            <LeftNavbar />
+          </div>
+        )}
+      </AnimatePresence>
+
+      {/* Right Navbar Container */}
+      <AnimatePresence>
+        {animationPhase === 'final' && (
+          <div className="fixed right-5 lg:right-10 top-[55%] lg:top-1/2 -translate-y-1/2 z-50">
+            <RightNavbar isNight={isNight} setIsNight={setIsNight} />
+          </div>
+        )}
+      </AnimatePresence>
     </motion.div>
   )
 }
