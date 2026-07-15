@@ -21,10 +21,10 @@ const ExploreView = ({ explored }: ExploreViewProps) => {
 
     useEffect(() => {
         if (explored) {
-            // Delay showing the navbars until after the headline's fade-in/hold/fade-out sequence completes (2.8s)
+            // Delay showing the navbars until after the headline's fade-in/hold/fade-out sequence completes (5.8s, includes an extra 3s so the headline has time to be read)
             const timer = setTimeout(() => {
                 setShowNavbars(true)
-            }, 2800)
+            }, 5800)
             return () => clearTimeout(timer)
         } else {
             setShowNavbars(false)
@@ -98,34 +98,47 @@ const ExploreView = ({ explored }: ExploreViewProps) => {
                 </div>
             </div>
 
-            {/* Left Side "SOAR THE SKYLINE" Text — fades in, holds, then slides out as the navbars arrive */}
-            <motion.div
-                className="absolute z-20 left-20 top-[40%] -translate-y-1/2 flex flex-col gap-2 select-none pointer-events-none"
-                initial={{ opacity: 0, x: "40px" }}
-                animate={{ opacity: [0, 1, 1, 0], x: ["40px", "0px", "0px", "-200px"] }}
-                transition={{ duration: 2.8, times: [0, 0.15, 0.75, 1], ease: [0.25, 1, 0.28, 1] }}
-                style={{ fontFamily: '"Hind Kochi", sans-serif', fontWeight: 300 }}
+            {/* Left Side "LOCATION / LUXURY / LEGACY" Text — each word fades in one after another,
+                all three hold together, then slide out in sync as the navbars arrive */}
+            <div
+                className="absolute z-20 left-32 top-[45%] -translate-y-1/2 flex flex-col gap-8 select-none pointer-events-none"
+                style={{ fontFamily: '"Hind Kochi", sans-serif', fontWeight: 700 }}
             >
-                <h2
-                    className="text-5xl lg:text-[70px] text-transparent bg-clip-text"
-                    style={gradientHeadingStyle('0.15em')}
+                <motion.h2
+                    className="text-3xl lg:text-5xl text-transparent bg-clip-text"
+                    initial={{ opacity: 0, x: "40px" }}
+                    animate={{ opacity: [0, 1, 1, 0], x: ["40px", "0px", "0px", "-200px"] }}
+                    transition={{ duration: 5.8, times: [0, 0.121, 0.828, 1], ease: [0.45, 0, 0.15, 1] }}
+                    style={{ ...gradientHeadingStyle('0.12em'), fontFamily: '"Hind Kochi", sans-serif', fontWeight: 700 }}
                 >
-                    SOAR THE
-                </h2>
-                <h2
-                    className="text-5xl lg:text-[70px] text-transparent bg-clip-text mt-2"
-                    style={gradientHeadingStyle('0.13em')}
+                    LOCATION
+                </motion.h2>
+                <motion.h2
+                    className="text-3xl lg:text-5xl text-transparent bg-clip-text"
+                    initial={{ opacity: 0, x: "40px" }}
+                    animate={{ opacity: [0, 1, 1, 0], x: ["40px", "0px", "0px", "-200px"] }}
+                    transition={{ duration: 5.4, delay: 0.4, times: [0, 0.13, 0.815, 1], ease: [0.45, 0, 0.15, 1] }}
+                    style={{ ...gradientHeadingStyle('0.1em'), fontFamily: '"Hind Kochi", sans-serif', fontWeight: 700 }}
                 >
-                    SKYLINE
-                </h2>
-            </motion.div>
+                    LUXURY
+                </motion.h2>
+                <motion.h2
+                    className="text-3xl lg:text-5xl text-transparent bg-clip-text"
+                    initial={{ opacity: 0, x: "40px" }}
+                    animate={{ opacity: [0, 1, 1, 0], x: ["40px", "0px", "0px", "-200px"] }}
+                    transition={{ duration: 5.0, delay: 0.8, times: [0, 0.14, 0.8, 1], ease: [0.45, 0, 0.15, 1] }}
+                    style={{ ...gradientHeadingStyle('0.1em'), fontFamily: '"Hind Kochi", sans-serif', fontWeight: 700 }}
+                >
+                    LEGACY
+                </motion.h2>
+            </div>
 
             {/* Right Side Transparent Outline Curve — mirrors the headline's fade-in/hold/fade-out */}
             <motion.div
                 className="absolute z-10 right-0 top-0 h-full w-[50%] md:w-[40%] select-none pointer-events-none flex items-center justify-end"
                 initial={{ opacity: 0, x: "40px" }}
                 animate={{ opacity: [0, 0.35, 0.35, 0], x: ["40px", "0px", "0px", "200px"] }}
-                transition={{ duration: 2.8, times: [0, 0.15, 0.75, 1], ease: [0.25, 1, 0.28, 1] }}
+                transition={{ duration: 5.8, times: [0, 0.07, 0.88, 1], ease: [0.25, 1, 0.28, 1] }}
             >
                 <img src={homeLeftTransparent} alt="L&T Transparent Curve" className="h-full object-contain" />
             </motion.div>
