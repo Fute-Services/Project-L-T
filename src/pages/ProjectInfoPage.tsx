@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-const bgImage = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/893914ec-b475-44a4-c1b7-d92037174700/public";
-const buildingImg = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/7cc71f42-f566-45d0-cd07-0138cacfd000/public";
+const bgImage = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/42f430b2-5126-4f70-c275-c805a8234e00/public";
+const buildingImg = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/19045808-fdfc-4c55-b5cf-72e2b0627000/public";
 const transLogo = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/a78f6c68-fcf5-4d49-e5be-2fafd2d42800/public";
 import logo2 from "../assets/logos/logo-outline-white.svg";
 import LeftNavbar from "../components/navigation/LeftNavbar";
