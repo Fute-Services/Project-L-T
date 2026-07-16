@@ -54,7 +54,7 @@ const containerVariants = {
 
 
 // Image variant: Smooth directional slide
-const imageVariants:Variants = {
+const imageVariants: Variants = {
     enter: (direction: number) => ({
         x: direction > 0 ? "100%" : "-100%",
         opacity: 0,
@@ -129,7 +129,7 @@ const imageVariants:Variants = {
 // Title Variant: Center Flash to Bottom Track
 // Title Variant: Center to Permanent Bottom Track
 // Title Variant: Left Entrance -> Center Pass -> Permanent Right Anchor
-const titleVariants :Variants= {
+const titleVariants: Variants = {
     enter: {
         letterSpacing: "0.20em",
         opacity: 0,
@@ -150,7 +150,7 @@ const titleVariants :Variants= {
             x: {
                 times: [0, 0.35, 1], // 0% time (left), 35% time (center), 100% time (right)
                 // duration: 1.6,
-                duration:0.5,
+                duration: 0.5,
                 ease: [0.16, 1, 0.3, 1] // Cinematic ease-out
             }
         }
@@ -224,27 +224,25 @@ const Gallery = () => {
                             custom={direction}
                             variants={imageVariants}
                             alt={`Gallery ${currentIndex + 1}`}
-                            className="absolute inset-0 w-full h-full object-cover z-0"
+                            className="absolute inset-0 w-full h-full object-contain lg:object-cover z-0"
                         />
 
                         {/* VIGNETTE OVERLAY */}
                         <div className="absolute inset-0 bg-black/30 z-10 pointer-events-none" />
 
-
-                        {/* THE TITLE WRAPPER: Placed directly in the background container, anchored permanently to the bottom-right */}
                         {/* THE TITLE WRAPPER: Anchored permanently at the bottom-right */}
-                        <div className="absolute bottom-12 md:bottom-14 right-6 md:right-[27%] z-20 
-    pointer-events-none text-right select-none max-w-2xl ">
+                        <div className="absolute bottom-16 sm:bottom-14 right-4 sm:right-[10%] lg:right-[27%] z-20 
+    pointer-events-none text-right select-none max-w-[90vw] sm:max-w-2xl ">
 
                             <motion.h2
                                 key={`title-${currentIndex}`} // Triggers the sweep animation on slide change
                                 variants={titleVariants}
                                 initial="enter"
                                 animate="center"
-                                className="inline-block text-white text-xl
+                                className="inline-block text-white text-[10px] sm:text-lg lg:text-xl
                                  uppercase font-light tracking-wide 
     drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)] leading-tight 
-    pl-12 pr-14 py-4 /* Extra padding on the right for the capsule turn */"
+    pl-6 pr-8 py-2 sm:pl-10 sm:pr-12 sm:py-3 lg:pl-12 lg:pr-14 lg:py-4 /* Extra padding on the right for the capsule turn */"
 
                                 /* Direct styling to override color physics and shape precisely */
                                 style={{
@@ -286,9 +284,9 @@ const Gallery = () => {
             {/* =========================================
                TOP LOGO & NAVBARS
             ========================================= */}
-            <div className="absolute z-50 top-8 left-10 flex items-center gap-4 select-none pointer-events-none">
-                <img src={logo2} alt="Logo" className="w-12 h-12 object-contain" />
-                <h1 className="text-white text-sm font-semibold tracking-wide italic italic">L&T Realty</h1>
+            <div className="absolute z-50 top-4 left-4 sm:top-8 sm:left-10 flex items-center gap-2 sm:gap-4 select-none pointer-events-none">
+                <img src={logo2} alt="Logo" className="w-8 h-8 sm:w-12 sm:h-12 object-contain" />
+                <h1 className="text-white text-xs sm:text-sm font-semibold tracking-wide italic">L&T Realty</h1>
             </div>
 
             <AnimatePresence>
@@ -321,10 +319,10 @@ const Gallery = () => {
                         className="absolute bottom-6 left-[43%] -translate-x-1/2 z-[80]"
                     >
                         <div className="flex items-center gap-5">
-                            <button onClick={handlePrev} className="w-12 h-12 md:w-[50px] md:h-[50px] flex items-center justify-center rounded-full bg-black/50 border border-white/30 text-white hover:bg-white/20 transition-all cursor-pointer">
+                            <button onClick={handlePrev} className="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center rounded-full bg-black/50 border border-white/30 text-white hover:bg-white/20 transition-all cursor-pointer">
                                 <svg width="14" height="20" viewBox="0 0 15 21" fill="none"><path d="M13.1328 1L2.36728 7.98875C0.582323 9.14751 0.537838 11.7447 2.28206 12.9639L11.6328 19.5" stroke="white" strokeWidth="2" strokeLinecap="round" /></svg>
                             </button>
-                            <button onClick={handleNext} className="w-12 h-12 md:w-[50px] md:h-[50px] flex items-center justify-center rounded-full bg-black/50 border border-white/30 text-white hover:bg-white/20 transition-all cursor-pointer">
+                            <button onClick={handleNext} className="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center rounded-full bg-black/50 border border-white/30 text-white hover:bg-white/20 transition-all cursor-pointer">
                                 <svg width="12" height="20" viewBox="0 0 15 21" fill="none"><path d="M1 19.5L11.7655 12.5112C13.5505 11.3525 13.595 8.75531 11.8507 7.53611L2.5 1" stroke="white" strokeWidth="2" strokeLinecap="round" /></svg>
                             </button>
                         </div>

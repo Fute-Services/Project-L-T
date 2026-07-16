@@ -10,6 +10,7 @@ import RightNavbar from "../components/navigation/RightNavbar";
 const CertificationPage = () => {
   const [isZoomed, setIsZoomed] = useState(false);
   const [isNight, setIsNight] = useState(true);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
   useEffect(() => {
     // After 1.0s, the background image starts its slow zoom-in, the overlay fades, and the icons split
@@ -17,10 +18,28 @@ const CertificationPage = () => {
       setIsZoomed(true);
     }, 1000);
 
+    const handleResize = () => setWindowWidth(window.innerWidth);
+    window.addEventListener("resize", handleResize);
+
     return () => {
       clearTimeout(zoomTimer);
+      window.removeEventListener("resize", handleResize);
     };
   }, []);
+
+  // Determine translation x based on screen width
+  const getXTranslation = (direction: "left" | "right") => {
+    if (!isZoomed) return "0px";
+    
+    let offset = "8vw"; // Default for large desktop
+    if (windowWidth < 640) {
+      offset = "15vw"; // Mobile L / portrait mobile
+    } else if (windowWidth < 1024) {
+      offset = "13vw"; // Tablet / Portrait view
+    }
+    
+    return direction === "left" ? `-${offset}` : offset;
+  };
 
   return (
     <div className="fixed inset-0 w-full h-full overflow-hidden bg-[#0a0d12]">
@@ -41,21 +60,17 @@ const CertificationPage = () => {
       <div className="absolute inset-0 bg-black/20 z-[5] pointer-events-none" />
 
       {/* 3. Top Left Logo */}
-      <div className="absolute z-20 top-8 left-10 select-none pointer-events-none">
+      <div className="absolute z-20 top-4 left-4 sm:top-8 sm:left-10 select-none pointer-events-none">
         <img
           src={newLogo}
           alt="Logo"
-          style={{
-            height: '56px',
-            width: 'auto',
-            objectFit: 'contain'
-          }}
+          className="h-8 sm:h-14 w-auto object-contain"
         />
       </div>
 
       {/* 4. Header Section */}
-      <div className="absolute top-0 left-0 w-full text-center pt-8 z-10 select-none">
-        <h1 className="text-white text-2xl lg:text-3xl font-extrabold tracking-widest uppercase font-sans">
+      <div className="absolute top-0 left-0 w-full text-center pt-16 sm:pt-8 z-10 select-none">
+        <h1 className="text-white text-lg sm:text-2xl lg:text-3xl font-extrabold tracking-widest uppercase font-sans">
           Certifications
         </h1>
       </div>
@@ -79,17 +94,14 @@ const CertificationPage = () => {
             animate={{
               opacity: 1,
               scale: 1.0,
-              x: isZoomed ? "8vw" : "0px"
+              x: getXTranslation("right")
             }}
             transition={{
               duration: 4.0,
               ease: [0.25, 1, 0.3, 1],
               opacity: { duration: 1.0 }
             }}
-            className="absolute w-[110px] h-[110px] md:w-[160px] md:h-[160px] lg:w-[200px] lg:h-[200px] pointer-events-auto select-none rounded-full overflow-hidden flex items-center justify-center"
-            style={{
-              // boxShadow: "0 20px 50px rgba(0, 0, 0, 0.4)",
-            }}
+            className="absolute w-[90px] h-[90px] sm:w-[130px] sm:h-[130px] md:w-[140px] md:h-[140px] lg:w-[200px] lg:h-[200px] pointer-events-auto select-none rounded-full overflow-hidden flex items-center justify-center"
           >
             <img
               src={leadIcon}
@@ -104,17 +116,14 @@ const CertificationPage = () => {
             animate={{
               opacity: 1,
               scale: 1.0,
-              x: isZoomed ? "-8vw" : "0px"
+              x: getXTranslation("left")
             }}
             transition={{
               duration: 4.0,
               ease: [0.25, 1, 0.3, 1],
               opacity: { duration: 1.0 }
             }}
-            className="absolute w-[110px] h-[110px] md:w-[160px] md:h-[160px] lg:w-[180px] lg:h-[180px] pointer-events-auto select-none rounded-full overflow-hidden flex items-center justify-center"
-            style={{
-              // boxShadow: "0 20px 50px rgba(0, 0, 0, 0.4)",
-            }}
+            className="absolute w-[90px] h-[90px] sm:w-[130px] sm:h-[130px] md:w-[140px] md:h-[140px] lg:w-[180px] lg:h-[180px] pointer-events-auto select-none rounded-full overflow-hidden flex items-center justify-center"
           >
             <img
               src={wellIcon}
