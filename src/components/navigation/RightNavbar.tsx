@@ -24,8 +24,8 @@ const NavbarLink = ({ to, label, icon }: { to: string; label: string; icon: any 
   const darkCircle = 'w-[30px] lg:w-[48px] h-[30px] lg:h-[48px] rounded-full flex items-center justify-center bg-[#1e2018]/80 hover:bg-[#B9D2FF]/30 transition-all duration-300'
 
   return (
-    <NavLink 
-      to={to} 
+    <NavLink
+      to={to}
       className="flex flex-col items-center py-[2px] lg:py-[5px] w-full"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
@@ -34,19 +34,18 @@ const NavbarLink = ({ to, label, icon }: { to: string; label: string; icon: any 
         return (
           <>
             <div className={isActive ? activeCircle : darkCircle}>
-              <img 
-                src={icon} 
-                alt={label} 
-                className={`w-[14px] h-[14px] lg:w-[22px] lg:h-[22px] transition-all duration-300 ${
-                  isActive 
-                    ? 'filter-active-black' 
-                    : isHovered 
-                      ? 'filter-active-blue' 
+              <img
+                src={icon}
+                alt={label}
+                className={`w-[14px] h-[14px] lg:w-[22px] lg:h-[22px] transition-all duration-300 ${isActive
+                    ? 'filter-active-black'
+                    : isHovered
+                      ? 'filter-active-blue'
                       : 'filter-inactive-white'
-                }`} 
+                  }`}
               />
             </div>
-            <span 
+            <span
               className="text-[6.5px] lg:text-[9px] mt-[3px] text-center whitespace-pre-line leading-[1.3] select-none text-white"
             >
               {label}
@@ -68,7 +67,7 @@ const RightNavbar = ({ isNight, setIsNight }: RightNavbarProps) => {
         <motion.div
           initial={{ x: 220, opacity: 0, rotate: 12, scale: 0.9 }}
           animate={{ x: 0, opacity: 1, rotate: 0, scale: 1 }}
-          transition={{ type: "spring", stiffness: 420, damping: 32, mass: 0.5 }}
+          transition={{ type: "spring", stiffness: 260, damping: 24, mass: 0.6 }}
           style={{ transformOrigin: 'top center' }}
           className="flex flex-col items-center w-full"
         >

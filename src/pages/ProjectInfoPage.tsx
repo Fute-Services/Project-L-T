@@ -1,14 +1,16 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import bgImage from "../assets/images/project-specification/background.webp";
-import buildingImg from "../assets/images/project-specification/building.webp";
-import transLogo from "../assets/images/project-specification/transparent-logo.png";
-import logo2 from "../assets/logos/logo-outline-white.svg";
+const bgImage = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/42f430b2-5126-4f70-c275-c805a8234e00/public";
+const buildingImg = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/19045808-fdfc-4c55-b5cf-72e2b0627000/public";
+const transLogo = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/a78f6c68-fcf5-4d49-e5be-2fafd2d42800/public";
+const newLogo = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/abe60fc8-d31a-482c-276d-74b273dcc700/public";
 import LeftNavbar from "../components/navigation/LeftNavbar";
+import RightNavbar from "../components/navigation/RightNavbar";
 
 const ProjectInfoPage = () => {
   const [isZoomed, setIsZoomed] = useState(true);
   const [showOverlays, setShowOverlays] = useState(false);
+  const [isNight, setIsNight] = useState(true);
 
   useEffect(() => {
     // Zoom transition lasts for 2.5s, start showing details at 1.2s
@@ -103,20 +105,17 @@ const ProjectInfoPage = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 1.0, ease: "easeOut" }}
-            className="absolute z-20 top-8 left-10 flex items-center gap-4 select-none pointer-events-none"
+            className="absolute z-20 top-8 left-10 select-none pointer-events-none"
           >
-            <div className="relative w-12 h-12">
-              <img
-                src={logo2}
-                alt="L&T Logo"
-                className="absolute inset-0 w-full h-full object-contain"
-              />
-            </div>
-            <div className="flex items-center text-white">
-              <h1 className="font-mahameru text-sm font-semibold tracking-wide italic leading-none">
-                L&T Realty
-              </h1>
-            </div>
+            <img
+              src={newLogo}
+              alt="Logo"
+              style={{
+                height: '56px',
+                width: 'auto',
+                objectFit: 'contain'
+              }}
+            />
           </motion.div>
         )}
       </AnimatePresence>
@@ -130,11 +129,20 @@ const ProjectInfoPage = () => {
         )}
       </AnimatePresence>
 
+      {/* Right Navbar Container */}
+      <AnimatePresence>
+        {showOverlays && (
+          <div className="fixed right-5 lg:right-10 top-[55%] lg:top-1/2 -translate-y-1/2 z-50">
+            <RightNavbar isNight={isNight} setIsNight={setIsNight} />
+          </div>
+        )}
+      </AnimatePresence>
+
       {/* Foreground Skyscraper Overlay - Positioned above list but below navbar */}
       <img
         src={buildingImg}
         alt="Skyscraper Building"
-        className="absolute left-[15%] bottom-10 h-[70%] lg:h-[92%] w-[220px] lg:w-[260px] z-[45] pointer-events-none transition-opacity duration-1000 ease-out"
+        className="absolute left-[20%] bottom-[14%] h-[70%] lg:h-[84%] w-[220px] lg:w-[285px] z-[75] pointer-events-none transition-opacity duration-1000 ease-out"
         style={{ opacity: showOverlays ? 1 : 0 }}
       />
 
@@ -145,8 +153,8 @@ const ProjectInfoPage = () => {
             initial={{ opacity: 0, x: -80 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -80 }}
-            transition={{ duration: 1.5, ease: [0.25, 1, 0.28, 1], delay: 0.3 }}
-            className="fixed left-[75px] lg:left-[485px] top-[30%] lg:top-[15%] -translate-y-1/2 z-40 w-[300px] lg:w-[480px] flex flex-col gap-4 lg:gap-5"
+            transition={{ duration: 1.5, ease: [0.25, 1, 0.28, 1], delay: 0. }}
+            className="fixed left-[75px] lg:left-[576px] top-[30%] lg:top-[15%] -translate-y-1/2 z-40 w-[300px] lg:w-[480px] flex flex-col gap-4 lg:gap-5"
           >
             {specData.map((item) => (
               <div

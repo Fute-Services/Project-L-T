@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { useNavigate } from "react-router-dom"
-import homeBgDay from "../../assets/images/home/home-background-day.webp"
-import homeBgNight from "../../assets/images/home/home-background-night.webp"
-import homeLeftTransparent from "../../assets/images/home/home-left-overlay.png"
-import logo2 from "../../assets/logos/logo-outline-white.svg"
-import logoBlack from "../../assets/logos/logo-black.png"
+const homeBgDay = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/0f3a05a6-ecfd-4b4a-3f4b-8b4c5adf7800/public";
+const homeBgNight = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/04e18dee-1e31-4b0e-bf58-9073b8630e00/public";
+const homeLeftTransparent = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/20799cb8-8664-4229-4c2f-c04185864500/public";
+const logo2 = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/abe60fc8-d31a-482c-276d-74b273dcc700/public"
+import blackLogo from "../../assets/images/home/black logo.png"
 import LeftNavbar from "../navigation/LeftNavbar"
 import RightNavbar from "../navigation/RightNavbar"
 import { gradientHeadingStyle } from "../../styles/gradientHeadingText"
@@ -21,10 +21,10 @@ const ExploreView = ({ explored }: ExploreViewProps) => {
 
     useEffect(() => {
         if (explored) {
-            // Delay showing the navbars until after the headline's fade-in/hold/fade-out sequence completes (0.9s)
+            // Delay showing the navbars until after the headline's fade-in/hold/fade-out sequence completes (5.8s, includes an extra 3s so the headline has time to be read)
             const timer = setTimeout(() => {
                 setShowNavbars(true)
-            }, 900)
+            }, 5800)
             return () => clearTimeout(timer)
         } else {
             setShowNavbars(false)
@@ -70,62 +70,60 @@ const ExploreView = ({ explored }: ExploreViewProps) => {
                 }}
             />
 
-            {/* Top Left Logo (Swaps dynamically between Day/Night themes) */}
-            <div className="absolute z-20 top-8 left-10 flex items-center gap-4 select-none pointer-events-none">
-                <div className="relative w-12 h-12">
-                    {/* White Logo (Night) */}
-                    <img
-                        src={logo2}
-                        alt="Logo Night"
-                        className="absolute inset-0 w-full h-full object-contain transition-opacity duration-300"
-                        style={{ opacity: isNight ? 1 : 0 }}
-                    />
-                    {/* Black Logo (Day) */}
-                    <img
-                        src={logoBlack}
-                        alt="Logo Day"
-                        className="absolute inset-0 w-full h-full object-contain transition-opacity duration-300"
-                        style={{ opacity: isNight ? 0 : 1 }}
-                    />
-                </div>
-                <div className={`flex items-center transition-colors duration-300 ${isNight ? 'text-white' : 'text-black'}`}>
-                    <h1 className="font-mahameru text-sm font-semibold tracking-wide italic leading-none">L&T Realty</h1>
-                    {/* <div className="w-[1px] h-8 bg-white/30 mx-4" />
-                    <div className="flex flex-col justify-center">
-                        <h2 className="font-mahameru text-[11px] font-bold uppercase tracking-widest italic leading-none">INNOVATION CAMPUS</h2>
-                        <p className="font-mahameru text-[8px] font-semibold uppercase tracking-widest text-white/60 mt-[4px] leading-none">LOWER PAREL, MUMBAI</p>
-                    </div> */}
-                </div>
+            {/* Top Left Logo */}
+            <div className="absolute z-20 top-8 left-10 select-none pointer-events-none">
+                <img
+                    src={isNight ? logo2 : blackLogo}
+                    alt="Logo"
+                    style={{
+                        height: '56px',
+                        width: 'auto',
+                        objectFit: 'contain'
+                    }}
+                />
             </div>
 
-            {/* Left Side "SOAR THE SKYLINE" Text — fades in, holds, then slides out as the navbars arrive */}
-            <motion.div
-                className="absolute z-20 left-20 top-[40%] -translate-y-1/2 flex flex-col gap-2 select-none pointer-events-none"
-                initial={{ opacity: 0, x: "40px" }}
-                animate={{ opacity: [0, 1, 1, 0], x: ["40px", "0px", "0px", "-200px"] }}
-                transition={{ duration: 0.9, times: [0, 0.3, 0.6, 1], ease: [0.25, 1, 0.28, 1] }}
-                style={{ fontFamily: '"Hind Kochi", sans-serif', fontWeight: 300 }}
+            {/* Left Side "LOCATION / LUXURY / LEGACY" Text — each word fades in one after another,
+                all three hold together, then slide out in sync as the navbars arrive */}
+            <div
+                className="absolute z-20 left-32 top-[45%] -translate-y-1/2 flex flex-col gap-8 select-none pointer-events-none"
+                style={{ fontFamily: '"Hind Kochi", sans-serif', fontWeight: 700 }}
             >
-                <h2
-                    className="text-5xl lg:text-[70px] text-transparent bg-clip-text"
-                    style={gradientHeadingStyle('0.15em')}
+                <motion.h2
+                    className="text-3xl lg:text-5xl text-transparent bg-clip-text"
+                    initial={{ opacity: 0, x: "40px" }}
+                    animate={{ opacity: [0, 1, 1, 0], x: ["40px", "0px", "0px", "-200px"] }}
+                    transition={{ duration: 5.8, times: [0, 0.121, 0.828, 1], ease: [0.45, 0, 0.15, 1] }}
+                    style={{ ...gradientHeadingStyle('0.12em'), fontFamily: '"Hind Kochi", sans-serif', fontWeight: 700 }}
                 >
-                    SOAR THE
-                </h2>
-                <h2
-                    className="text-5xl lg:text-[70px] text-transparent bg-clip-text mt-2"
-                    style={gradientHeadingStyle('0.13em')}
+                    LOCATION
+                </motion.h2>
+                <motion.h2
+                    className="text-3xl lg:text-5xl text-transparent bg-clip-text"
+                    initial={{ opacity: 0, x: "40px" }}
+                    animate={{ opacity: [0, 1, 1, 0], x: ["40px", "0px", "0px", "-200px"] }}
+                    transition={{ duration: 5.4, delay: 0.4, times: [0, 0.13, 0.815, 1], ease: [0.45, 0, 0.15, 1] }}
+                    style={{ ...gradientHeadingStyle('0.1em'), fontFamily: '"Hind Kochi", sans-serif', fontWeight: 700 }}
                 >
-                    SKYLINE
-                </h2>
-            </motion.div>
+                    LUXURY
+                </motion.h2>
+                <motion.h2
+                    className="text-3xl lg:text-5xl text-transparent bg-clip-text"
+                    initial={{ opacity: 0, x: "40px" }}
+                    animate={{ opacity: [0, 1, 1, 0], x: ["40px", "0px", "0px", "-200px"] }}
+                    transition={{ duration: 5.0, delay: 0.8, times: [0, 0.14, 0.8, 1], ease: [0.45, 0, 0.15, 1] }}
+                    style={{ ...gradientHeadingStyle('0.1em'), fontFamily: '"Hind Kochi", sans-serif', fontWeight: 700 }}
+                >
+                    LEGACY
+                </motion.h2>
+            </div>
 
             {/* Right Side Transparent Outline Curve — mirrors the headline's fade-in/hold/fade-out */}
             <motion.div
                 className="absolute z-10 right-0 top-0 h-full w-[50%] md:w-[40%] select-none pointer-events-none flex items-center justify-end"
                 initial={{ opacity: 0, x: "40px" }}
                 animate={{ opacity: [0, 0.35, 0.35, 0], x: ["40px", "0px", "0px", "200px"] }}
-                transition={{ duration: 0.9, times: [0, 0.3, 0.6, 1], ease: [0.25, 1, 0.28, 1] }}
+                transition={{ duration: 5.8, times: [0, 0.07, 0.88, 1], ease: [0.25, 1, 0.28, 1] }}
             >
                 <img src={homeLeftTransparent} alt="L&T Transparent Curve" className="h-full object-contain" />
             </motion.div>

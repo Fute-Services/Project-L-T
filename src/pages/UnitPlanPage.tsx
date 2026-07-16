@@ -13,9 +13,7 @@ interface FloorAmenity {
     polygon: string; // Coordinate strings for SVG mapping
 }
 export default function UnitPlanPage({ startScene = 2 }: { startScene?: 1 | 2 | 3 }) {
-    const [scene, 
-        // setScene
-    ] = useState<1 | 2 | 3>(startScene);
+    const [scene] = useState<1 | 2 | 3>(startScene);
     const [hoveredAmenity, setHoveredAmenity] = useState<FloorAmenity | null>(null);
     const [selectedAmenity, setSelectedAmenity] = useState<string | null>(); // Defaults active highlight
     const [zoomScale, setZoomScale] = useState<number>(1);
@@ -38,7 +36,7 @@ export default function UnitPlanPage({ startScene = 2 }: { startScene?: 1 | 2 | 
                 setZoomScale(prev => prev + 0.16); // Step 1: 1.25, Step 2: 1.50
             }
         } else {
-            if (zoomStep > -2) {
+            if (zoomStep > 0) {
                 setZoomStep(prev => prev - 1);
                 setZoomScale(prev => prev - 0.16); // Step -1: 0.75, Step -2: 0.50
             }
@@ -286,7 +284,7 @@ export default function UnitPlanPage({ startScene = 2 }: { startScene?: 1 | 2 | 
                 {/* Zoom Out Button */}
                 <button
                     onClick={() => handleZoom('out')}
-                    disabled={zoomStep === -2}
+                    disabled={zoomStep === 0}
                     className={`w-9 h-9 rounded-full bg-[#160f0a]/80 border border-white/10 text-white/80 flex items-center justify-center transition-all active:scale-95 shadow-md ${zoomStep === -2 ? 'opacity-40 cursor-not-allowed pointer-events-none' : 'hover:text-white hover:bg-[#22170f] hover:border-white/20'
                         }`}
                 >

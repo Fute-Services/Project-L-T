@@ -54,7 +54,7 @@ const containerVariants = {
 
 
 // Image variant: Smooth directional slide
-const imageVariants: Variants = {
+const imageVariants:Variants = {
     enter: (direction: number) => ({
         x: direction > 0 ? "100%" : "-100%",
         opacity: 0,
@@ -129,7 +129,7 @@ const imageVariants: Variants = {
 // Title Variant: Center Flash to Bottom Track
 // Title Variant: Center to Permanent Bottom Track
 // Title Variant: Left Entrance -> Center Pass -> Permanent Right Anchor
-const titleVariants: Variants = {
+const titleVariants :Variants= {
     enter: {
         letterSpacing: "0.20em",
         opacity: 0,
@@ -150,7 +150,7 @@ const titleVariants: Variants = {
             x: {
                 times: [0, 0.35, 1], // 0% time (left), 35% time (center), 100% time (right)
                 // duration: 1.6,
-                duration: 0.5,
+                duration:0.5,
                 ease: [0.16, 1, 0.3, 1] // Cinematic ease-out
             }
         }
@@ -163,7 +163,7 @@ const Gallery = () => {
     const [isNight, setIsNight] = useState(true);
 
     // State to control title disappearance after appearance
-    const [isTitleVisible, setIsTitleVisible] = useState(false);
+    const [, setIsTitleVisible] = useState(false);
 
     // Initial Intro Timer
     useEffect(() => {
@@ -208,7 +208,7 @@ const Gallery = () => {
                 animate={{ filter: showIntro ? "blur(24px)" : "blur(0px)" }}
                 transition={{ duration: 1.5, delay: showIntro ? 0 : 1.5, ease: "easeInOut" }}
             >
-                <AnimatePresence initial={true} custom={direction} mode="wait">
+                <AnimatePresence initial={false} custom={direction} mode="wait">
                     <motion.div
                         key={currentIndex}
                         custom={direction}

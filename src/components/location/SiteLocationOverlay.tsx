@@ -1,6 +1,6 @@
-import airportMumbai from '../../assets/images/location/poi/airport-mumbai.png'
-import worliSeaLink from '../../assets/images/location/poi/worli-sea-link.png'
-import hangingGarden from '../../assets/images/location/poi/hanging-garden.png'
+const airportMumbai = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/ce157318-bb8b-4cb7-68b8-3ac6f8b1d000/public";
+const worliSeaLink = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/70f49d4e-c7e3-4043-953f-2dc939df6200/public";
+const hangingGarden = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/cc05f43e-da3d-4770-be0d-e236434a2500/public";
 
 interface POI {
   key: string

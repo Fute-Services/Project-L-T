@@ -38,6 +38,10 @@ export const router = createBrowserRouter([
     path: "/circulation",
     element: <CirculationPage />,
   },
+   {
+    path: "/unitplan",
+    element: <UnitPlanPage />,
+  },
   {
     path: "/certification",
     element: <CertificationPage />,

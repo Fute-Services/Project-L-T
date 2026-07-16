@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import bgImage from "../assets/images/project-specification/background.png";
-import buildingImg from "../assets/images/project-specification/building.png";
-import transLogo from "../assets/images/project-specification/transparent-logo.png";
+const bgImage = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/42f430b2-5126-4f70-c275-c805a8234e00/public";
+const buildingImg = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/19045808-fdfc-4c55-b5cf-72e2b0627000/public";
+const transLogo = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/baddc139-7694-40c9-b009-7d1f880dba00/public";
 import logo2 from "../assets/logos/logo-outline-white.svg";
 import LeftNavbar from "../components/navigation/LeftNavbar";
-import img1 from "../assets/images/project-specification/well-certification-badge.png";
-import img2 from "../assets/images/project-specification/leed-platinum-badge.png";
+const img1 = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/a6ceaa96-0e90-4e1c-39b8-e66b97194d00/public";
+const img2 = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/53c3fc5c-718e-40d6-0037-583ff5910500/public";
 
 const ProjectSpecificationPage = () => {
   const [isZoomed, setIsZoomed] = useState(true);
