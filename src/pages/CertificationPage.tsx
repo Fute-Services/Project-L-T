@@ -61,7 +61,7 @@ const CertificationPage = () => {
       </div>
 
       {/* 5. Left Navbar Container */}
-      <div className="fixed left-5 lg:left-16 top-[55%] lg:top-1/2 -translate-y-1/2 z-50">
+      <div className="fixed left-5 sm:left-10 md:left-12 lg:left-16 top-[55%] lg:top-1/2 -translate-y-1/2 z-50">
         <LeftNavbar />
       </div>
 

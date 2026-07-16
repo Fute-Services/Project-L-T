@@ -14,6 +14,7 @@ import RainOverlay from "../components/home/RainOverlay"
 import LightningOverlay from "../components/home/LightningOverlay"
 import { gradientHeadingStyle } from "../styles/gradientHeadingText"
 import { useStormAudio } from "../hooks/useStormAudio"
+import logo1 from "../../src/assets/logos/logo-outline-white.svg"
 
 interface HomePageProps {
     startScene?: 1 | 2 | 3;
@@ -277,7 +278,7 @@ const HomePage = ({ startScene = 1 }: HomePageProps) => {
                                     }
                                     transition={{ duration: 1.2, ease: [0.45, 0, 0.2, 1] }}
                                 >
-                                    <img src={logo2} alt="" className="w-7 h-7 object-contain relative z-10" />
+                                    <img src={logo1} alt="" className="w-7 h-7 object-contain relative z-10" />
                                 </motion.div>
                             </div>
 

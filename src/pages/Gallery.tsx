@@ -294,7 +294,7 @@ const Gallery = () => {
             <AnimatePresence>
                 {!showIntro && (
                     <>
-                        <div className="fixed left-5 lg:left-16 top-1/2 -translate-y-1/2 z-[70]">
+                        <div className="fixed left-5 sm:left-10 md:left-12 lg:left-16 top-1/2 -translate-y-1/2 z-[70]">
                             <motion.div initial={{ opacity: 0, x: -50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 1, delay: 1.5 }}>
                                 <LeftNavbar />
                             </motion.div>

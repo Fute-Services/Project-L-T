@@ -126,7 +126,7 @@ const ProjectSpecificationPage = () => {
       {/* 4. Left Navbar Container */}
       <AnimatePresence>
         {showOverlays && (
-          <div className="fixed left-5 lg:left-16 top-[55%] lg:top-1/2 -translate-y-1/2 z-50">
+          <div className="fixed left-5 sm:left-10 md:left-12 lg:left-16 top-[55%] lg:top-1/2 -translate-y-1/2 z-50">
             <LeftNavbar />
           </div>
         )}
@@ -148,7 +148,7 @@ const ProjectSpecificationPage = () => {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -80 }}
             transition={{ duration: 1.5, ease: [0.25, 1, 0.28, 1], delay: 0.3 }}
-            className="fixed left-[75px] lg:left-[485px] top-[30%] lg:top-[15%] -translate-y-1/2 z-40 w-[300px] lg:w-[480px] flex flex-col gap-4 lg:gap-5"
+            className="fixed left-[75px] sm:left-[105px] md:left-[105px] lg:left-[485px] top-[30%] lg:top-[15%] -translate-y-1/2 z-40 w-[300px] lg:w-[480px] flex flex-col gap-4 lg:gap-5"
           >
             {specData.map((item) => (
               <div

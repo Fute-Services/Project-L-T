@@ -548,7 +548,7 @@ export default function LocationPage() {
       {/* Left Navbar Container */}
       <AnimatePresence>
         {!showIntro && (
-          <div className="fixed left-5 lg:left-16 top-[55%] lg:top-1/2 -translate-y-1/2 z-50">
+          <div className="fixed left-5 sm:left-10 md:left-12 lg:left-16 top-[55%] lg:top-1/2 -translate-y-1/2 z-50">
             <motion.div
               initial={{ opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0 }}

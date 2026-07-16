@@ -151,7 +151,7 @@ const ExploreView = ({ explored }: ExploreViewProps) => {
                 {showNavbars && (
                     <>
                         {/* Left Navbar Container */}
-                        <div className="fixed left-5 lg:left-16 top-[55%] lg:top-1/2 -translate-y-1/2 z-50">
+                        <div className="fixed left-5 sm:left-10 md:left-12 lg:left-16 top-[55%] lg:top-1/2 -translate-y-1/2 z-50">
                             <LeftNavbar />
                         </div>
 
@@ -161,7 +161,7 @@ const ExploreView = ({ explored }: ExploreViewProps) => {
                         </div>
 
                         {/* Bottom Left Logo Link to Scene 1 */}
-                        <div className="fixed left-5 lg:left-16 bottom-16 z-50 w-[38px] lg:w-[60px] flex justify-center">
+                        <div className="fixed left-5 sm:left-10 md:left-12 lg:left-16 bottom-16 z-50 w-[38px] lg:w-[60px] flex justify-center">
                             <motion.button
                                 onClick={() => navigate("/")}
                                 className="w-9 h-9 lg:w-12 lg:h-12 rounded-full flex items-center justify-center bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 shadow-2xl backdrop-blur-md cursor-pointer transition-colors duration-300"
