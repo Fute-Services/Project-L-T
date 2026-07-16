@@ -3,23 +3,24 @@ import { motion, AnimatePresence, type Variants } from "framer-motion";
 
 
 // Asset Imports
-import gallery2 from '../assets/images/gallery/2 Dusk main.webp';
-import gallery3 from '../assets/images/gallery/3.webp';
-import gallery4 from '../assets/images/gallery/4.webp';
-import gallery5 from '../assets/images/gallery/5.webp';
-import gallery7 from '../assets/images/gallery/7.webp';
-import gallery8 from '../assets/images/gallery/8.webp';
-import gallery9 from '../assets/images/gallery/9.webp';
-import gallery10 from '../assets/images/gallery/10.webp';
-
-// const gallery2 ='https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/31d3c44c-9398-4aab-539c-b4a939cceb00/public';
-// const gallery3 = 'https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/e4fcf4de-c85c-40cf-53a7-01ca3576ff00/public';
-// const gallery4= 'https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/a276137d-ec40-4ace-aa0f-15bb3747c900/public';
-// const gallery5 ='https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/024bc39e-3ebc-408d-9adc-2e9009b75600/public';
-// const gallery7 ='https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/c9be42b0-998c-48e6-d5d7-5639f34f3c00/public';
+// import gallery2 from '../assets/images/gallery/2 Dusk main.webp';
+// import gallery3 from '../assets/images/gallery/3.webp';
+// import gallery4 from '../assets/images/gallery/4.webp';
+// import gallery5 from '../assets/images/gallery/5.webp';
+// import gallery7 from '../assets/images/gallery/7.webp';
 // import gallery8 from '../assets/images/gallery/8.webp';
-// const gallery9 ='https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/f17befd0-4f62-4c9d-8248-fd05a86b1500/public';
+// import gallery9 from '../assets/images/gallery/9.webp';
 // import gallery10 from '../assets/images/gallery/10.webp';
+
+const gallery2 = 'https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/31d3c44c-9398-4aab-539c-b4a939cceb00/public';
+const gallery3 = 'https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/e4fcf4de-c85c-40cf-53a7-01ca3576ff00/public';
+const gallery4 = 'https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/a276137d-ec40-4ace-aa0f-15bb3747c900/public';
+const gallery5 = 'https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/024bc39e-3ebc-408d-9adc-2e9009b75600/public';
+const gallery7 = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/d4bc0726-4748-4335-fd33-b7ecc2484b00/public";
+const gallery8 = 'https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/c9be42b0-998c-48e6-d5d7-5639f34f3c00/public';
+
+const gallery9 = 'https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/f17befd0-4f62-4c9d-8248-fd05a86b1500/public';
+const gallery10 = 'https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/2453c472-e39b-4b8f-dc57-70698232fe00/public';
 
 import logo2 from '../assets/logos/logo-outline-white.svg';
 import LeftNavbar from '../components/navigation/LeftNavbar';
@@ -27,13 +28,13 @@ import RightNavbar from '../components/navigation/RightNavbar';
 
 const GALLERY_DATA = [
     { id: 1, images: gallery2, title: "Samagam of innovation connectivity and grandeur" },
-    { id: 2, images: gallery7, title: "An Icon Of Vision, Precision & Prestige" },
-    { id: 3, images: gallery8, title: "At the Epicentre of Mumbai's Business Landscape" },
-    { id: 4, images: gallery9, title: "A Signature Arrival Of Luxury And Legacy" },
-    { id: 5, images: gallery3, title: "Unobstructed Views, For All 365 Days & Forever" },
-    { id: 6, images: gallery5, title: "Elevated Workspaces , Extraordinary Perspectives" },
-    { id: 7, images: gallery10, title: "A Landmark that defines the skyline" },
-    { id: 8, images: gallery4, title: "Grand Arrival, Crafted For Privacy And Prestige" },
+    { id: 2, images: gallery3, title: "Strategically positioned near Mumbai's landmark double-decker bridge" },
+    { id: 3, images: gallery4, title: "At the Epicentre of Mumbai's Business Landscape" },
+    { id: 4, images: gallery5, title: "A Signature Arrival Of Luxury And Legacy" },
+    { id: 5, images: gallery7, title: "Unobstructed Views, For All 365 Days & Forever" },
+    { id: 6, images: gallery8, title: "Elevated Workspaces , Extraordinary Perspectives" },
+    { id: 7, images: gallery9, title: "A Landmark that defines the skyline" },
+    { id: 8, images: gallery10, title: "Grand Arrival, Crafted For Privacy And Prestige" },
 ];
 
 // Parent wrapper variant coordinates entry timing
@@ -53,7 +54,7 @@ const containerVariants = {
 
 
 // Image variant: Smooth directional slide
-const imageVariants:Variants = {
+const imageVariants: Variants = {
     enter: (direction: number) => ({
         x: direction > 0 ? "100%" : "-100%",
         opacity: 0,
@@ -128,7 +129,7 @@ const imageVariants:Variants = {
 // Title Variant: Center Flash to Bottom Track
 // Title Variant: Center to Permanent Bottom Track
 // Title Variant: Left Entrance -> Center Pass -> Permanent Right Anchor
-const titleVariants :Variants= {
+const titleVariants: Variants = {
     enter: {
         letterSpacing: "0.20em",
         opacity: 0,
@@ -149,7 +150,7 @@ const titleVariants :Variants= {
             x: {
                 times: [0, 0.35, 1], // 0% time (left), 35% time (center), 100% time (right)
                 // duration: 1.6,
-                duration:0.5,
+                duration: 0.5,
                 ease: [0.16, 1, 0.3, 1] // Cinematic ease-out
             }
         }
