@@ -127,7 +127,7 @@ export default function UnitPlanPage({ startScene = 2 }: { startScene?: 1 | 2 | 
             </motion.div>
 
             {/* 3. Global Navigation Sidebar */}
-            <div className="fixed left-12 top-1/2 -translate-y-1/2 z-50">
+            <div className="fixed left-5 lg:left-12 top-1/2 -translate-y-1/2 z-50">
                 <LeftNavbar />
             </div>
 
@@ -155,7 +155,7 @@ export default function UnitPlanPage({ startScene = 2 }: { startScene?: 1 | 2 | 
                 <img
                     src={Typical}
                     alt="Ground Structural Layout Blueprint"
-                    className="absolute inset-0 w-full h-full object-cover pointer-events-none z-10"
+                    className="absolute inset-0 w-full h-full object-contain lg:object-cover pointer-events-none z-10"
                 />
 
                 {/* Interactive Vector Highlight Polygon System Overlays */}
@@ -198,7 +198,7 @@ export default function UnitPlanPage({ startScene = 2 }: { startScene?: 1 | 2 | 
                     ease: [0.16, 1, 0.3, 1], // Luxury cubic-bezier curve
                     delay: 0.5
                 }}
-                className="absolute right-[8%] top-[30%] 
+                className="absolute right-[8%] top-[10%] lg:top-[30%] 
             -translate-y-1/2 z-50 w-[160px] flex flex-col gap-6 font-sans">
 
 
@@ -233,16 +233,16 @@ export default function UnitPlanPage({ startScene = 2 }: { startScene?: 1 | 2 | 
                         <div className="inline-flex pl-2 mb-6 items-center gap-2 
                              border border-amber-500/20 rounded-[2px]
                               bg-white/10 backdrop-blur-sm min-w-[130px]">
-                            <span className="text-white font-bold text-xl tracking-wide">G</span>
+                            <span className="text-white font-bold text-lg lg:text-xl tracking-wide">G</span>
                             <span className="text-white/80  mt-1
-                                 tracking-widest text-sm 
+                                 tracking-widest text-[10px] md:text-[12px] lg:text-sm 
                                 font-medium ">Floor</span>
                         </div>
 
-                        <div className="text-white/70 text-sm flex flex-col gap-5">
-                            <p><span className="text-lg font-bold px-1">3.5</span>lakh sqft Carpet Area(appx.)</p>
-                            <p><span className="text-lg font-bold px-1">17,000</span>sqft (appx.) Floor Plate</p>
-                            <p><span className="text-lg font-bold px-1">4.2 - 4.5</span>mt Floor to Floor Height</p>
+                        <div className="text-white/70 text-[10px] md:text-[12px] lg:text-sm flex flex-col gap-5">
+                            <p><span className="text-sm lg:text-lg font-bold px-1">3.5</span>lakh sqft Carpet Area(appx.)</p>
+                            <p><span className="text-sm lg:text-lg font-bold px-1">17,000</span>sqft (appx.) Floor Plate</p>
+                            <p><span className="text-sm lg:text-lg font-bold px-1">4.2 - 4.5</span>mt Floor to Floor Height</p>
                         </div>
                         {/* </div> */}
                         {/* {amenityData.map((menuItem) => {
@@ -297,7 +297,9 @@ export default function UnitPlanPage({ startScene = 2 }: { startScene?: 1 | 2 | 
                 <button
                     onClick={() => handleZoom('in')}
                     disabled={zoomStep === 2}
-                    className={`w-9 h-9 rounded-full font-bold flex items-center justify-center transition-all active:scale-95 shadow-lg ${zoomStep === 2
+                    className={`w-9 h-9 rounded-full font-bold 
+                        flex items-center justify-center transition-all 
+                        active:scale-95 shadow-lg ${zoomStep === 2
                         ? 'bg-neutral-700 text-neutral-500 opacity-40 cursor-not-allowed pointer-events-none'
                         : 'bg-[#fcd34d] text-[#160f0a] hover:bg-[#fbbf24] shadow-amber-500/10'
                         }`}
