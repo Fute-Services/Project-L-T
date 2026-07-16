@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 const bgImage = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/42f430b2-5126-4f70-c275-c805a8234e00/public";
 const buildingImg = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/19045808-fdfc-4c55-b5cf-72e2b0627000/public";
 const transLogo = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/a78f6c68-fcf5-4d49-e5be-2fafd2d42800/public";
-import logo2 from "../assets/logos/logo-outline-white.svg";
+const newLogo = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/abe60fc8-d31a-482c-276d-74b273dcc700/public";
 import LeftNavbar from "../components/navigation/LeftNavbar";
 import RightNavbar from "../components/navigation/RightNavbar";
 
@@ -105,20 +105,17 @@ const ProjectInfoPage = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 1.0, ease: "easeOut" }}
-            className="absolute z-20 top-8 left-10 flex items-center gap-4 select-none pointer-events-none"
+            className="absolute z-20 top-8 left-10 select-none pointer-events-none"
           >
-            <div className="relative w-12 h-12">
-              <img
-                src={logo2}
-                alt="L&T Logo"
-                className="absolute inset-0 w-full h-full object-contain"
-              />
-            </div>
-            <div className="flex items-center text-white">
-              <h1 className="font-mahameru text-sm font-semibold tracking-wide italic leading-none">
-                L&T Realty
-              </h1>
-            </div>
+            <img
+              src={newLogo}
+              alt="Logo"
+              style={{
+                height: '56px',
+                width: 'auto',
+                objectFit: 'contain'
+              }}
+            />
           </motion.div>
         )}
       </AnimatePresence>

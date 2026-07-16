@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 const certificateBg = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/03d6e841-c126-4feb-306a-2be0866ee600/public";
 const wellIcon = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/448c4daa-c063-4a12-b792-cc5d52bb4700/public";
 const leadIcon = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/3caab12e-6b86-4e61-4a40-856aa65efe00/public";
-import logo2 from "../assets/logos/logo-outline-white.svg";
+const newLogo = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/abe60fc8-d31a-482c-276d-74b273dcc700/public";
 import LeftNavbar from "../components/navigation/LeftNavbar";
 import RightNavbar from "../components/navigation/RightNavbar";
 
@@ -41,19 +41,16 @@ const CertificationPage = () => {
       <div className="absolute inset-0 bg-black/20 z-[5] pointer-events-none" />
 
       {/* 3. Top Left Logo */}
-      <div className="absolute z-20 top-8 left-10 flex items-center gap-4 select-none pointer-events-none">
-        <div className="relative w-12 h-12">
-          <img
-            src={logo2}
-            alt="L&T Logo"
-            className="absolute inset-0 w-full h-full object-contain"
-          />
-        </div>
-        <div className="flex items-center text-white">
-          <h1 className="font-mahameru text-sm font-semibold tracking-wide italic leading-none">
-            L&T Realty
-          </h1>
-        </div>
+      <div className="absolute z-20 top-8 left-10 select-none pointer-events-none">
+        <img
+          src={newLogo}
+          alt="Logo"
+          style={{
+            height: '56px',
+            width: 'auto',
+            objectFit: 'contain'
+          }}
+        />
       </div>
 
       {/* 4. Header Section */}

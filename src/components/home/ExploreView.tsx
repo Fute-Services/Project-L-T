@@ -4,8 +4,8 @@ import { useNavigate } from "react-router-dom"
 const homeBgDay = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/0f3a05a6-ecfd-4b4a-3f4b-8b4c5adf7800/public";
 const homeBgNight = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/04e18dee-1e31-4b0e-bf58-9073b8630e00/public";
 const homeLeftTransparent = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/20799cb8-8664-4229-4c2f-c04185864500/public";
-import logo2 from "../../assets/logos/logo-outline-white.svg"
-import logoBlack from "../../assets/logos/logo-black.png"
+const logo2 = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/abe60fc8-d31a-482c-276d-74b273dcc700/public"
+import blackLogo from "../../assets/images/home/black logo.png"
 import LeftNavbar from "../navigation/LeftNavbar"
 import RightNavbar from "../navigation/RightNavbar"
 import { gradientHeadingStyle } from "../../styles/gradientHeadingText"
@@ -70,32 +70,17 @@ const ExploreView = ({ explored }: ExploreViewProps) => {
                 }}
             />
 
-            {/* Top Left Logo (Swaps dynamically between Day/Night themes) */}
-            <div className="absolute z-20 top-8 left-10 flex items-center gap-4 select-none pointer-events-none">
-                <div className="relative w-12 h-12">
-                    {/* White Logo (Night) */}
-                    <img
-                        src={logo2}
-                        alt="Logo Night"
-                        className="absolute inset-0 w-full h-full object-contain transition-opacity duration-300"
-                        style={{ opacity: isNight ? 1 : 0 }}
-                    />
-                    {/* Black Logo (Day) */}
-                    <img
-                        src={logoBlack}
-                        alt="Logo Day"
-                        className="absolute inset-0 w-full h-full object-contain transition-opacity duration-300"
-                        style={{ opacity: isNight ? 0 : 1 }}
-                    />
-                </div>
-                <div className={`flex items-center transition-colors duration-300 ${isNight ? 'text-white' : 'text-black'}`}>
-                    <h1 className="font-mahameru text-sm font-semibold tracking-wide italic leading-none">L&T Realty</h1>
-                    {/* <div className="w-[1px] h-8 bg-white/30 mx-4" />
-                    <div className="flex flex-col justify-center">
-                        <h2 className="font-mahameru text-[11px] font-bold uppercase tracking-widest italic leading-none">INNOVATION CAMPUS</h2>
-                        <p className="font-mahameru text-[8px] font-semibold uppercase tracking-widest text-white/60 mt-[4px] leading-none">LOWER PAREL, MUMBAI</p>
-                    </div> */}
-                </div>
+            {/* Top Left Logo */}
+            <div className="absolute z-20 top-8 left-10 select-none pointer-events-none">
+                <img
+                    src={isNight ? logo2 : blackLogo}
+                    alt="Logo"
+                    style={{
+                        height: '56px',
+                        width: 'auto',
+                        objectFit: 'contain'
+                    }}
+                />
             </div>
 
             {/* Left Side "LOCATION / LUXURY / LEGACY" Text — each word fades in one after another,

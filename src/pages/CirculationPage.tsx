@@ -4,6 +4,7 @@ import LeftNavbar from "../components/navigation/LeftNavbar";
 import RightNavbar from "../components/navigation/RightNavbar";
 import cerculationBg from "../assets/images/cerculation/cerculation-bg.png";
 import backButtonImg from "../assets/images/cerculation/back butten.png";
+const newLogo = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/abe60fc8-d31a-482c-276d-74b273dcc700/public";
 
 export default function CirculationPage() {
     const [isNight, setIsNight] = useState(true);
@@ -19,6 +20,19 @@ export default function CirculationPage() {
 
     return (
         <div className="fixed inset-0 w-full h-full overflow-hidden bg-[#0a0d12]">
+            {/* Top Left Logo */}
+            <div className="absolute z-20 top-8 left-10 select-none pointer-events-none">
+                <img
+                    src={newLogo}
+                    alt="Logo"
+                    style={{
+                        height: '56px',
+                        width: 'auto',
+                        objectFit: 'contain'
+                    }}
+                />
+            </div>
+
             {/* 1. Background Layer */}
             <div className="absolute inset-0 w-full h-full z-0">
                 {/* Explored Gradient BG (Always in DOM) */}

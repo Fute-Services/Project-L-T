@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom"
 import lntLogo from "../assets/logos/lnt-logo-full.png"
 const scene2Bg = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/29dc6f0d-4780-4bf9-7d57-4d94c1186400/public";
 const transparentLogo = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/40740c95-dc4c-4dfa-86a6-f976c26cee00/public";
-import logo2 from "../assets/logos/logo-outline-white.svg"
+const logo2 = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/abe60fc8-d31a-482c-276d-74b273dcc700/public";
 const homeBgDay = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/0f3a05a6-ecfd-4b4a-3f4b-8b4c5adf7800/public";
 const homeBgNight = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/04e18dee-1e31-4b0e-bf58-9073b8630e00/public";
 import ExploreView from "../components/home/ExploreView"
@@ -163,20 +163,13 @@ const HomePage = ({ startScene = 1 }: HomePageProps) => {
 
                         {/* Top Left White Logo */}
                         <motion.div
-                            className="absolute z-20 top-8 left-10 flex items-center gap-4 select-none pointer-events-none"
+                            className="absolute z-20 top-10 left-10 flex items-center  select-none pointer-events-none"
                             initial={{ opacity: 0, x: -30 }}
                             animate={{ opacity: scene === 2 ? 1 : 0, x: scene === 2 ? 0 : -30 }}
                             transition={{ duration: 2.2, delay: 0.6, ease: [0.25, 1, 0.5, 1] }}
                         >
-                            <img src={logo2} alt="Logo" className="w-12 h-12 object-contain" />
-                            <div className="flex items-center text-white">
-                                <h1 className="font-mahameru text-sm font-semibold tracking-wide italic leading-none">L&T Realty</h1>
-                                <div className="w-[1px] h-8 bg-white/30 mx-4" />
-                                <div className="flex flex-col justify-center">
-                                    <h2 className="font-mahameru text-[11px] font-bold uppercase tracking-widest italic leading-none">INNOVATION CAMPUS</h2>
-                                    <p className="font-mahameru text-[8px] font-semibold uppercase tracking-widest text-white/60 mt-[4px] leading-none">LOWER PAREL, MUMBAI</p>
-                                </div>
-                            </div>
+                            <img src={logo2} alt="Logo" className="h-[4vw] w-auto object-contain" />
+
                         </motion.div>
 
                         {/* Top Right Transparent Outline Logo */}
@@ -209,6 +202,12 @@ const HomePage = ({ startScene = 1 }: HomePageProps) => {
                             >
                                 CAMPUS
                             </h2>
+                            <h3
+                                className="text-3xl lg:text-[25px] text-transparent bg-clip-text mt-2 ml-[10px]"
+                                style={{ ...gradientHeadingStyle('0.10em'), lineHeight: "1.2" }}
+                            >
+                                Lower Parel, Mumbai
+                            </h3>
                         </motion.div>
 
                         {/* Right Side Transparent Outline Curve */}
