@@ -10,7 +10,7 @@ import nightIcon from '../../assets/icons/night-icon.png'
 const navItems = [
   { path: '/circulation', label: 'Circulation', icon: circulationIcon },
   { path: '/certification', label: 'Certification', icon: certificateIcon },
-  { path: '/gallery', label: 'Gallery', icon: galleryIcon },
+  { path: '/gallery', label: 'Project Overview', icon: galleryIcon },
 ]
 
 interface RightNavbarProps {
