@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import LeftNavbar from "../components/navigation/LeftNavbar";
 import RightNavbar from "../components/navigation/RightNavbar";
@@ -9,14 +9,6 @@ const newLogo = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/abe60fc8-d31a-
 export default function CirculationPage() {
     const [isNight, setIsNight] = useState(true);
     const [explored, setExplored] = useState(false);
-    const [isLargeScreen, setIsLargeScreen] = useState(true);
-
-    useEffect(() => {
-        const checkWidth = () => setIsLargeScreen(window.innerWidth >= 1024);
-        checkWidth();
-        window.addEventListener("resize", checkWidth);
-        return () => window.removeEventListener("resize", checkWidth);
-    }, []);
 
     // X, Y coordinates (left, top percentages) for the location markers.
     // Feel free to adjust these percentages to match perfectly with the background image map.
@@ -42,7 +34,7 @@ export default function CirculationPage() {
             </div>
 
             {/* 1. Background Layer */}
-            <div className="absolute inset-0 w-full h-full z-0 overflow-hidden">
+            <div className="absolute inset-0 w-full h-full z-0">
                 {/* Explored Gradient BG (Always in DOM) */}
                 <div
                     className="absolute inset-0 w-full h-full"
@@ -51,76 +43,63 @@ export default function CirculationPage() {
                     }}
                 />
 
-                {/* Aspect ratio container for the 1982x1024 image */}
-                <div
-                    className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
-                    style={{
-                        width: isLargeScreen ? "max(100vw, 193.55vh)" : "min(100vw, 193.55vh)",
-                        height: isLargeScreen ? "max(100vh, 51.67vw)" : "min(100vh, 51.67vw)",
+                {/* Unexplored BG Image (Fades out when explored) */}
+                <motion.img
+                    src={cerculationBg}
+                    alt="Circulation Background"
+                    className="absolute inset-0 w-full h-full object-cover"
+                    animate={{
+                        opacity: explored ? 0 : 1,
+                        scale: explored ? 1.05 : 1.0,
                     }}
-                >
-                    {/* Unexplored BG Image (Fades out when explored) */}
-                    <motion.img
-                        src={cerculationBg}
-                        alt="Circulation Background"
-                        className="w-full h-full object-cover"
-                        animate={{
-                            opacity: explored ? 0 : 1,
-                            scale: explored ? 1.05 : 1.0,
-                        }}
-                        transition={{ duration: 1.0, ease: "easeInOut" }}
-                        style={{ pointerEvents: explored ? "none" : "auto" }}
-                    />
-
-                    {/* 1.5. Location Markers (Only visible in unexplored state on the bg map) */}
-                    <AnimatePresence>
-                        {!explored && (
-                            <div className="absolute inset-0 w-full h-full z-20 pointer-events-none">
-                                {markers.map((marker, index) => (
-                                    <motion.div
-                                        key={marker.name}
-                                        initial={{ opacity: 0, scale: 0.8 }}
-                                        animate={{ opacity: 1, scale: 1 }}
-                                        exit={{ opacity: 0, scale: 0.8 }}
-                                        transition={{ duration: 1.0, delay: index * 0.15 + 0.3 }}
-                                        className="absolute flex items-center justify-center group cursor-pointer"
-                                        style={{
-                                            left: marker.left,
-                                            top: marker.top,
-                                            transform: "translate(-50%, -50%)",
-                                            width: "16px",
-                                            height: "16px"
-                                        }}
-                                    >
-                                        {/* Glowing Pulsing Dot */}
-                                        <div className="relative w-4 h-4 flex items-center justify-center z-10">
-                                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#FFEFA8]/50 opacity-75"></span>
-                                            <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#FFEFA8] shadow-[0_0_10px_#FFEFA8]"></span>
-                                        </div>
-
-                                        {/* The Popup Container (rises and scales slightly on hover) */}
-                                        <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 flex flex-col items-center pointer-events-auto">
-                                            <div className="flex flex-col items-center transition-all duration-300 ease-out transform group-hover:-translate-y-2 group-hover:scale-105 origin-bottom">
-                                                {/* The Pill Label */}
-                                                <div
-                                                    className={`px-3.5 py-1 lg:py-1.5 border border-white/10 font-sans text-[8.5px] lg:text-[10px] font-bold tracking-wider uppercase transition-all duration-300 text-center whitespace-pre-line shadow-lg bg-black/75 text-white group-hover:bg-[#ffcb6e] group-hover:text-[#0c1523] group-hover:border-[#ffcb6e] ${marker.name.includes('\n') ? 'rounded-[12px] py-1.5' : 'rounded-full'
-                                                        }`}
-                                                >
-                                                    {marker.name}
-                                                </div>
-                                                {/* The Down Triangle */}
-                                                <div
-                                                    className="w-0 h-0 border-l-[6px] border-l-transparent border-r-[6px] border-r-transparent border-t-[6px] border-t-black/75 group-hover:border-t-[#ffcb6e] transition-all duration-300 -mt-[1px]"
-                                                />
-                                            </div>
-                                        </div>
-                                    </motion.div>
-                                ))}
-                            </div>
-                        )}
-                    </AnimatePresence>
-                </div>
+                    transition={{ duration: 1.0, ease: "easeInOut" }}
+                    style={{ pointerEvents: explored ? "none" : "auto" }}
+                />
             </div>
+
+            {/* 1.5. Location Markers (Only visible in unexplored state on the bg map) */}
+            <AnimatePresence>
+                {!explored && (
+                    <div className="absolute inset-0 w-full h-full z-20 pointer-events-none">
+                        {markers.map((marker, index) => (
+                            <motion.div
+                                key={marker.name}
+                                initial={{ opacity: 0, scale: 0.8 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                exit={{ opacity: 0, scale: 0.8 }}
+                                transition={{ duration: 1.0, delay: index * 0.15 + 0.3 }}
+                                className="absolute flex flex-col items-center pointer-events-auto group cursor-pointer pb-2"
+                                style={{
+                                    left: marker.left,
+                                    top: marker.top,
+                                    transform: "translate(-50%, calc(-100% + 16px))"
+                                }}
+                            >
+                                {/* The Popup Container (rises and scales slightly on hover) */}
+                                <div className="flex flex-col items-center transition-all duration-300 ease-out transform group-hover:-translate-y-2 group-hover:scale-105 origin-bottom">
+                                    {/* The Pill Label */}
+                                    <div
+                                        className={`px-3.5 py-1 lg:py-1.5 border border-white/10 font-sans text-[8.5px] lg:text-[10px] font-bold tracking-wider uppercase transition-all duration-300 text-center whitespace-pre-line shadow-lg bg-black/75 text-white group-hover:bg-[#ffcb6e] group-hover:text-[#0c1523] group-hover:border-[#ffcb6e] ${marker.name.includes('\n') ? 'rounded-[12px] py-1.5' : 'rounded-full'
+                                            }`}
+                                    >
+                                        {marker.name}
+                                    </div>
+                                    {/* The Down Triangle */}
+                                    <div
+                                        className="w-0 h-0 border-l-[6px] border-l-transparent border-r-[6px] border-r-transparent border-t-[6px] border-t-black/75 group-hover:border-t-[#ffcb6e] transition-all duration-300 -mt-[1px]"
+                                    />
+                                </div>
+
+                                {/* Glowing Pulsing Dot */}
+                                <div className="relative w-4 h-4 flex items-center justify-center mt-1.5 z-10">
+                                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#FFEFA8]/50 opacity-75"></span>
+                                    <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#FFEFA8] shadow-[0_0_10px_#FFEFA8]"></span>
+                                </div>
+                            </motion.div>
+                        ))}
+                    </div>
+                )}
+            </AnimatePresence>
 
             {/* 2. Content Layer (Always positioned relative or absolute on top) */}
             <div className="absolute inset-0 flex flex-col justify-between z-10 w-full h-full pointer-events-none">
@@ -203,7 +182,7 @@ export default function CirculationPage() {
                 </div>
 
                 {/* Left Navbar */}
-                <div className="absolute top-[48%] lg:top-[55%] left-[6%] sm:left-[9%] md:left-[9.5%] lg:left-[6%] z-50 -translate-y-1/2 -translate-x-1/2 pointer-events-auto">
+                <div className="absolute top-[48%] lg:top-[55%] left-[6%] md:left-[8.5%] lg:left-[6%] z-50 -translate-y-1/2 -translate-x-1/2 pointer-events-auto">
                     <LeftNavbar />
                 </div>
 
