@@ -47,6 +47,10 @@ export const router = createBrowserRouter([
     element: <CertificationPage />,
   },
   {
+    path: "/unitplan",
+    element: <UnitPlanPage />,
+  },
+  {
     path: "/gallery",
     element: <Gallery />,
   },

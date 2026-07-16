@@ -543,7 +543,6 @@ const ProjectDetailsPage = () => {
             duration: 1,
             ease: [0.22, 1, 0.36, 1],
           }}
-
           className="w-[300px] 
           lg:w-[220px] h-[56vh] max-h-[560px] rounded-t-[25px] rounded-b-[5px] flex flex-col"
           style={{
@@ -589,7 +588,6 @@ const ProjectDetailsPage = () => {
                          so rows render identically and trigger overflow naturally */
                       className="relative flex items-center h-10 border-b border-white/10 cursor-pointer group overflow-hidden last:border-b-0 flex-shrink-0"
                     >
-
                       {active && (
                         <motion.div
                           layoutId="activeFloor"
@@ -602,11 +600,9 @@ const ProjectDetailsPage = () => {
                         />
                       )}
 
-
                       {!active && (
                         <div className="absolute inset-0 bg-transparent group-hover:bg-white/[0.03] transition-colors duration-300" />
                       )}
-
 
                       <div
                         className={`relative 
@@ -622,7 +618,6 @@ const ProjectDetailsPage = () => {
                       {!active && (
                         <div className="relative z-10 w-px self-stretch bg-white/10" />
                       )}
-
 
                       {/* <div className="relative z-10 flex-1 flex h-full">
                         {!active && (

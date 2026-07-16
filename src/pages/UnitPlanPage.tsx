@@ -36,7 +36,7 @@ export default function UnitPlanPage({ startScene = 2 }: { startScene?: 1 | 2 | 
                 setZoomScale(prev => prev + 0.16); // Step 1: 1.25, Step 2: 1.50
             }
         } else {
-            if (zoomStep > -2) {
+            if (zoomStep > 0) {
                 setZoomStep(prev => prev - 1);
                 setZoomScale(prev => prev - 0.16); // Step -1: 0.75, Step -2: 0.50
             }
@@ -233,13 +233,19 @@ export default function UnitPlanPage({ startScene = 2 }: { startScene?: 1 | 2 | 
                         <div className="inline-flex pl-2 mb-6 items-center gap-2 
                              border border-amber-500/20 rounded-[2px]
                               bg-white/10 backdrop-blur-sm min-w-[130px]">
-                            <span className="text-white font-bold text-[19px] tracking-wide">G</span>
+                            <span className="text-white font-bold text-xl tracking-wide">G</span>
                             <span className="text-white/80  mt-1
-                                 tracking-widest text-[12px] 
+                                 tracking-widest text-sm 
                                 font-medium ">Floor</span>
                         </div>
+
+                        <div className="text-white/70 text-sm flex flex-col gap-5">
+                            <p><span className="text-lg font-bold px-1">3.5</span>lakh sqft Carpet Area(appx.)</p>
+                            <p><span className="text-lg font-bold px-1">17,000</span>sqft (appx.) Floor Plate</p>
+                            <p><span className="text-lg font-bold px-1">4.2 - 4.5</span>mt Floor to Floor Height</p>
+                        </div>
                         {/* </div> */}
-                        {amenityData.map((menuItem) => {
+                        {/* {amenityData.map((menuItem) => {
                             const isItemActive = hoveredAmenity?.id === menuItem.id || selectedAmenity === menuItem.id;
 
                             return (
@@ -250,7 +256,7 @@ export default function UnitPlanPage({ startScene = 2 }: { startScene?: 1 | 2 | 
                                     onClick={() => setSelectedAmenity(menuItem.id)}
                                     className="group relative py-2.5 cursor-pointer flex items-center transition-all duration-150 select-none"
                                 >
-                                    {/* Dynamic Sliding Bold Gold Vertical Active indicator segment */}
+                                    
                                     {isItemActive && (
                                         <motion.div
                                             layoutId="verticalMenuIndicator"
@@ -259,7 +265,7 @@ export default function UnitPlanPage({ startScene = 2 }: { startScene?: 1 | 2 | 
                                         />
                                     )}
 
-                                    {/* Amenity Label Text */}
+                                    
                                     <span className={`text-[13px] tracking-wide transition-all duration-200 z-10 ${isItemActive
                                         ? 'text-white font-medium pl-1'
                                         : 'text-white/70 group-hover:text-white pl-0'
@@ -268,7 +274,7 @@ export default function UnitPlanPage({ startScene = 2 }: { startScene?: 1 | 2 | 
                                     </span>
                                 </div>
                             );
-                        })}
+                        })} */}
                     </LayoutGroup>
                 </div>
             </motion.div>
@@ -278,7 +284,7 @@ export default function UnitPlanPage({ startScene = 2 }: { startScene?: 1 | 2 | 
                 {/* Zoom Out Button */}
                 <button
                     onClick={() => handleZoom('out')}
-                    disabled={zoomStep === -2}
+                    disabled={zoomStep === 0}
                     className={`w-9 h-9 rounded-full bg-[#160f0a]/80 border border-white/10 text-white/80 flex items-center justify-center transition-all active:scale-95 shadow-md ${zoomStep === -2 ? 'opacity-40 cursor-not-allowed pointer-events-none' : 'hover:text-white hover:bg-[#22170f] hover:border-white/20'
                         }`}
                 >
