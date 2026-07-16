@@ -257,6 +257,20 @@ const ProjectDetailsPage = () => {
 
   const navigate = useNavigate();
 
+
+  // Inside your component:
+const [isLargeScreen, setIsLargeScreen] = useState(true);
+
+useEffect(() => {
+  const checkWidth = () => setIsLargeScreen(window.innerWidth >= 1024);
+  
+  // Initial check
+  checkWidth();
+  
+  window.addEventListener("resize", checkWidth);
+  return () => window.removeEventListener("resize", checkWidth);
+}, []);
+
   return (
     <div className="fixed inset-0 w-full h-full overflow-hidden bg-[#0a0d12]">
       {/* 1. Background Image */}
@@ -266,7 +280,7 @@ const ProjectDetailsPage = () => {
         <motion.img
           src={homeBgNight}// Thay bằng đường dẫn ảnh của bạn
           alt="Building Skyline"
-          className="absolute inset-0 w-full h-full object-cover"
+          className="absolute inset-0 w-full h-full object-contain lg:object-cover"
           initial={{ scale: 1.05, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ duration: 1.5, ease: "easeOut" }}
@@ -280,7 +294,8 @@ const ProjectDetailsPage = () => {
             This forces the SVG vector layer to crop and scale exactly like the 'object-cover' image above,
             keeping coordinates seamlessly pinned together on mobile, tablets, and desktops.
           */
-          preserveAspectRatio="xMidYMid slice"
+          // preserveAspectRatio="xMidYMid slice"
+          preserveAspectRatio={isLargeScreen ? "xMidYMid slice" : "xMidYMid meet"}
           className="absolute inset-0 w-full h-full z-20 pointer-events-auto"
           aria-hidden="true"
         >
@@ -394,7 +409,7 @@ const ProjectDetailsPage = () => {
         <RightNavbar isNight={isNight} setIsNight={setIsNight} />
       </div>
 
-      <div className="absolute top-[45%] -translate-y-1/2 left-[15%] z-50">
+      <div className="absolute top-[50%] lg:top-[45%] -translate-y-1/2 left-[15%] z-50">
         {/* <motion.div
           initial={{ x: -120, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
@@ -543,8 +558,9 @@ const ProjectDetailsPage = () => {
             duration: 1,
             ease: [0.22, 1, 0.36, 1],
           }}
-          className="w-[300px] 
-          lg:w-[220px] h-[56vh] max-h-[560px] rounded-t-[25px] rounded-b-[5px] flex flex-col"
+          className="w-[130px] 
+          lg:w-[220px] h-[30vh] max-h-[190px]   lg:h-[56vh] lg:max-h-[560px] 
+          rounded-t-[25px] rounded-b-[5px] flex flex-col"
           style={{
             background: "linear-gradient(180deg, rgba(70,65,62,.68) 0%, rgba(35,32,30,.62) 100%)",
             backdropFilter: "blur(26px)",
@@ -555,7 +571,7 @@ const ProjectDetailsPage = () => {
         >
 
           <div className="px-6 pt-2 pb-0 flex-shrink-0">
-            <div className="flex items-center h-10 text-[14px] text-white/90 tracking-wide">
+            <div className="flex items-center h-10 text-[11px] lg:text-[14px] text-white/90 tracking-wide">
               <div className="w-[32%] text-center">Floors</div>
 
 
@@ -563,7 +579,7 @@ const ProjectDetailsPage = () => {
           </div>
 
 
-          <div className="px-2 pb-3 flex-1 overflow-hidden text-[10px]">
+          <div className="px-2 pb-3 flex-1 overflow-hidden text-[8px] lg:text-[10px]">
             <div className="border border-white/10 h-full rounded-[4px] overflow-hidden flex flex-col">
 
 
@@ -586,7 +602,8 @@ const ProjectDetailsPage = () => {
                       // onClick={() => setSelectedRow(index)}
                       /* FIXED: Changed 'h-[8%]' to a stable static height 'h-10' (40px) 
                          so rows render identically and trigger overflow naturally */
-                      className="relative flex items-center h-10 border-b border-white/10 cursor-pointer group overflow-hidden last:border-b-0 flex-shrink-0"
+                      className="relative flex items-center h-10 border-b
+                       border-white/10 cursor-pointer group overflow-hidden last:border-b-0 flex-shrink-0"
                     >
                       {active && (
                         <motion.div
@@ -601,13 +618,14 @@ const ProjectDetailsPage = () => {
                       )}
 
                       {!active && (
-                        <div className="absolute inset-0 bg-transparent group-hover:bg-white/[0.03] transition-colors duration-300" />
+                        <div className="absolute inset-0 bg-transparent
+                         group-hover:bg-white/[0.03] transition-colors duration-300" />
                       )}
 
                       <div
                         className={`relative 
                           font-sans z-10 w-full flex 
-                          items-start px-5 justify-start text-[10px]
+                          items-start px-5 justify-start text-[8px] lg:text-[10px]
                            tracking-wide transition-colors ${active ? "text-[#3d2c16] font-semibold" : "text-white/80"
                           }`}
                       >
