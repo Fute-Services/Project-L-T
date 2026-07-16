@@ -38,8 +38,8 @@ const POI_MARKERS = [
   },
   {
     name: "L&T Realty",
-    left: "41.5%",
-    top: "50.5%",
+    left: "40.9%",
+    top: "51.8%",
     image: logoOutline,
     layout: "logo",
   },
@@ -68,9 +68,16 @@ const POI_MARKERS = [
     top: "28%",
     image: atalSetuImg,
     layout: "image-right",
-    // bgColor: "#9BB6E3",
   },
 ];
+
+const POI_LINES: Record<string, { start: [number, number]; end: [number, number] }> = {
+  "AIRPORT MUMBAI": { start: [587, 246], end: [488, 455] },
+  "WORLI SEA LINK": { start: [412, 382], end: [488, 454] },
+  "HANGING GARDEN": { start: [392, 516], end: [488, 452] },
+  "GATEWAY OF INDIA": { start: [531, 603], end: [488, 450] },
+  "ATAL SETU": { start: [898, 304], end: [489, 450] },
+};
 
 const TABS = [
   { key: 'site', label: 'Site Location' },
@@ -89,6 +96,7 @@ export default function LocationPage() {
   const [isNight, setIsNight] = useState<boolean>(true)
   const [showIntro, setShowIntro] = useState<boolean>(true)
   const [isInitialLoadDone, setIsInitialLoadDone] = useState<boolean>(false)
+  const [selectedLandmark, setSelectedLandmark] = useState<string | null>(null)
   const videoCardRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -213,12 +221,14 @@ export default function LocationPage() {
         // Fixed-aspect box reproducing the photo's cover-crop (3075x2141) so the
         // POI markers stay glued to landmarks at every viewport size.
         <motion.div
+          className="relative"
           animate={{ filter: showIntro ? "blur(24px)" : "blur(0px)" }}
           transition={
             isInitialLoadDone
               ? { duration: 0.3, delay: 0, ease: "easeInOut" }
               : { duration: 1.5, delay: showIntro ? 0 : 2.5, ease: "easeInOut" }
           }
+          onClick={() => setSelectedLandmark(null)}
           style={{
             position: 'absolute',
             left: '50%',
@@ -233,6 +243,105 @@ export default function LocationPage() {
             alt="Location aerial view"
             style={{ width: '100%', height: '100%', display: 'block', objectFit: 'cover' }}
           />
+
+          {/* SVG lines overlay */}
+          {activeTab === 'site' && (
+            <svg
+              viewBox="0 0 1103 768"
+              className="absolute inset-0 w-full h-full pointer-events-none z-10"
+            >
+              <defs>
+                <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+                  <feGaussianBlur stdDeviation="4" result="blur" />
+                  <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                </filter>
+              </defs>
+
+              {POI_MARKERS.map((poi) => {
+                if (poi.name === "L&T Realty") return null;
+                const lineData = POI_LINES[poi.name];
+                if (!lineData) return null;
+
+                const isSelected = selectedLandmark === poi.name;
+                if (!isSelected) return null;
+
+                const { start, end } = lineData;
+                const maskId = `mask-${poi.name.replace(/\s+/g, '-').toLowerCase()}`;
+
+                return (
+                  <g key={poi.name}>
+                    <defs>
+                      <mask id={maskId}>
+                        {/* A solid white line that draws from start to end to reveal the dashed line */}
+                        <motion.path
+                          d={`M ${start[0]} ${start[1]} L ${end[0]} ${end[1]}`}
+                          fill="none"
+                          stroke="white"
+                          strokeWidth="20"
+                          strokeLinecap="round"
+                          initial={{ pathLength: 0 }}
+                          animate={{ pathLength: 1 }}
+                          transition={{ duration: 1.5, ease: "easeInOut" }}
+                        />
+                      </mask>
+                    </defs>
+
+                    {/* Background faint guide line (static dashed) */}
+                    <path
+                      d={`M ${start[0]} ${start[1]} L ${end[0]} ${end[1]}`}
+                      fill="none"
+                      stroke="#ffffffff"
+                      strokeWidth="1.5"
+                      strokeDasharray="3 6"
+                      opacity="0.25"
+                      strokeLinecap="round"
+                    />
+
+                    {/* Group containing all glowing, sharp, and highlight dashed paths, revealed by the mask */}
+                    <g mask={`url(#${maskId})`}>
+                      {/* Outer Glowing Dashed Path */}
+                      <motion.path
+                        d={`M ${start[0]} ${start[1]} L ${end[0]} ${end[1]}`}
+                        fill="none"
+                        stroke="#fffefdff"
+                        strokeWidth="5"
+                        strokeLinecap="round"
+                        strokeDasharray="10 15"
+                        opacity="0.5"
+                        filter="url(#glow)"
+                        animate={{ strokeDashoffset: -100 }}
+                        transition={{ repeat: Infinity, duration: 1.8, ease: "linear" }}
+                      />
+
+                      {/* Inner Sharp Dashed Path */}
+                      <motion.path
+                        d={`M ${start[0]} ${start[1]} L ${end[0]} ${end[1]}`}
+                        fill="none"
+                        stroke="#ffffffff"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeDasharray="10 15"
+                        animate={{ strokeDashoffset: -100 }}
+                        transition={{ repeat: Infinity, duration: 1.8, ease: "linear" }}
+                      />
+
+                      {/* Flowing Highlight Dash */}
+                      <motion.path
+                        d={`M ${start[0]} ${start[1]} L ${end[0]} ${end[1]}`}
+                        fill="none"
+                        stroke="#fff"
+                        strokeWidth="2.5"
+                        strokeLinecap="round"
+                        strokeDasharray="10 90"
+                        animate={{ strokeDashoffset: -200 }}
+                        transition={{ repeat: Infinity, duration: 1.2, ease: "linear" }}
+                      />
+                    </g>
+                  </g>
+                );
+              })}
+            </svg>
+          )}
 
           {/* 1.5. Site Location Markers Overlay (Only in 'site' tab) */}
           {activeTab === 'site' && (
@@ -250,6 +359,7 @@ export default function LocationPage() {
                           ? { duration: 0.3, delay: 0, ease: "easeOut" }
                           : { duration: 1.5, delay: showIntro ? 0 : (index * 0.35 + 4.0), ease: [0.16, 1, 0.3, 1] }
                       }
+                      onClick={(e) => e.stopPropagation()}
                       className="absolute pointer-events-auto flex flex-col items-center group cursor-pointer"
                       style={{
                         left: poi.left,
@@ -290,6 +400,10 @@ export default function LocationPage() {
                         ? { duration: 0.3, delay: 0, ease: "easeOut" }
                         : { duration: 1.5, delay: showIntro ? 0 : (index * 0.35 + 4.0), ease: [0.16, 1, 0.3, 1] }
                     }
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setSelectedLandmark(prev => prev === poi.name ? null : poi.name);
+                    }}
                     className="absolute flex flex-col items-center pointer-events-auto group cursor-pointer pb-2"
                     style={{
                       left: poi.left,

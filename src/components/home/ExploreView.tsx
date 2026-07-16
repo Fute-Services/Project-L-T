@@ -9,6 +9,7 @@ import blackLogo from "../../assets/images/home/black logo.png"
 import LeftNavbar from "../navigation/LeftNavbar"
 import RightNavbar from "../navigation/RightNavbar"
 import { gradientHeadingStyle } from "../../styles/gradientHeadingText"
+import logo1 from "../../assets/logos/logo-outline-white.svg"
 
 interface ExploreViewProps {
     explored: boolean;
@@ -177,7 +178,7 @@ const ExploreView = ({ explored }: ExploreViewProps) => {
                                 title="Back to Intro"
                             >
                                 <img
-                                    src={logo2}
+                                    src={logo1}
                                     alt="Back to Intro"
                                     className="w-5 h-5 lg:w-7 lg:h-7 object-contain opacity-75 hover:opacity-100 transition-opacity"
                                 />
