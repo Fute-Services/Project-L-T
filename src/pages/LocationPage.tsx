@@ -73,8 +73,8 @@ const POI_MARKERS = [
 
 const POI_LINES: Record<string, { start: [number, number]; end: [number, number] }> = {
   "AIRPORT MUMBAI": { start: [587, 246], end: [488, 455] },
-  "WORLI SEA LINK": { start: [412, 382], end: [488, 454] },
-  "HANGING GARDEN": { start: [392, 516], end: [488, 452] },
+  "WORLI SEA LINK": { start: [422, 382], end: [488, 454] },
+  "HANGING GARDEN": { start: [390, 511], end: [488, 452] },
   "GATEWAY OF INDIA": { start: [531, 603], end: [488, 450] },
   "ATAL SETU": { start: [898, 304], end: [489, 450] },
 };
