@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-const certificateBg = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/03d6e841-c126-4feb-306a-2be0866ee600/public";
+import certificateBg from "../assets/images/projectInfo/bg-sunset.jpg";
 const wellIcon = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/448c4daa-c063-4a12-b792-cc5d52bb4700/public";
 const leadIcon = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/3caab12e-6b86-4e61-4a40-856aa65efe00/public";
 const newLogo = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/abe60fc8-d31a-482c-276d-74b273dcc700/public";
@@ -48,7 +48,7 @@ const CertificationPage = () => {
         <motion.img
           src={certificateBg}
           alt="Certification Background"
-          className="absolute inset-0 w-full h-full object-fill"
+          className="absolute inset-0 w-full h-full object-cover"
           style={{ transformOrigin: "center 4%" }}
           initial={{ scale: 1.0 }}
           animate={{ scale: isZoomed ? 1.85 : 1.0 }}

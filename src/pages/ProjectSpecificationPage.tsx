@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-const bgImage = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/42f430b2-5126-4f70-c275-c805a8234e00/public";
-const buildingImg = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/19045808-fdfc-4c55-b5cf-72e2b0627000/public";
+import bgImage from "../assets/images/projectInfo/bg-sunset.jpg";
 const transLogo = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/baddc139-7694-40c9-b009-7d1f880dba00/public";
 import logo2 from "../assets/logos/logo-outline-white.svg";
 import LeftNavbar from "../components/navigation/LeftNavbar";
@@ -58,7 +57,7 @@ const ProjectSpecificationPage = () => {
         <motion.img
           src={bgImage}
           alt="Project Specification Background"
-          className="absolute inset-0 w-full h-full object-fill"
+          className="absolute inset-0 w-full h-full object-cover"
           style={{ transformOrigin: "33% top" }}
           initial={{ scale: 1.95 }}
           animate={{ scale: isZoomed ? 1.95 : 1.0 }}
@@ -133,13 +132,6 @@ const ProjectSpecificationPage = () => {
       </AnimatePresence>
 
       {/* Foreground Skyscraper Overlay - Positioned above list but below navbar */}
-      <img
-        src={buildingImg}
-        alt="Skyscraper Building"
-        className="absolute left-[15%] bottom-10 h-[70%] lg:h-[92%] w-[220px] lg:w-[260px] z-[45] pointer-events-none transition-opacity duration-1000 ease-out"
-        style={{ opacity: showOverlays ? 1 : 0 }}
-      />
-
       {/* 5. Center Specifications List */}
       <AnimatePresence>
         {showOverlays && (

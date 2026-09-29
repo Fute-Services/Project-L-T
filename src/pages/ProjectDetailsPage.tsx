@@ -1,7 +1,7 @@
 import { useCallback, useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 
-const homeBgNight = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/c4bab2ee-9d5c-481f-9fd3-bad2e4198c00/public";
+import homeBgNight from "../assets/images/home/scene2-sunset.jpg"
 const newLogo = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/abe60fc8-d31a-482c-276d-74b273dcc700/public";
 import LeftNavbar from "../components/navigation/LeftNavbar";
 import RightNavbar from "../components/navigation/RightNavbar";

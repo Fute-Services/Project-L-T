@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-const bgImage = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/42f430b2-5126-4f70-c275-c805a8234e00/public";
-const buildingImg = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/19045808-fdfc-4c55-b5cf-72e2b0627000/public";
+import bgImage from "../assets/images/projectInfo/bg-sunset.jpg";
 const transLogo = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/a78f6c68-fcf5-4d49-e5be-2fafd2d42800/public";
 const newLogo = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/abe60fc8-d31a-482c-276d-74b273dcc700/public";
 import LeftNavbar from "../components/navigation/LeftNavbar";
@@ -12,7 +11,11 @@ const ProjectInfoPage = () => {
   const [showOverlays, setShowOverlays] = useState(false);
   const [isNight, setIsNight] = useState(true);
 
+  const [imgLoaded, setImgLoaded] = useState(false);
+
   useEffect(() => {
+    // Start the sequence only once the background is loaded: zoom-out first, then the text
+    if (!imgLoaded) return;
     // Zoom transition lasts for 2.5s, start showing details at 1.2s
     const zoomTimer = setTimeout(() => {
       setIsZoomed(false);
@@ -26,7 +29,7 @@ const ProjectInfoPage = () => {
       clearTimeout(zoomTimer);
       clearTimeout(overlayTimer);
     };
-  }, []);
+  }, [imgLoaded]);
 
   const specData = [
     {
@@ -58,7 +61,8 @@ const ProjectInfoPage = () => {
         <motion.img
           src={bgImage}
           alt="Project Specification Background"
-          className="absolute inset-0 w-full h-full object-fill"
+          onLoad={() => setImgLoaded(true)}
+          className="absolute inset-0 w-full h-full object-cover"
           style={{ transformOrigin: "33% top" }}
           initial={{ scale: 1.95 }}
           animate={{ scale: isZoomed ? 1.95 : 1.0 }}
@@ -138,14 +142,6 @@ const ProjectInfoPage = () => {
         )}
       </AnimatePresence>
 
-      {/* Foreground Skyscraper Overlay - Positioned above list but below navbar */}
-      <img
-        src={buildingImg}
-        alt="Skyscraper Building"
-        className="absolute left-[20%] bottom-[14%] h-[70%] lg:h-[84%] w-[220px] lg:w-[285px] z-[75] pointer-events-none transition-opacity duration-1000 ease-out"
-        style={{ opacity: showOverlays ? 1 : 0 }}
-      />
-
       {/* 5. Center Specifications List */}
       <AnimatePresence>
         {showOverlays && (
@@ -154,7 +150,7 @@ const ProjectInfoPage = () => {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -80 }}
             transition={{ duration: 1.5, ease: [0.25, 1, 0.28, 1], delay: 0. }}
-            className="fixed left-[75px] sm:left-[105px] md:left-[105px] lg:left-[576px] top-[30%] lg:top-[15%] -translate-y-1/2 z-40 w-[300px] lg:w-[480px] flex flex-col gap-4 lg:gap-5"
+            className="fixed left-[38vw] top-[30%] lg:top-[15%] -translate-y-1/2 z-40 w-[58vw] lg:w-[480px] flex flex-col gap-4 lg:gap-5"
           >
             {specData.map((item) => (
               <div

@@ -4,16 +4,13 @@ import { useNavigate } from "react-router-dom"
 
 // Assets imports
 import lntLogo from "../assets/logos/lnt-logo-full.png"
-const scene2Bg = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/29dc6f0d-4780-4bf9-7d57-4d94c1186400/public";
+import scene2Bg from "../assets/images/home/scene2-sunset.jpg"
 const transparentLogo = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/40740c95-dc4c-4dfa-86a6-f976c26cee00/public";
 const logo2 = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/abe60fc8-d31a-482c-276d-74b273dcc700/public";
-const homeBgDay = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/0f3a05a6-ecfd-4b4a-3f4b-8b4c5adf7800/public";
-const homeBgNight = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/04e18dee-1e31-4b0e-bf58-9073b8630e00/public";
+import homeBgDay from "../assets/images/home/scene2-sunset.jpg"
+import homeBgNight from "../assets/images/home/scene2-sunset.jpg"
 import ExploreView from "../components/home/ExploreView"
-import RainOverlay from "../components/home/RainOverlay"
-import LightningOverlay from "../components/home/LightningOverlay"
 import { gradientHeadingStyle } from "../styles/gradientHeadingText"
-import { useStormAudio } from "../hooks/useStormAudio"
 import logo1 from "../../src/assets/logos/logo-outline-white.svg"
 
 interface HomePageProps {
@@ -25,7 +22,6 @@ const HomePage = ({ startScene = 1 }: HomePageProps) => {
     // scene state determines whether we show Scene 1 (centered logo), Scene 2 (framed workspace), or Scene 3 (sunset explore view)
     const [scene, setScene] = useState<1 | 2 | 3>(startScene)
     const [isExploring, setIsExploring] = useState(false)
-    const { playThunder } = useStormAudio()
 
     useEffect(() => {
         if (startScene !== 1) return;
@@ -155,12 +151,6 @@ const HomePage = ({ startScene = 1 }: HomePageProps) => {
                             }}
                             transition={{ duration: 3.5, ease: [0.25, 1, 0.28, 1], delay: 0.2 }}
                         />
-
-                        {/* Light drizzle overlay on top of the skyline background */}
-                        <RainOverlay />
-
-                        {/* Occasional lightning strikes in the storm clouds */}
-                        <LightningOverlay onStrike={playThunder} />
 
                         {/* Top Left White Logo */}
                         <motion.div

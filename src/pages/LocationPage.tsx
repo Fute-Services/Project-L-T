@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from 'react'
 import { Maximize } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
-const locationBackground = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/17b41634-6695-49c9-61a2-8f9d29916400/public";
-const mobilityBackground = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/dc10b7fa-face-4664-3e64-7730e1fc3900/public";
-const connectivityBackground = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/516be76d-66fe-41a5-6c08-756b0e7f9b00/public";
-const infraBackground = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/31d45c69-edae-427e-5929-694fb0757000/public";
+import locationBackground from "../assets/images/cerculation/circulation-aerial.jpg"
+import mobilityBackground from "../assets/images/cerculation/circulation-aerial.jpg"
+import connectivityBackground from "../assets/images/cerculation/circulation-aerial.jpg"
+import infraBackground from "../assets/images/cerculation/circulation-aerial.jpg"
 const group43Logo = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/abe60fc8-d31a-482c-276d-74b273dcc700/public";
 import InteractiveMapView from '../components/location/InteractiveMapView'
 import { glassContainerStyle, pillButtonStyle, standaloneGlassButtonStyle } from '../styles/glassOverlay'

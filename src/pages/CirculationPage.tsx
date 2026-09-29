@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import LeftNavbar from "../components/navigation/LeftNavbar";
 import RightNavbar from "../components/navigation/RightNavbar";
-import cerculationBg from "../assets/images/cerculation/cerculation-bg.png";
+import cerculationBg from "../assets/images/cerculation/circulation-aerial.jpg";
 import backButtonImg from "../assets/images/cerculation/back butten.png";
 const newLogo = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/abe60fc8-d31a-482c-276d-74b273dcc700/public";
 

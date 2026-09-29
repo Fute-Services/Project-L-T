@@ -14,7 +14,7 @@ import { PageFlip } from "page-flip";
 import LeftNavbar from "../components/navigation/LeftNavbar";
 // import backIcon from "../assets/back butten.png";
 import pdfFile from "../assets/documents/lnt-lower-parel-brochure.pdf";
-const bgImage = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/29dc6f0d-4780-4bf9-7d57-4d94c1186400/public";
+import bgImage from "../assets/images/home/scene2-sunset.jpg";
 
 // Declare pdfjsLib and PageFlip module to satisfy TypeScript
 declare global {

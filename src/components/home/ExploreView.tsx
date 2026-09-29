@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { useNavigate } from "react-router-dom"
-const homeBgDay = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/0f3a05a6-ecfd-4b4a-3f4b-8b4c5adf7800/public";
-const homeBgNight = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/04e18dee-1e31-4b0e-bf58-9073b8630e00/public";
+import homeBgDay from "../../assets/images/home/scene2-sunset.jpg"
+import homeBgNight from "../../assets/images/home/scene2-sunset.jpg"
 const homeLeftTransparent = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/20799cb8-8664-4229-4c2f-c04185864500/public";
 const logo2 = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/abe60fc8-d31a-482c-276d-74b273dcc700/public"
 import blackLogo from "../../assets/images/home/black logo.png"
