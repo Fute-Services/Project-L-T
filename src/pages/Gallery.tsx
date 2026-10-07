@@ -15,12 +15,12 @@ import { motion, AnimatePresence, type Variants } from "framer-motion";
 import gallery2 from '../assets/images/home/scene2-sunset.jpg';
 import gallery3 from '../assets/images/projectInfo/bg-sunset.jpg';
 import gallery4 from '../assets/images/cerculation/circulation-aerial.jpg';
-import gallery5 from '../assets/images/gallery/signature-lobby.jpg';
-import gallery7 from '../assets/images/gallery/unobstructed-views.jpg';
-import gallery8 from '../assets/images/gallery/elevated-workspaces.jpg';
+import gallery5 from '../assets/images/home/scene2-sunset.jpg';
+import gallery7 from '../assets/images/projectInfo/bg-sunset.jpg';
+import gallery8 from '../assets/images/cerculation/circulation-aerial.jpg';
 
-import gallery9 from '../assets/images/gallery/skyline-night.jpg';
-import gallery10 from '../assets/images/gallery/grand-arrival.jpg';
+import gallery9 from '../assets/images/home/scene2-sunset.jpg';
+import gallery10 from '../assets/images/projectInfo/bg-sunset.jpg';
 
 import logo2 from '../assets/logos/logo-outline-white.svg';
 import LeftNavbar from '../components/navigation/LeftNavbar';
@@ -275,7 +275,7 @@ const Gallery = () => {
                             transition={{ duration: 2, ease: [0.25, 1, 0.5, 1] }}
                             className="text-white text-6xl md:text-8xl lg:text-[100px] tracking-[0.15em] font-light"
                         >
-                            GALLERY
+                            PROJECT OVERVIEW
                         </motion.h1>
                     </div>
                 )}
