@@ -15,7 +15,6 @@
     ]],
     ['Skyline', [
       ['/img/gallery/unobstructed-views.jpg', 'Corner office at night overlooking the Bandra-Worli Sea Link.', "Unobstructed Views, For All 365 Days & Forever"],
-      ['/img/gallery/elevated-workspaces.jpg', 'Workspace with floor-to-ceiling glazing above the city at night.', "Elevated Workspaces , Extraordinary Perspectives"],
       ['/img/gallery/skyline-night.jpg', 'Executive office with a night view of the city skyline.', "A Landmark that defines the skyline"],
     ]],
     ['Interior', [
