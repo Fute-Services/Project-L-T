@@ -9,7 +9,6 @@
     ['Exterior', [
       [A.hero, 'Innovation Campus tower at sunset beside the elevated highway.'],
       [A.architecture, 'Innovation Campus tower at sunset with the flyover in front.'],
-      ['/img/gallery/grand-arrival.jpg', 'Gated night arrival at Innovation Campus beside the flyover.'],
     ]],
     ['Skyline', [
       ['/img/gallery/circulation-aerial.jpg', 'Innovation Campus rising above the Mumbai skyline at sunset.'],
@@ -47,7 +46,7 @@
   const EASE = { io: 'cubic-bezier(.42,0,.58,1)', intro: 'cubic-bezier(.25,1,.5,1)' };
   const UI = '.console-rail,.console-context,.header-controls,.footer';
 
-  // Arrows and counter stay hidden until a category tab is clicked; the intro plays on each visit.
+  // Arrows and counter show from the start; the intro plays on each visit.
   let img = 0, picked = false, intro = false, timers = [], sliding = false, dir = 1;
 
   const step = (side, label, d, cat) => `<button type="button" class="gallery-step ${side}" data-action="galleryStep" data-dir="${d}" aria-label="${label} ${cat.toLowerCase()} image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${d < 0 ? 'M15 5l-7 7 7 7' : 'M9 5l7 7-7 7'}"/></svg></button>`;
@@ -121,7 +120,7 @@
     if (state.view === 'gallery') document.getElementById('consoleContext').innerHTML = SETS.map(([t], i) => `<button type="button" data-action="gallerySelect" data-index="${i}" aria-pressed="${state.gallery === i}">${t}</button>`).join('');
   };
   go = function (v) {
-    if (v === 'gallery' && state.view !== 'gallery') { img = 0; picked = false; intro = true; }
+    if (v === 'gallery' && state.view !== 'gallery') { img = 0; picked = true; intro = true; }
     return baseGo(v);
   };
 
